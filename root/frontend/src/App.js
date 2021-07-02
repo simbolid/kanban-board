@@ -3,7 +3,7 @@ import React from 'react';
 function App() {
   return (
     <p>
-      Edit <code>src/App.js</code> and save to reload.
+      Placeholder text
     </p>
   );
 }
