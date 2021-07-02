@@ -1,9 +1,8 @@
 import React from 'react';
+import Dashboard from './Dashboard';
 
 const App = () => (
-  <p>
-    Placeholder text
-  </p>
+  <Dashboard />
 );
 
 export default App;
