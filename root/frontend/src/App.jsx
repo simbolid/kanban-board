@@ -1,5 +1,5 @@
 import React from 'react';
-import Board from './ProjectBoard';
+import Board from './pages/ProjectBoard';
 
 const App = () => (
   <Board />
