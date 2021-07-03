@@ -1,8 +1,8 @@
 import React from 'react';
-import Dashboard from './Dashboard';
+import Board from './ProjectBoard';
 
 const App = () => (
-  <Dashboard />
+  <Board />
 );
 
 export default App;
