@@ -1,5 +1,4 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,7 +26,6 @@ const ProjectBoard = () => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
 
       {/* Includes the top bar and the side menu */}
       <NavigationInterface />
