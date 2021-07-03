@@ -1,6 +1,9 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import {
+  Button,
+  Container,
+  Grid,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
@@ -10,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
+  addColumnButton: {
+    textTransform: 'none',
+    padding: theme.spacing(1),
+  },
   content: {
     flexGrow: 1,
     height: '100vh',
@@ -41,7 +48,9 @@ const ProjectBoard = () => {
               <Column />
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Column />
+              <Button color="primary" className={classes.addColumnButton}>
+                Add Column
+              </Button>
             </Grid>
           </Grid>
         </Container>
