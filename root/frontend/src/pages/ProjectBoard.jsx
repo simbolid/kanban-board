@@ -1,22 +1,16 @@
-// TODO: use direct imports rather than destructuring
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
+import NewColumnSection from './components/NewColumnSection';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
-  addColumnButton: {
-    textTransform: 'none',
-    padding: theme.spacing(1),
-  },
   content: {
     flexGrow: 1,
     height: '100vh',
@@ -37,33 +31,6 @@ const ProjectBoard = () => {
 
   const [newColumnTitle, setNewColumnTitle] = useState('');
 
-  // TODO: extract this component into its own file
-  const NewColumnSection = ({ buttonPressed }) => {
-    if (buttonPressed) {
-      return (
-        <form onSubmit={() => setAddColumn(false)}>
-          <TextField
-            variant="outlined"
-            size="small"
-            label="Column title"
-            value={newColumnTitle}
-            onChange={(e) => setNewColumnTitle(e.target.value)}
-            autoFocus
-          />
-        </form>
-      );
-    }
-    return (
-      <Button
-        color="primary"
-        className={classes.addColumnButton}
-        onClick={() => setAddColumn(true)}
-      >
-        Add Column
-      </Button>
-    );
-  };
-
   return (
     <div className={classes.root}>
 
@@ -81,7 +48,16 @@ const ProjectBoard = () => {
               <Column />
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <NewColumnSection buttonPressed={addColumn} />
+              {/* Initially a button for adding a column to the board. If the button is
+                  pressed, turns into a text field that requests a name for the column */}
+              <NewColumnSection
+                buttonPressed={addColumn}
+                onTextFieldSubmit={() => setAddColumn(false)}
+                textFieldLabel="Column title"
+                textFieldValue={newColumnTitle}
+                onTextFieldChange={(e) => setNewColumnTitle(e.target.value)}
+                onButtonClick={() => setAddColumn(true)}
+              />
             </Grid>
           </Grid>
         </Container>
