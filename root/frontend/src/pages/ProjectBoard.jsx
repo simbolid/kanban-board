@@ -1,8 +1,10 @@
-import React from 'react';
+// TODO: use direct imports rather than destructuring
+import React, { useState } from 'react';
 import {
   Button,
   Container,
   Grid,
+  TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigationInterface from './components/Navigation';
@@ -31,6 +33,39 @@ const useStyles = makeStyles((theme) => ({
 const ProjectBoard = () => {
   const classes = useStyles();
 
+  /* when the add column button is pressed, set to true
+     and request the title of the new column */
+  const [addColumn, setAddColumn] = useState(false);
+
+  const [newColumnTitle, setNewColumnTitle] = useState('');
+
+  // TODO: extract this component into its own file
+  const NewColumnSection = ({ buttonPressed }) => {
+    if (buttonPressed) {
+      return (
+        <form onSubmit={() => setAddColumn(false)}>
+          <TextField
+            variant="outlined"
+            size="small"
+            label="Column title"
+            value={newColumnTitle}
+            onChange={(e) => setNewColumnTitle(e.target.value)}
+            autoFocus
+          />
+        </form>
+      );
+    }
+    return (
+      <Button
+        color="primary"
+        className={classes.addColumnButton}
+        onClick={() => setAddColumn(true)}
+      >
+        Add Column
+      </Button>
+    );
+  };
+
   return (
     <div className={classes.root}>
 
@@ -48,9 +83,7 @@ const ProjectBoard = () => {
               <Column />
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Button color="primary" className={classes.addColumnButton}>
-                Add Column
-              </Button>
+              <NewColumnSection buttonPressed={addColumn} />
             </Grid>
           </Grid>
         </Container>
