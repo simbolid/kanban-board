@@ -1,12 +1,10 @@
 // TODO: use direct imports rather than destructuring
 import React, { useState } from 'react';
-import {
-  Button,
-  Container,
-  Grid,
-  TextField,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 
