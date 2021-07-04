@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavigationInterface = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   const handleDrawerOpen = () => setOpen(true);
