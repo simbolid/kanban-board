@@ -6,6 +6,8 @@ import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 import NewColumnSection from './components/NewColumnSection';
 
+// TODO: remove flex grow behavior in favor of horizontol scrolling
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -25,11 +27,23 @@ const useStyles = makeStyles((theme) => ({
 const ProjectBoard = () => {
   const classes = useStyles();
 
-  /* when the add column button is pressed, set to true
-     and request the title of the new column */
-  const [addColumn, setAddColumn] = useState(false);
-
+  const [requestNewColumnTitle, setRequestNewColumnTitle] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
+
+  const [columns, setColumns] = useState([
+    {
+      title: 'Column one',
+    },
+    {
+      title: 'Column two',
+    },
+  ]);
+
+  const handleNewColumnSubmit = () => {
+    setRequestNewColumnTitle(false);
+    setNewColumnTitle('');
+    setColumns(columns.concat({ title: newColumnTitle }));
+  };
 
   return (
     <div className={classes.root}>
@@ -40,23 +54,22 @@ const ProjectBoard = () => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4} lg={3}>
-              <Column />
-            </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Column />
-            </Grid>
+          <Grid container spacing={3} wrap="nowrap">
+            {columns.map((column) => (
+              <Grid item xs={12} md={4} lg={3}>
+                <Column title={column.title} />
+              </Grid>
+            ))}
             <Grid item xs={12} md={4} lg={3}>
               {/* Initially a button for adding a column to the board. If the button is
                   pressed, turns into a text field that requests a name for the column */}
               <NewColumnSection
-                buttonPressed={addColumn}
-                onTextFieldSubmit={() => setAddColumn(false)}
+                buttonPressed={requestNewColumnTitle}
+                onTextFieldSubmit={handleNewColumnSubmit}
                 textFieldLabel="Column title"
                 textFieldValue={newColumnTitle}
                 onTextFieldChange={(e) => setNewColumnTitle(e.target.value)}
-                onButtonClick={() => setAddColumn(true)}
+                onButtonClick={() => setRequestNewColumnTitle(true)}
               />
             </Grid>
           </Grid>

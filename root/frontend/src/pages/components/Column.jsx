@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Paper from '@material-ui/core/Paper';
 
@@ -11,13 +12,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Column = () => {
+const Column = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
-      Column
+      {props.title}
     </Paper>
   );
+};
+
+Column.propTypes = {
+  title: PropTypes.string.isRequired,
 };
 
 export default Column;
