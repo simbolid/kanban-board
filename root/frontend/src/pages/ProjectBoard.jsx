@@ -53,7 +53,7 @@ const ProjectBoard = () => {
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="false" className={classes.container}>
           <Grid container spacing={3} wrap="nowrap">
             {columns.map((column) => (
               <Grid item xs={12} md={4} lg={3}>
