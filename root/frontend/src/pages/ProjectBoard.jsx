@@ -47,7 +47,7 @@ const ProjectBoard = () => {
   const handleNewColumnSubmit = () => {
     setRequestNewColumnTitle(false);
     setNewColumnTitle('');
-    setColumns(columns.concat({ title: newColumnTitle }));
+    setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
   };
 
   return (
@@ -58,10 +58,12 @@ const ProjectBoard = () => {
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="false" className={classes.container}>
+        <Container maxWidth={false} className={classes.container}>
           <Grid container spacing={2} wrap="nowrap">
-            {columns.map((column) => (
+            {columns.map((column, index) => (
               <Column
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 title={column.title}
                 cards={column.cards}
               />

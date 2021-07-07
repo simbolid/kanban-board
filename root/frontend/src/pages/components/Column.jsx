@@ -30,7 +30,10 @@ const Column = (props) => {
         <Typography className={classes.title}>
           {props.title}
         </Typography>
-        {props.cards.map((card) => <Card title={card.title} />)}
+        {props.cards.map((card, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Card key={index} title={card.title} />
+        ))}
       </Paper>
     </Grid>
   );
