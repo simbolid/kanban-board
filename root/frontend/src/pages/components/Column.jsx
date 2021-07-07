@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Card from './Card';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  title: {
+    fontWeight: 'bold',
+  },
 }));
 
 const Column = (props) => {
@@ -23,7 +27,9 @@ const Column = (props) => {
   return (
     <Grid item className={classes.gridItem} xs={12} md={4} lg={3}>
       <Paper className={classes.paper}>
-        {props.title}
+        <Typography className={classes.title}>
+          {props.title}
+        </Typography>
         {props.cards.map((card) => <Card title={card.title} />)}
       </Paper>
     </Grid>
