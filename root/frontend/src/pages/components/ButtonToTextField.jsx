@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewColumnSection = (props) => {
+const ButtonToTextField = (props) => {
   const classes = useStyles();
 
   if (props.buttonPressed) {
@@ -39,7 +39,7 @@ const NewColumnSection = (props) => {
   );
 };
 
-NewColumnSection.propTypes = {
+ButtonToTextField.propTypes = {
   buttonPressed: PropTypes.bool.isRequired,
   onTextFieldSubmit: PropTypes.func.isRequired,
   textFieldLabel: PropTypes.string.isRequired,
@@ -48,4 +48,4 @@ NewColumnSection.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
 };
 
-export default NewColumnSection;
+export default ButtonToTextField;

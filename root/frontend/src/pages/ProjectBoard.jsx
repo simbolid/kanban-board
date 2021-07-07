@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
-import NewColumnSection from './components/NewColumnSection';
+import ButtonToTextField from './components/ButtonToTextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +30,17 @@ const ProjectBoard = () => {
   const [columns, setColumns] = useState([
     {
       title: 'Column one',
+      cards: [
+        { title: 'card one' },
+        { title: 'card two' },
+      ],
     },
     {
       title: 'Column two',
+      cards: [
+        { title: 'new one' },
+        { title: 'new two' },
+      ],
     },
   ]);
 
@@ -53,12 +61,15 @@ const ProjectBoard = () => {
         <Container maxWidth="false" className={classes.container}>
           <Grid container spacing={2} wrap="nowrap">
             {columns.map((column) => (
-              <Column title={column.title} />
+              <Column
+                title={column.title}
+                cards={column.cards}
+              />
             ))}
             <Grid item xs={12} md={4} lg={3}>
               {/* Initially a button for adding a column to the board. If the button is
                   pressed, turns into a text field that requests a name for the column */}
-              <NewColumnSection
+              <ButtonToTextField
                 buttonPressed={requestNewColumnTitle}
                 onTextFieldSubmit={handleNewColumnSubmit}
                 textFieldLabel="Column title"
