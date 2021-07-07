@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ProjectBoard = () => {
   const classes = useStyles();
 
-  const [requestNewColumnTitle, setRequestNewColumnTitle] = useState(false);
+  const [requestNewColumn, setRequestNewColumn] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
 
   const [columns, setColumns] = useState([
@@ -45,14 +45,14 @@ const ProjectBoard = () => {
   ]);
 
   const handleNewColumnSubmit = () => {
-    setRequestNewColumnTitle(false);
+    setRequestNewColumn(false);
     setNewColumnTitle('');
     setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
   };
 
   const handleNewColumnCancel = () => {
-    setRequestNewColumnTitle(false);
-    setRequestNewColumnTitle(false);
+    setRequestNewColumn(false);
+    setRequestNewColumn(false);
     setNewColumnTitle('');
   };
 
@@ -78,13 +78,13 @@ const ProjectBoard = () => {
               {/* Initially a button for adding a column to the board. If the button is
                   pressed, turns into a text field that requests a name for the column */}
               <ButtonToTextField
-                buttonPressed={requestNewColumnTitle}
+                buttonPressed={requestNewColumn}
                 onCancel={handleNewColumnCancel}
                 onTextFieldSubmit={handleNewColumnSubmit}
                 textFieldLabel="Column title"
                 textFieldValue={newColumnTitle}
                 onTextFieldChange={(e) => setNewColumnTitle(e.target.value)}
-                onButtonClick={() => setRequestNewColumnTitle(true)}
+                onButtonClick={() => setRequestNewColumn(true)}
               />
             </Grid>
           </Grid>
