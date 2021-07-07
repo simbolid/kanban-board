@@ -44,7 +44,7 @@ const ButtonToTextField = (props) => {
             className={classes.addButton}
             onClick={props.onTextFieldSubmit}
           >
-            Add Column
+            {props.title}
           </Button>
           <IconButton aria-label="delete" onClick={props.onCancel}>
             <CloseIcon />
@@ -59,7 +59,7 @@ const ButtonToTextField = (props) => {
       className={classes.addButton}
       onClick={props.onButtonClick}
     >
-      Add Column
+      {props.title}
     </Button>
   );
 };
@@ -70,6 +70,7 @@ ButtonToTextField.propTypes = {
   onTextFieldSubmit: PropTypes.func.isRequired,
   textFieldLabel: PropTypes.string.isRequired,
   textFieldValue: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   onTextFieldChange: PropTypes.func.isRequired,
   onButtonClick: PropTypes.func.isRequired,
 };
