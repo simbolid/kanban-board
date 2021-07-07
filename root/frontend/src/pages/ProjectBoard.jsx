@@ -55,6 +55,15 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
+  const addCardToColumn = (index, card) => {
+    // retrieve and update the column to be modified
+    const column = columns.slice(index, index + 1)[0];
+    column.cards = column.cards.concat(card);
+
+    // insert the updated column into the columns array
+    setColumns(columns.slice(0, index).concat(column).concat(columns.slice(index + 1)));
+  };
+
   return (
     <div className={classes.root}>
 
@@ -69,8 +78,10 @@ const ProjectBoard = () => {
               <Column
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
+                index={index}
                 title={column.title}
                 cards={column.cards}
+                addCard={addCardToColumn}
               />
             ))}
             <Grid item xs={12} md={4} lg={3}>

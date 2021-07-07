@@ -36,6 +36,7 @@ const Column = (props) => {
 
   const handleNewCardSubmit = () => {
     setNewCardRequested(false);
+    props.addCard(props.index, { title: newCardTitle });
     setNewCardTitle('');
   };
 
@@ -71,6 +72,8 @@ Column.propTypes = {
       title: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  addCard: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Column;
