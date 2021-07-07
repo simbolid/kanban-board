@@ -50,6 +50,12 @@ const ProjectBoard = () => {
     setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
   };
 
+  const handleNewColumnCancel = () => {
+    setRequestNewColumnTitle(false);
+    setRequestNewColumnTitle(false);
+    setNewColumnTitle('');
+  };
+
   return (
     <div className={classes.root}>
 
@@ -73,6 +79,7 @@ const ProjectBoard = () => {
                   pressed, turns into a text field that requests a name for the column */}
               <ButtonToTextField
                 buttonPressed={requestNewColumnTitle}
+                onCancel={handleNewColumnCancel}
                 onTextFieldSubmit={handleNewColumnSubmit}
                 textFieldLabel="Column title"
                 textFieldValue={newColumnTitle}
