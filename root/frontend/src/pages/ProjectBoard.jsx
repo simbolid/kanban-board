@@ -45,9 +45,11 @@ const ProjectBoard = () => {
   ]);
 
   const handleNewColumnSubmit = () => {
-    setNewColumnRequested(false);
-    setNewColumnTitle('');
-    setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
+    if (newColumnTitle !== '') {
+      setNewColumnRequested(false);
+      setNewColumnTitle('');
+      setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
+    }
   };
 
   const handleNewColumnCancel = () => {

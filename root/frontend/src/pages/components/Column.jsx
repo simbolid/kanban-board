@@ -35,9 +35,12 @@ const Column = (props) => {
   };
 
   const handleNewCardSubmit = () => {
-    setNewCardRequested(false);
-    props.addCard(props.index, { title: newCardTitle });
-    setNewCardTitle('');
+    // the new card requires a title
+    if (newCardTitle !== '') {
+      setNewCardRequested(false);
+      props.addCard(props.index, { title: newCardTitle });
+      setNewCardTitle('');
+    }
   };
 
   return (
