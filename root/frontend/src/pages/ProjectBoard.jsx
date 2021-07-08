@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 import ButtonToTextField from './components/ButtonToTextField';
+import columnService from '../services/columns';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,22 +28,14 @@ const ProjectBoard = () => {
   const [newColumnRequested, setNewColumnRequested] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
 
-  const [columns, setColumns] = useState([
-    {
-      title: 'Column one',
-      cards: [
-        { title: 'card one' },
-        { title: 'card two' },
-      ],
-    },
-    {
-      title: 'Column two',
-      cards: [
-        { title: 'new one' },
-        { title: 'new two' },
-      ],
-    },
-  ]);
+  const [columns, setColumns] = useState([]);
+
+  // load notes from server on startup
+  useEffect(() => {
+    columnService
+      .getAll()
+      .then((initialColumns) => setColumns(initialColumns));
+  }, []);
 
   const handleNewColumnSubmit = () => {
     if (newColumnTitle !== '') {
