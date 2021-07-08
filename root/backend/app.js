@@ -8,6 +8,7 @@ const app = express();
 // parse requests containing JSON payloads
 app.use(express.json());
 
+// only allow requests from the local frontend
 const corsOptions = {
   origin: 'http://localhost:3000',
 };
