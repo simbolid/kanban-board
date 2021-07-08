@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     paddingTop: '1px',
     paddingLeft: '2px',
+    textAlign: 'left',
   },
 }));
 
