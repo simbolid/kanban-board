@@ -37,8 +37,10 @@ const ProjectBoard = () => {
       .then((initialColumns) => setColumns(initialColumns));
   }, []);
 
-  const handleNewColumnSubmit = async () => {
-    // prevent default?
+  const handleNewColumnSubmit = async (event) => {
+    // prevent form submission from reloading page
+    event.preventDefault();
+
     if (newColumnTitle !== '') {
       const newColumn = {
         title: newColumnTitle,

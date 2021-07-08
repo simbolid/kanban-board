@@ -46,7 +46,7 @@ const Column = (props) => {
   return (
     <Grid item className={classes.gridItem} xs={12} md={4} lg={3}>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>
+        <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
         {props.cards.map((card, index) => (

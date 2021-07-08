@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: '200px',
+    marginTop: '10px',
+  },
   addButton: {
     textTransform: 'none',
     // fontFamily: 'Roboto',
     padding: theme.spacing(1),
   },
-  box: {
+  secondRow: {
     display: 'flex',
     marginTop: '5px',
     maxHeight: '30px',
@@ -25,7 +28,7 @@ const ButtonToTextField = (props) => {
 
   if (props.buttonPressed) {
     return (
-      <>
+      <div className={classes.root}>
         <form onSubmit={props.onTextFieldSubmit}>
           <TextField
             variant="outlined"
@@ -36,7 +39,7 @@ const ButtonToTextField = (props) => {
             autoFocus
           />
         </form>
-        <Box className={classes.box}>
+        <div className={classes.secondRow}>
           <Button
             variant="contained"
             size="small"
@@ -49,18 +52,20 @@ const ButtonToTextField = (props) => {
           <IconButton aria-label="delete" onClick={props.onCancel}>
             <CloseIcon />
           </IconButton>
-        </Box>
-      </>
+        </div>
+      </div>
     );
   }
   return (
-    <Button
-      color="primary"
-      className={classes.addButton}
-      onClick={props.onButtonClick}
-    >
-      {props.title}
-    </Button>
+    <div className={classes.root}>
+      <Button
+        color="primary"
+        className={classes.addButton}
+        onClick={props.onButtonClick}
+      >
+        {props.title}
+      </Button>
+    </div>
   );
 };
 
