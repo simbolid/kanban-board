@@ -1,9 +1,24 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
+const config = require('./utils/config');
 const router = require('./controllers/columns');
 
 const app = express();
+
+// connect to MongoDB cluster
+console.log('connecting to MongoDB');
+console.log(config.DB_URI);
+mongoose.connect(config.DB_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+  .then(() => console.log('connected to MongoDB'))
+  .catch((error) => console.log('error connecting to MongoDB:', error.message));
 
 // parse requests containing JSON payloads
 app.use(express.json());

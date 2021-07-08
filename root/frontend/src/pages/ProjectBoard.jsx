@@ -30,18 +30,25 @@ const ProjectBoard = () => {
 
   const [columns, setColumns] = useState([]);
 
-  // load notes from server on startup
+  // load columns from server on startup
   useEffect(() => {
     columnService
       .getAll()
       .then((initialColumns) => setColumns(initialColumns));
   }, []);
 
-  const handleNewColumnSubmit = () => {
+  const handleNewColumnSubmit = async () => {
+    // prevent default?
     if (newColumnTitle !== '') {
+      const newColumn = {
+        title: newColumnTitle,
+        cards: [],
+      };
+
+      const savedColumn = await columnService.create(newColumn);
       setNewColumnRequested(false);
       setNewColumnTitle('');
-      setColumns(columns.concat({ title: newColumnTitle, cards: [] }));
+      setColumns(columns.concat(savedColumn));
     }
   };
 

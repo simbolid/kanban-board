@@ -7,4 +7,9 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
-export default { getAll };
+const create = (newColumn) => {
+  const request = axios.post(url, newColumn);
+  return request.then((response) => response.data);
+};
+
+export default { getAll, create };
