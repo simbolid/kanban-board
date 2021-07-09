@@ -31,10 +31,10 @@ const ProjectBoard = () => {
   const [columns, setColumns] = useState([]);
 
   // load columns from server on startup
-  useEffect(() => {
-    columnService
-      .getAll()
-      .then((initialColumns) => setColumns(initialColumns));
+  useEffect(async () => {
+    const initialColumns = await columnService.getAll();
+    // console.log(initialColumns);
+    setColumns(initialColumns);
   }, []);
 
   const handleNewColumnSubmit = async (event) => {
@@ -80,8 +80,7 @@ const ProjectBoard = () => {
           <Grid container spacing={2} wrap="nowrap">
             {columns.map((column, index) => (
               <Column
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
+                key={column.id}
                 index={index}
                 title={column.title}
                 cards={column.cards}
