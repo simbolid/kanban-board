@@ -49,9 +49,8 @@ const Column = (props) => {
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
-        {props.cards.map((card, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Card key={index} title={card.title} />
+        {props.cards.map((card) => (
+          <Card key={card.id} title={card.title} />
         ))}
         <ButtonToTextField
           buttonPressed={newCardRequested}

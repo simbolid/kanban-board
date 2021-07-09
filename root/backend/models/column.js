@@ -19,6 +19,10 @@ const columnSchema = new mongoose.Schema({
 columnSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
+    returnedObject.cards.forEach((card) => {
+      card.id = card._id.toString();
+      delete card._id;
+    });
     delete returnedObject._id;
     delete returnedObject.__v;
   },
