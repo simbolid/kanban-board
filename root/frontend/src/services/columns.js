@@ -12,4 +12,13 @@ const create = (newColumn) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, create };
+const update = (id, column) => {
+  const request = axios.put(`${url}/${id}`, column);
+  return request.then((response) => response.data);
+};
+
+export default {
+  getAll,
+  create,
+  update,
+};

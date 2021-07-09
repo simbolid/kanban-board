@@ -59,15 +59,17 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
-  const addCardToColumn = (id, card) => {
+  const addCardToColumn = async (id, card) => {
     // retrieve and update the column to be modified
     const columnToUpdate = columns.filter((col) => col.id === id)[0];
-
     columnToUpdate.cards = columnToUpdate.cards.concat(card);
+
+    // save the column to the backend
+    const updatedColumn = await columnService.update(id, columnToUpdate);
 
     // insert the updated column into the columns array
     setColumns(columns.map((column) => {
-      const col = column.id !== id ? column : columnToUpdate;
+      const col = column.id !== updatedColumn.id ? column : updatedColumn;
       return col;
     }));
   };

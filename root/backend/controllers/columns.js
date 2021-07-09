@@ -1,9 +1,7 @@
 const router = require('express').Router();
 const Column = require('../models/column');
-// const data = require('../example-data');
 
 router.get('/', async (request, response) => {
-  // response.json(data);
   const columns = await Column.find({});
   response.json(columns);
 });
@@ -16,6 +14,18 @@ router.post('/', async (request, response) => {
 
   const savedColumn = await column.save();
   response.json(savedColumn);
+});
+
+router.put('/:id', async (request, response) => {
+  const column = {
+    title: request.body.title,
+    cards: request.body.cards,
+  };
+
+  const updatedColumn = await Column
+    .findByIdAndUpdate(request.params.id, column, { new: true });
+
+  response.json(updatedColumn);
 });
 
 module.exports = router;
