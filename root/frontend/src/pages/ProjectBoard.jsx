@@ -59,13 +59,17 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
-  const addCardToColumn = (index, card) => {
+  const addCardToColumn = (id, card) => {
     // retrieve and update the column to be modified
-    const column = columns.slice(index, index + 1)[0];
-    column.cards = column.cards.concat(card);
+    const columnToUpdate = columns.filter((col) => col.id === id)[0];
+
+    columnToUpdate.cards = columnToUpdate.cards.concat(card);
 
     // insert the updated column into the columns array
-    setColumns(columns.slice(0, index).concat(column).concat(columns.slice(index + 1)));
+    setColumns(columns.map((column) => {
+      const col = column.id !== id ? column : columnToUpdate;
+      return col;
+    }));
   };
 
   return (
@@ -78,10 +82,10 @@ const ProjectBoard = () => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth={false} className={classes.container}>
           <Grid container spacing={2} wrap="nowrap">
-            {columns.map((column, index) => (
+            {columns.map((column) => (
               <Column
                 key={column.id}
-                index={index}
+                id={column.id}
                 title={column.title}
                 cards={column.cards}
                 addCard={addCardToColumn}
