@@ -9,7 +9,6 @@ const app = express();
 
 // connect to MongoDB cluster
 console.log('connecting to MongoDB');
-console.log(config.DB_URI);
 mongoose.connect(config.DB_URI,
   {
     useNewUrlParser: true,
