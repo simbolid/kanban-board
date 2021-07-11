@@ -52,7 +52,7 @@ const Column = (props) => {
           {props.title}
         </Typography>
         {props.cards
-          .filter((card) => card.title.toLowerCase().includes(props.filter))
+          .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
           .map((card) => (
             <IssueCard key={card.id} title={card.title} />
           ))}
