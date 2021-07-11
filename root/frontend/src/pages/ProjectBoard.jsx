@@ -10,6 +10,7 @@ import columnService from '../services/columns';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundColor: theme.palette.grey[200],
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {

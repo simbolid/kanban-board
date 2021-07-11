@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonToTextField from './ButtonToTextField';
-import Card from './Card';
+import IssueCard from './IssueCard';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     paddingInline: theme.spacing(2), // left and right
     paddingBlock: theme.spacing(1), // top and bottom
+    backgroundColor: theme.palette.grey[50],
+    borderRadius: 0,
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -45,14 +47,14 @@ const Column = (props) => {
 
   return (
     <Grid item className={classes.gridItem} xs={12} md={4} lg={3}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={0}>
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
         {props.cards
           .filter((card) => card.title.toLowerCase().includes(props.filter))
           .map((card) => (
-            <Card key={card.id} title={card.title} />
+            <IssueCard key={card.id} title={card.title} />
           ))}
         <ButtonToTextField
           buttonPressed={newCardRequested}
