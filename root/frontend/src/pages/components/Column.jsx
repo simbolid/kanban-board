@@ -49,9 +49,11 @@ const Column = (props) => {
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
-        {props.cards.map((card) => (
-          <Card key={card.id} title={card.title} />
-        ))}
+        {props.cards
+          .filter((card) => card.title.toLowerCase().includes(props.filter))
+          .map((card) => (
+            <Card key={card.id} title={card.title} />
+          ))}
         <ButtonToTextField
           buttonPressed={newCardRequested}
           onButtonClick={() => setNewCardRequested(true)}
@@ -69,6 +71,7 @@ const Column = (props) => {
 
 Column.propTypes = {
   title: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired,
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

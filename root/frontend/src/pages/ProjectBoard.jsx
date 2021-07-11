@@ -30,6 +30,8 @@ const ProjectBoard = () => {
 
   const [columns, setColumns] = useState([]);
 
+  const [filter, setFilter] = useState('');
+
   // load columns from server on startup
   useEffect(async () => {
     const initialColumns = await columnService.getAll();
@@ -78,7 +80,10 @@ const ProjectBoard = () => {
     <div className={classes.root}>
 
       {/* Includes the top bar and the side menu */}
-      <NavigationInterface />
+      <NavigationInterface
+        filter={filter}
+        handleFilterChange={(event) => setFilter(event.target.value)}
+      />
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -89,6 +94,7 @@ const ProjectBoard = () => {
                 key={column.id}
                 id={column.id}
                 title={column.title}
+                filter={filter}
                 cards={column.cards}
                 addCard={addCardToColumn}
               />
@@ -100,7 +106,7 @@ const ProjectBoard = () => {
                 buttonPressed={newColumnRequested}
                 onButtonClick={() => setNewColumnRequested(true)}
                 onCancel={handleNewColumnCancel}
-                onTextFieldChange={(e) => setNewColumnTitle(e.target.value)}
+                onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
                 onTextFieldSubmit={handleNewColumnSubmit}
                 textFieldLabel="Column title"
                 textFieldValue={newColumnTitle}

@@ -14,6 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { mainListItems, secondaryListItems } from './navigationItems';
 
 const drawerWidth = 240;
@@ -112,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationInterface = () => {
+const NavigationInterface = ({ filter, handleFilterChange }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -147,6 +148,8 @@ const NavigationInterface = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={filter}
+              onChange={handleFilterChange}
             />
           </div>
 
@@ -177,6 +180,11 @@ const NavigationInterface = () => {
       </Drawer>
     </>
   );
+};
+
+NavigationInterface.propTypes = {
+  filter: PropTypes.string.isRequired,
+  handleFilterChange: PropTypes.func.isRequired,
 };
 
 export default NavigationInterface;
