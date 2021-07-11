@@ -37,6 +37,7 @@ const ButtonToTextField = (props) => {
             value={props.textFieldValue}
             onChange={props.onTextFieldChange}
             autoFocus
+            multiline
           />
         </form>
         <div className={classes.secondRow}>
