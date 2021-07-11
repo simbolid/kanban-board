@@ -5,13 +5,15 @@ import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import { mainListItems, secondaryListItems } from './navigationItems';
 
 const drawerWidth = 240;
@@ -48,9 +50,6 @@ const useStyles = makeStyles((theme) => ({
   menuButtonHidden: {
     display: 'none',
   },
-  title: {
-    flexGrow: 1, // components are children of a flexbox
-  },
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -70,6 +69,46 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9),
     },
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notification: {
+    marginLeft: 'auto',
   },
 }));
 
@@ -93,10 +132,25 @@ const NavigationInterface = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography component="h1" variant="h6" color="inherit" noWrap>
             My Board
           </Typography>
-          <IconButton color="inherit">
+
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Filter cards"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+
+          <IconButton color="inherit" className={classes.notification}>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
