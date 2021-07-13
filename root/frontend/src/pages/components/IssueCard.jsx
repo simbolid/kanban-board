@@ -5,6 +5,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+// import Paper from '@material-ui/core/Paper';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -16,6 +17,11 @@ import {
 const useStyles = makeStyles(() => ({
   card: {
     marginTop: '10px',
+  },
+  overlayPaper: {
+    padding: '10px',
+    // minHeight: '80vh',
+    // minWidth: '500px',
   },
 }));
 
@@ -39,18 +45,18 @@ const IssueCard = (props) => {
       </Card>
       <Popover
         {...bindPopover(popupState)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
+        anchorReference="anchorPosition"
+        anchorPosition={{ top: 75, left: 1200 }}
         transformOrigin={{
           vertical: 'top',
           horizontal: 'center',
         }}
       >
-        <Typography>
-          {props.title}
-        </Typography>
+        <div className={classes.overlayPaper}>
+          <Typography>
+            {props.title}
+          </Typography>
+        </div>
       </Popover>
     </>
   );
