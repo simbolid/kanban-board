@@ -50,7 +50,7 @@ const IssueCard = (props) => {
         {...bindPopover(popupState)}
         anchorReference="anchorPosition"
         anchorPosition={{ top: 75, left: 1200 }}
-        marginThreshold="0"
+        marginThreshold={0}
       >
         <div className={classes.overlay}>
           <Typography className={classes.overlayTitle}>
