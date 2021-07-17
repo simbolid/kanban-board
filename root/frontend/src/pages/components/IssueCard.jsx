@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -16,9 +15,13 @@ import {
 const useStyles = makeStyles(() => ({
   card: {
     marginTop: '10px',
-  },
-  drag: {
     backgroundColor: 'white',
+    borderRadius: '2px',
+    boxShadow: ' 0 1.25px 1px 0 rgba(0, 0, 0, 0.15)',
+    '&:hover': {
+      // otherwise, cursor defaults to grab
+      cursor: 'pointer',
+    },
   },
   overlay: {
     padding: '14px',
@@ -42,24 +45,18 @@ const IssueCard = (props) => {
     <>
       <Draggable draggableId={props.cardId} index={props.index}>
         {(provided) => (
-          <Card
+          <ListItem
             className={classes.card}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
+            {...bindTrigger(popupState)}
+            button
           >
-            <CardActionArea
-              {...bindTrigger(popupState)}
-            >
-              {/* TODO: use List and ListItems to allow for drag --
-                  see https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/ListItemCustom.js */}
-              <CardContent>
-                <Typography>
-                  {props.title}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+            <ListItemText>
+              {props.title}
+            </ListItemText>
+          </ListItem>
         )}
       </Draggable>
       <Popover
@@ -80,6 +77,8 @@ const IssueCard = (props) => {
 
 IssueCard.propTypes = {
   title: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default IssueCard;

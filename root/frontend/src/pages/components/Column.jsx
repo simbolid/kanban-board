@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Droppable } from 'react-beautiful-dnd';
@@ -55,11 +56,13 @@ const Column = (props) => {
         <Droppable droppableId={props.id}>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {props.cards
-                .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
-                .map((card, index) => (
-                  <IssueCard key={card.id} cardId={card.id} index={index} title={card.title} />
-                ))}
+              <List>
+                {props.cards
+                  .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
+                  .map((card, index) => (
+                    <IssueCard key={card.id} cardId={card.id} index={index} title={card.title} />
+                  ))}
+              </List>
               {provided.placeholder}
             </div>
           )}
