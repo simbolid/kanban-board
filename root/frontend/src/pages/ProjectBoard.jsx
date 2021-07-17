@@ -85,7 +85,7 @@ const ProjectBoard = () => {
   return (
     <div className={classes.root}>
 
-      {/* Includes the top bar and the side menu */}
+      {/* the top bar and side menu */}
       <NavigationInterface
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
