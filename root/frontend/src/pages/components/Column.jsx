@@ -4,6 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
 import IssueCard from './IssueCard';
 
@@ -51,11 +52,18 @@ const Column = (props) => {
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
-        {props.cards
-          .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
-          .map((card) => (
-            <IssueCard key={card.id} title={card.title} />
-          ))}
+        <Droppable droppableId={props.id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {props.cards
+                .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
+                .map((card, index) => (
+                  <IssueCard key={card.id} cardId={card.id} index={index} title={card.title} />
+                ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
         <ButtonToTextField
           buttonPressed={newCardRequested}
           onButtonClick={() => setNewCardRequested(true)}
@@ -77,6 +85,7 @@ Column.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
+      // TODO: add id
     }),
   ).isRequired,
   addCard: PropTypes.func.isRequired,

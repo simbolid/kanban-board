@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { DragDropContext } from 'react-beautiful-dnd';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 import ButtonToTextField from './components/ButtonToTextField';
@@ -77,6 +78,10 @@ const ProjectBoard = () => {
     }));
   };
 
+  const onDragEnd = () => {
+    // TODO: save changes to column and card order
+  };
+
   return (
     <div className={classes.root}>
 
@@ -86,37 +91,39 @@ const ProjectBoard = () => {
         handleFilterChange={(event) => setFilter(event.target.value)}
       />
 
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth={false} className={classes.container}>
-          <Grid container spacing={2} wrap="nowrap">
-            {columns.map((column) => (
-              <Column
-                key={column.id}
-                id={column.id}
-                title={column.title}
-                filter={filter}
-                cards={column.cards}
-                addCard={addCardToColumn}
-              />
-            ))}
-            <Grid item xs={12} md={4} lg={3}>
-              {/* Initially a button for adding a column to the board. If the button is
-                  pressed, turns into a text field that requests a name for the column */}
-              <ButtonToTextField
-                buttonPressed={newColumnRequested}
-                onButtonClick={() => setNewColumnRequested(true)}
-                onCancel={handleNewColumnCancel}
-                onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
-                onTextFieldSubmit={handleNewColumnSubmit}
-                textFieldLabel="Column title"
-                textFieldValue={newColumnTitle}
-                title="Add Column"
-              />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth={false} className={classes.container}>
+            <Grid container spacing={2} wrap="nowrap">
+              {columns.map((column) => (
+                <Column
+                  key={column.id}
+                  id={column.id}
+                  title={column.title}
+                  filter={filter}
+                  cards={column.cards}
+                  addCard={addCardToColumn}
+                />
+              ))}
+              <Grid item xs={12} md={4} lg={3}>
+                {/* Initially a button for adding a column to the board. If the button is
+                    pressed, turns into a text field that requests a name for the column */}
+                <ButtonToTextField
+                  buttonPressed={newColumnRequested}
+                  onButtonClick={() => setNewColumnRequested(true)}
+                  onCancel={handleNewColumnCancel}
+                  onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
+                  onTextFieldSubmit={handleNewColumnSubmit}
+                  textFieldLabel="Column title"
+                  textFieldValue={newColumnTitle}
+                  title="Add Column"
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      </main>
+          </Container>
+        </main>
+      </DragDropContext>
     </div>
   );
 };

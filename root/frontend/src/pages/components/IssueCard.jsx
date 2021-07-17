@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
@@ -7,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Draggable } from 'react-beautiful-dnd';
 import {
   usePopupState,
   bindTrigger,
@@ -16,6 +16,9 @@ import {
 const useStyles = makeStyles(() => ({
   card: {
     marginTop: '10px',
+  },
+  drag: {
+    backgroundColor: 'white',
   },
   overlay: {
     padding: '14px',
@@ -37,15 +40,28 @@ const IssueCard = (props) => {
 
   return (
     <>
-      <Card className={classes.card} {...bindTrigger(popupState)}>
-        <CardActionArea>
-          <CardContent>
-            <Typography>
-              {props.title}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+      <Draggable draggableId={props.cardId} index={props.index}>
+        {(provided) => (
+          <Card
+            className={classes.card}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <CardActionArea
+              {...bindTrigger(popupState)}
+            >
+              {/* TODO: use List and ListItems to allow for drag --
+                  see https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/ListItemCustom.js */}
+              <CardContent>
+                <Typography>
+                  {props.title}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        )}
+      </Draggable>
       <Popover
         {...bindPopover(popupState)}
         anchorReference="anchorPosition"
