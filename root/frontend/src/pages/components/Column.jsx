@@ -15,8 +15,7 @@ const useStyles = makeStyles((theme) => ({
     width: '330px',
   },
   paper: {
-    paddingInline: theme.spacing(2), // left and right
-    paddingBlock: theme.spacing(1), // top and bottom
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.grey[50],
     borderRadius: 0,
     display: 'flex',
@@ -25,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight: 'bold',
+    paddingLeft: theme.spacing(2),
   },
 }));
 

@@ -14,7 +14,7 @@ import {
 
 const useStyles = makeStyles(() => ({
   card: {
-    marginTop: '10px',
+    marginBottom: '10px',
     backgroundColor: 'white',
     borderRadius: '2px',
     boxShadow: ' 0 1.25px 1px 0 rgba(0, 0, 0, 0.15)',
