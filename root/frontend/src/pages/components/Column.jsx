@@ -53,30 +53,30 @@ const Column = (props) => {
         <Typography className={classes.title} gutterBottom>
           {props.title}
         </Typography>
-        <Droppable droppableId={props.id}>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <List>
+        <List>
+          <Droppable droppableId={props.id}>
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
                 {props.cards
                   .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
                   .map((card, index) => (
                     <IssueCard key={card.id} cardId={card.id} index={index} title={card.title} />
                   ))}
-              </List>
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-        <ButtonToTextField
-          buttonPressed={newCardRequested}
-          onButtonClick={() => setNewCardRequested(true)}
-          onCancel={handleNewCardCancel}
-          onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
-          onTextFieldSubmit={handleNewCardSubmit}
-          textFieldLabel="Card title"
-          textFieldValue={newCardTitle}
-          title="Add Card"
-        />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+          <ButtonToTextField
+            buttonPressed={newCardRequested}
+            onButtonClick={() => setNewCardRequested(true)}
+            onCancel={handleNewCardCancel}
+            onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
+            onTextFieldSubmit={handleNewCardSubmit}
+            textFieldLabel="Card title"
+            textFieldValue={newCardTitle}
+            title="Add Card"
+          />
+        </List>
       </Paper>
     </Grid>
   );
