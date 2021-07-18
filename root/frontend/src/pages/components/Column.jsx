@@ -12,6 +12,7 @@ import IssueCard from './IssueCard';
 const useStyles = makeStyles((theme) => ({
   gridItem: {
     minWidth: '270px',
+    width: '330px',
   },
   paper: {
     paddingInline: theme.spacing(2), // left and right
