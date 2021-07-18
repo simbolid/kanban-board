@@ -66,6 +66,8 @@ const ProjectBoard = () => {
   const addCardToColumn = async (id, card) => {
     // retrieve and update the column to be modified
     const columnToUpdate = columns.filter((col) => col.id === id)[0];
+
+    // TODO: make this operation immutable
     columnToUpdate.cards = columnToUpdate.cards.concat(card);
 
     // save the column to the backend
@@ -78,8 +80,61 @@ const ProjectBoard = () => {
     }));
   };
 
-  const onDragEnd = () => {
-    // TODO: save changes to column and card order
+  const moveCard = ({ destination, source }) => {
+    // make sure that the destination is valid
+    if (!destination) return;
+
+    // make sure that user dragged card to new location
+    if (
+      destination.droppableId === source.droppableId
+      && destination.index === source.index
+    ) {
+      return;
+    }
+
+    const startColumn = columns.find((col) => col.id === source.droppableId);
+    const endColumn = columns.find((col) => col.id === destination.droppableId);
+
+    // move a card within a column
+    if (startColumn === endColumn) {
+      // preserve immutability by creating a new copy of the card array
+      const newCards = Array.from(startColumn.cards);
+
+      // remove the card from the source column
+      const draggedCard = newCards.splice(source.index, 1)[0];
+
+      // insert the task at the destination index
+      newCards.splice(destination.index, 0, draggedCard);
+
+      const updatedColumn = {
+        ...startColumn,
+        cards: newCards,
+      };
+
+      setColumns(columns.map((col) => (col.id !== updatedColumn.id ? col : updatedColumn)));
+      return;
+    }
+
+    // move a card between columns
+    const startColumnCards = Array.from(startColumn.cards);
+    const draggedCard = startColumnCards.splice(source.index, 1)[0];
+    const newStartColumn = {
+      ...startColumn,
+      cards: startColumnCards,
+    };
+
+    const endColumnCards = Array.from(endColumn.cards);
+    endColumnCards.splice(destination.index, 0, draggedCard);
+    const newEndColumn = {
+      ...endColumn,
+      cards: endColumnCards,
+    };
+
+    setColumns(columns.map((col) => {
+      if (col.id === newStartColumn.id) return newStartColumn;
+      if (col.id === newEndColumn.id) return newEndColumn;
+      return col;
+    }));
   };
 
   return (
@@ -91,7 +146,7 @@ const ProjectBoard = () => {
         handleFilterChange={(event) => setFilter(event.target.value)}
       />
 
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={moveCard}>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth={false} className={classes.container}>
