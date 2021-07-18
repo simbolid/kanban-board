@@ -65,17 +65,19 @@ const ProjectBoard = () => {
 
   const addCardToColumn = async (id, card) => {
     // retrieve and update the column to be modified
-    const columnToUpdate = columns.filter((col) => col.id === id)[0];
+    const columnToUpdate = columns.find((col) => col.id === id);
 
-    // TODO: make this operation immutable
-    columnToUpdate.cards = columnToUpdate.cards.concat(card);
+    const changedColumn = {
+      ...columnToUpdate,
+      cards: columnToUpdate.cards.concat(card),
+    };
 
     // save the column to the backend
-    const updatedColumn = await columnService.update(id, columnToUpdate);
+    const savedColumn = await columnService.update(id, changedColumn);
 
     // insert the updated column into the columns array
     setColumns(columns.map((column) => {
-      const col = column.id !== updatedColumn.id ? column : updatedColumn;
+      const col = column.id !== savedColumn.id ? column : savedColumn;
       return col;
     }));
   };
