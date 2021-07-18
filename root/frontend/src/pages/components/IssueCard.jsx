@@ -39,6 +39,7 @@ const IssueCard = (props) => {
 
   const popupState = usePopupState({
     variant: 'popover',
+    popupId: props.cardId,
   });
 
   return (
@@ -51,6 +52,7 @@ const IssueCard = (props) => {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             {...bindTrigger(popupState)}
+            selected={popupState.isOpen}
             button
           >
             <ListItemText>
