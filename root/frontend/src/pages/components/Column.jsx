@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[50],
     borderRadius: 0,
     display: 'flex',
-    overflow: 'auto',
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
