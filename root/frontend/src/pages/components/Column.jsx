@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Droppable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
 import IssueCard from './IssueCard';
 
@@ -48,37 +48,57 @@ const Column = (props) => {
   };
 
   return (
-    <Grid item className={classes.gridItem} xs={12} md={4} lg={3}>
-      <Paper className={classes.paper} elevation={0}>
-        <Typography className={classes.title} gutterBottom>
-          {props.title}
-        </Typography>
-        <List>
-          <Droppable droppableId={props.id}>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                {props.cards
-                  .filter((card) => card.title.toLowerCase().includes(props.filter.toLowerCase()))
-                  .map((card, index) => (
-                    <IssueCard key={card.id} cardId={card.id} index={index} title={card.title} />
-                  ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-          <ButtonToTextField
-            buttonPressed={newCardRequested}
-            onButtonClick={() => setNewCardRequested(true)}
-            onCancel={handleNewCardCancel}
-            onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
-            onTextFieldSubmit={handleNewCardSubmit}
-            textFieldLabel="Card title"
-            textFieldValue={newCardTitle}
-            title="Add Card"
-          />
-        </List>
-      </Paper>
-    </Grid>
+    <Draggable draggableId={props.id} index={props.index}>
+      {(provided) => (
+        <Grid
+          item
+          className={classes.gridItem}
+          xs={12}
+          md={4}
+          lg={3}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <Paper className={classes.paper} elevation={0}>
+            <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
+              {props.title}
+            </Typography>
+            <List>
+              <Droppable droppableId={props.id} type="card">
+                {/* eslint-disable-next-line no-shadow */}
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                    {props.cards
+                      .filter((card) => (
+                        card.title.toLowerCase().includes(props.filter.toLowerCase())
+                      ))
+                      .map((card, index) => (
+                        <IssueCard
+                          key={card.id}
+                          cardId={card.id}
+                          index={index}
+                          title={card.title}
+                        />
+                      ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <ButtonToTextField
+                buttonPressed={newCardRequested}
+                onButtonClick={() => setNewCardRequested(true)}
+                onCancel={handleNewCardCancel}
+                onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
+                onTextFieldSubmit={handleNewCardSubmit}
+                textFieldLabel="Card title"
+                textFieldValue={newCardTitle}
+                title="Add Card"
+              />
+            </List>
+          </Paper>
+        </Grid>
+      )}
+    </Draggable>
   );
 };
 
@@ -93,6 +113,7 @@ Column.propTypes = {
   ).isRequired,
   addCard: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Column;
