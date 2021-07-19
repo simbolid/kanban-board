@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
 const ButtonToTextField = (props) => {
   const classes = useStyles();
 
+  const detectEnterKey = (event) => {
+    if (event.keyCode === 13) {
+      props.onTextFieldSubmit(event);
+    }
+  };
+
   if (props.buttonPressed) {
     return (
       <div className={classes.root}>
@@ -35,6 +41,7 @@ const ButtonToTextField = (props) => {
             size="small"
             label={props.textFieldLabel}
             value={props.textFieldValue}
+            onKeyDown={detectEnterKey}
             onChange={props.onTextFieldChange}
             autoFocus
             multiline
