@@ -82,7 +82,7 @@ const ProjectBoard = () => {
     }));
   };
 
-  const moveCard = ({ destination, source }) => {
+  const moveCard = async ({ destination, source }) => {
     // make sure that the destination is valid
     if (!destination) return;
 
@@ -108,12 +108,16 @@ const ProjectBoard = () => {
       // insert the task at the destination index
       newCards.splice(destination.index, 0, draggedCard);
 
-      const updatedColumn = {
+      const changedColumn = {
         ...startColumn,
         cards: newCards,
       };
 
-      setColumns(columns.map((col) => (col.id !== updatedColumn.id ? col : updatedColumn)));
+      // update the frontend first to prevent lag
+      setColumns(columns.map((col) => (col.id !== changedColumn.id ? col : changedColumn)));
+
+      // then save changes to backend
+      await columnService.update(startColumn.id, changedColumn);
       return;
     }
 
@@ -137,6 +141,9 @@ const ProjectBoard = () => {
       if (col.id === newEndColumn.id) return newEndColumn;
       return col;
     }));
+
+    await columnService.update(startColumn.id, newStartColumn);
+    await columnService.update(endColumn.id, newEndColumn);
   };
 
   return (
