@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+// import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from './components/Navigation';
@@ -19,8 +19,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    display: 'flex',
+    alignItems: 'flex-start',
   },
 }));
 
@@ -165,41 +167,38 @@ const ProjectBoard = () => {
           <div className={classes.appBarSpacer} />
           <Droppable droppableId="all-columns" type="column" direction="horizontal">
             {(provided) => (
-              <Container
+              <div
                 className={classes.container}
-                maxWidth={false}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                <Grid container spacing={2} wrap="nowrap">
-                  {columns.map((column, index) => (
-                    <Column
-                      key={column.id}
-                      id={column.id}
-                      index={index}
-                      title={column.title}
-                      filter={filter}
-                      cards={column.cards}
-                      addCard={addCardToColumn}
-                    />
-                  ))}
-                  {provided.placeholder}
-                  <Grid item xs={12} md={4} lg={3}>
-                    {/* Initially a button for adding a column to the board. If the button is
-                        pressed, turns into a text field that requests a name for the column */}
-                    <ButtonToTextField
-                      buttonPressed={newColumnRequested}
-                      onButtonClick={() => setNewColumnRequested(true)}
-                      onCancel={handleNewColumnCancel}
-                      onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
-                      onTextFieldSubmit={handleNewColumnSubmit}
-                      textFieldLabel="Column title"
-                      textFieldValue={newColumnTitle}
-                      title="Add Column"
-                    />
-                  </Grid>
-                </Grid>
-              </Container>
+                {columns.map((column, index) => (
+                  <Column
+                    key={column.id}
+                    id={column.id}
+                    index={index}
+                    title={column.title}
+                    filter={filter}
+                    cards={column.cards}
+                    addCard={addCardToColumn}
+                  />
+                ))}
+                {provided.placeholder}
+                {/* Initially a button for adding a column to the board. If the button is
+                    pressed, turns into a text field that requests a name for the column */}
+                <Box marginLeft={1.5}>
+                  <ButtonToTextField
+                    buttonPressed={newColumnRequested}
+                    onButtonClick={() => setNewColumnRequested(true)}
+                    onCancel={handleNewColumnCancel}
+                    onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
+                    onTextFieldSubmit={handleNewColumnSubmit}
+                    textFieldLabel="Column title"
+                    textFieldValue={newColumnTitle}
+                    title="Add Column"
+                  />
+                </Box>
+              </div>
             )}
           </Droppable>
         </main>
