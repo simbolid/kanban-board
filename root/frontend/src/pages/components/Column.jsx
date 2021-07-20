@@ -26,6 +26,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* React.memo prevents dragging a card over a column from
+ * re-rendering the tasks in that column. */
+const CardList = React.memo(({ cards, filter }) => (
+  cards
+    .filter((card) => (
+      card.title.toLowerCase().includes(filter.toLowerCase())
+    ))
+    .map((card, index) => (
+      <IssueCard
+        key={card.id}
+        cardId={card.id}
+        index={index}
+        title={card.title}
+      />
+    ))
+));
+
 const Column = (props) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
@@ -62,18 +79,7 @@ const Column = (props) => {
               {/* eslint-disable-next-line no-shadow */}
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  {props.cards
-                    .filter((card) => (
-                      card.title.toLowerCase().includes(props.filter.toLowerCase())
-                    ))
-                    .map((card, index) => (
-                      <IssueCard
-                        key={card.id}
-                        cardId={card.id}
-                        index={index}
-                        title={card.title}
-                      />
-                    ))}
+                  <CardList cards={props.cards} filter={props.filter} />
                   {provided.placeholder}
                 </div>
               )}
@@ -93,6 +99,16 @@ const Column = (props) => {
       )}
     </Draggable>
   );
+};
+
+CardList.propTypes = {
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      // TODO: add id
+    }),
+  ).isRequired,
+  filter: PropTypes.string.isRequired,
 };
 
 Column.propTypes = {
