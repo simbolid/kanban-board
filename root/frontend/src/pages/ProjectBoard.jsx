@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -26,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* Note regarding immutability:
+ * Because columns is an array of objects, I had to be careful not to unknowingly
+ * mutate the array due to the pass-by-reference behavior of objects.
+ * I ensured that updates to columns are immutable by logging their state before and
+ * after copying and modifying a given column (but before the call to setColumns).
+ * State remained unchanged in all cases.
+ */
 const ProjectBoard = () => {
   const classes = useStyles();
   const [newColumnRequested, setNewColumnRequested] = useState(false);
@@ -93,6 +99,7 @@ const ProjectBoard = () => {
       return;
     }
 
+    // Move a column
     if (type === 'column') {
       const newColumns = Array.from(columns);
       const draggedColumn = newColumns.splice(source.index, 1)[0];
@@ -104,7 +111,7 @@ const ProjectBoard = () => {
     const startColumn = columns.find((col) => col.id === source.droppableId);
     const endColumn = columns.find((col) => col.id === destination.droppableId);
 
-    // move a card within a column
+    // Move a card within a column
     if (startColumn === endColumn) {
       // preserve immutability by creating a new copy of the card array
       const newCards = Array.from(startColumn.cards);
@@ -128,7 +135,7 @@ const ProjectBoard = () => {
       return;
     }
 
-    // move a card between columns
+    // Move a card between columns
     const startColumnCards = Array.from(startColumn.cards);
     const draggedCard = startColumnCards.splice(source.index, 1)[0];
     const newStartColumn = {
