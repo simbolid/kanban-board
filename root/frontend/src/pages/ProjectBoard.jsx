@@ -5,7 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 import ButtonToTextField from './components/ButtonToTextField';
-import columnService from '../services/columns';
+import requestService from '../services/requests';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +41,10 @@ const ProjectBoard = () => {
 
   // load columns from server on startup
   useEffect(async () => {
-    const initialColumns = await columnService.getAll();
-    // console.log(initialColumns);
-    setColumns(initialColumns);
+    const board = await requestService.getBoard();
+    // console.log(board);
+
+    setColumns(board.columns);
   }, []);
 
   const handleNewColumnSubmit = async (event) => {
@@ -56,7 +57,7 @@ const ProjectBoard = () => {
         cards: [],
       };
 
-      const savedColumn = await columnService.create(newColumn);
+      const savedColumn = await requestService.createColumn(newColumn);
       setNewColumnRequested(false);
       setNewColumnTitle('');
       setColumns(columns.concat(savedColumn));
@@ -78,7 +79,7 @@ const ProjectBoard = () => {
     };
 
     // save the column to the backend
-    const savedColumn = await columnService.update(id, changedColumn);
+    const savedColumn = await requestService.updateColumn(id, changedColumn);
 
     // insert the updated column into the columns array
     setColumns(columns.map((column) => {
@@ -131,7 +132,7 @@ const ProjectBoard = () => {
       setColumns(columns.map((col) => (col.id !== changedColumn.id ? col : changedColumn)));
 
       // then save changes to backend
-      await columnService.update(startColumn.id, changedColumn);
+      await requestService.updateColumn(startColumn.id, changedColumn);
       return;
     }
 
@@ -156,8 +157,8 @@ const ProjectBoard = () => {
       return col;
     }));
 
-    await columnService.update(startColumn.id, newStartColumn);
-    await columnService.update(endColumn.id, newEndColumn);
+    await requestService.updateColumn(startColumn.id, newStartColumn);
+    await requestService.updateColumn(endColumn.id, newEndColumn);
   };
 
   return (
