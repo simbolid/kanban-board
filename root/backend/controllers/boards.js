@@ -18,4 +18,15 @@ boardRouter.post('/', async (request, response) => {
   response.json(savedBoard);
 });
 
+boardRouter.put('/:id', async (request, response) => {
+  console.log(request.body);
+
+  const updatedBoard = await Board
+    .findByIdAndUpdate(request.params.id, {
+      columns: request.body,
+    }, { new: true });
+
+  response.json(updatedBoard);
+});
+
 module.exports = boardRouter;

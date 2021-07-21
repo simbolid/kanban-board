@@ -8,24 +8,24 @@ const getBoard = () => {
   return request.then((response) => response.data[0]);
 };
 
-const getColumns = () => {
-  const request = axios.get(columnUrl);
-  return request.then((response) => response.data);
-};
-
 const createColumn = (newColumn) => {
   const request = axios.post(columnUrl, newColumn);
   return request.then((response) => response.data);
 };
 
-const updateColumn = (id, column) => {
-  const request = axios.put(`${columnUrl}/${id}`, column);
+const updateColumn = (columnID, column) => {
+  const request = axios.put(`${columnUrl}/${columnID}`, column);
+  return request.then((response) => response.data);
+};
+
+const updateColumnOrder = (boardID, columnIDs) => {
+  const request = axios.put(`${boardUrl}/${boardID}`, columnIDs);
   return request.then((response) => response.data);
 };
 
 export default {
-  getColumns,
   getBoard,
   createColumn,
   updateColumn,
+  updateColumnOrder,
 };
