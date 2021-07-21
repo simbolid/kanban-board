@@ -4,7 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config = require('./utils/config');
-const router = require('./controllers/columns');
+const boardRouter = require('./controllers/boards');
+const columnRouter = require('./controllers/columns');
 
 const app = express();
 
@@ -35,6 +36,7 @@ morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
 // route handling
-app.use('/api/columns', router);
+app.use('/api/boards', boardRouter);
+app.use('/api/columns', columnRouter);
 
 module.exports = app;

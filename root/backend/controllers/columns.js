@@ -1,22 +1,29 @@
-const router = require('express').Router();
+const columnRouter = require('express').Router();
+const Board = require('../models/board');
 const Column = require('../models/column');
 
-router.get('/', async (request, response) => {
+columnRouter.get('/', async (request, response) => {
   const columns = await Column.find({});
   response.json(columns);
 });
 
-router.post('/', async (request, response) => {
+columnRouter.post('/', async (request, response) => {
   const column = new Column({
     title: request.body.title,
     cards: request.body.cards,
   });
 
   const savedColumn = await column.save();
+
+  // for now, assign all columns to one board
+  const board = (await Board.find({}))[0];
+  board.columns = board.columns.concat(savedColumn._id);
+  await board.save();
+
   response.json(savedColumn);
 });
 
-router.put('/:id', async (request, response) => {
+columnRouter.put('/:id', async (request, response) => {
   const column = {
     title: request.body.title,
     cards: request.body.cards,
@@ -28,4 +35,4 @@ router.put('/:id', async (request, response) => {
   response.json(updatedColumn);
 });
 
-module.exports = router;
+module.exports = columnRouter;
