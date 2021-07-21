@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -78,10 +79,11 @@ const Column = (props) => {
             <Droppable droppableId={props.id} type="card">
               {/* eslint-disable-next-line no-shadow */}
               {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+                // without min height, cannot drag cards into empty columns
+                <Box minHeight="2px" ref={provided.innerRef} {...provided.droppableProps}>
                   <CardList cards={props.cards} filter={props.filter} />
                   {provided.placeholder}
-                </div>
+                </Box>
               )}
             </Droppable>
             <ButtonToTextField
