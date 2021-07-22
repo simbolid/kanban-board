@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Draggable } from 'react-beautiful-dnd';
-import {
-  usePopupState,
-  bindTrigger,
-  bindPopover,
-} from 'material-ui-popup-state/hooks';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -21,12 +18,8 @@ const useStyles = makeStyles(() => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
+      // backgroundColor: '#eeeeee',
     },
-  },
-  overlay: {
-    padding: '14px',
-    minHeight: '91vh',
-    minWidth: '50vw',
   },
   overlayTitle: {
     // TODO: use semi-bold font weight instead of bold
@@ -36,11 +29,7 @@ const useStyles = makeStyles(() => ({
 
 const IssueCard = (props) => {
   const classes = useStyles();
-
-  const popupState = usePopupState({
-    variant: 'popover',
-    popupId: props.cardId,
-  });
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>
@@ -51,9 +40,9 @@ const IssueCard = (props) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            {...bindTrigger(popupState)}
-            selected={popupState.isOpen}
             button
+            disableRipple
+            onClick={() => setOpenDialog(true)}
           >
             <ListItemText>
               {props.title}
@@ -61,18 +50,19 @@ const IssueCard = (props) => {
           </ListItem>
         )}
       </Draggable>
-      <Popover
-        {...bindPopover(popupState)}
-        anchorReference="anchorPosition"
-        anchorPosition={{ top: 75, left: 1200 }}
-        marginThreshold={0}
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
       >
-        <div className={classes.overlay}>
-          <Typography className={classes.overlayTitle}>
-            {props.title}
+        <DialogTitle>
+          {props.title}
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            Description goes here
           </Typography>
-        </div>
-      </Popover>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
