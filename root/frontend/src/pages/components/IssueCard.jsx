@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import CloseIcon from '@material-ui/icons/Close';
+// import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Draggable } from 'react-beautiful-dnd';
 import { Typography } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: '10px',
     backgroundColor: 'white',
@@ -18,14 +21,34 @@ const useStyles = makeStyles(() => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
-      // backgroundColor: '#eeeeee',
     },
   },
-  overlayTitle: {
-    // TODO: use semi-bold font weight instead of bold
-    fontWeight: 'bold',
+  dialog: {
+    padding: theme.spacing(2),
+    height: '300px',
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
   },
 }));
+
+const DialogTitle = ({ children, onClose, ...other }) => {
+  const classes = useStyles();
+
+  return (
+    <MuiDialogTitle disableTypography {...other}>
+      <Typography variant="h6">
+        {children}
+      </Typography>
+      <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+        <CloseIcon />
+      </IconButton>
+    </MuiDialogTitle>
+  );
+};
 
 const IssueCard = (props) => {
   const classes = useStyles();
@@ -51,10 +74,11 @@ const IssueCard = (props) => {
         )}
       </Draggable>
       <Dialog
+        className={classes.dialog}
         open={openDialog}
         onClose={() => setOpenDialog(false)}
       >
-        <DialogTitle>
+        <DialogTitle onClose={() => setOpenDialog(false)}>
           {props.title}
         </DialogTitle>
         <DialogContent>
