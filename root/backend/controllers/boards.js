@@ -19,8 +19,6 @@ boardRouter.post('/', async (request, response) => {
 });
 
 boardRouter.put('/:id', async (request, response) => {
-  console.log(request.body);
-
   const updatedBoard = await Board
     .findByIdAndUpdate(request.params.id, {
       columns: request.body,
