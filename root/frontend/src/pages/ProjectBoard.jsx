@@ -38,22 +38,20 @@ const ProjectBoard = () => {
   const [newColumnTitle, setNewColumnTitle] = useState('');
   const [columns, setColumns] = useState([]);
   const [filter, setFilter] = useState('');
-  // const [boardID, setBoardID] = useState();
+  const [boardID, setBoardID] = useState();
 
   // load columns from server on startup
   useEffect(async () => {
     const board = await requestService.getBoard();
     // console.log(board);
 
+    setBoardID(board.id);
     setColumns(board.columns);
   }, []);
 
   // save column reordering
   useEffect(async () => {
-    if (columns !== []) {
-      // TODO: load ID into state so I don't have to hardcode it
-      const boardID = '60f764d9b5e93431a8f5f4dd';
-
+    if (boardID && columns !== []) {
       const columnIDs = columns.map((col) => col.id);
       await requestService.updateColumnOrder(boardID, columnIDs);
     }
