@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationInterface = ({ filter, handleFilterChange }) => {
+const NavigationInterface = ({ title, filter, handleFilterChange }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -134,7 +134,7 @@ const NavigationInterface = ({ filter, handleFilterChange }) => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap>
-            My Board
+            {title}
           </Typography>
 
           <div className={classes.search}>
@@ -183,6 +183,7 @@ const NavigationInterface = ({ filter, handleFilterChange }) => {
 };
 
 NavigationInterface.propTypes = {
+  title: PropTypes.string.isRequired,
   filter: PropTypes.string.isRequired,
   handleFilterChange: PropTypes.func.isRequired,
 };

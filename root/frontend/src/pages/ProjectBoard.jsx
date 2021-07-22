@@ -39,6 +39,7 @@ const ProjectBoard = () => {
   const [columns, setColumns] = useState([]);
   const [filter, setFilter] = useState('');
   const [boardID, setBoardID] = useState();
+  const [boardTitle, setBoardTitle] = useState('');
 
   // load columns from server on startup
   useEffect(async () => {
@@ -46,6 +47,7 @@ const ProjectBoard = () => {
     // console.log(board);
 
     setBoardID(board.id);
+    setBoardTitle(board.title);
     setColumns(board.columns);
   }, []);
 
@@ -176,6 +178,7 @@ const ProjectBoard = () => {
 
       {/* the top bar and side menu */}
       <NavigationInterface
+        title={boardTitle}
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
       />
