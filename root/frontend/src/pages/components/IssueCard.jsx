@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CloseIcon from '@material-ui/icons/Close';
-// import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Draggable } from 'react-beautiful-dnd';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dialog: {
     padding: theme.spacing(2),
-    height: '300px',
   },
   closeButton: {
     position: 'absolute',
@@ -34,21 +33,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.grey[500],
   },
 }));
-
-const DialogTitle = ({ children, onClose, ...other }) => {
-  const classes = useStyles();
-
-  return (
-    <MuiDialogTitle disableTypography {...other}>
-      <Typography variant="h6">
-        {children}
-      </Typography>
-      <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-        <CloseIcon />
-      </IconButton>
-    </MuiDialogTitle>
-  );
-};
 
 const IssueCard = (props) => {
   const classes = useStyles();
@@ -73,18 +57,30 @@ const IssueCard = (props) => {
           </ListItem>
         )}
       </Draggable>
+
       <Dialog
         className={classes.dialog}
         open={openDialog}
         onClose={() => setOpenDialog(false)}
+        fullWidth
+        scroll="body"
       >
-        <DialogTitle onClose={() => setOpenDialog(false)}>
-          {props.title}
-        </DialogTitle>
-        <DialogContent>
-          <Typography>
-            Description goes here
+
+        <DialogTitle onClose={() => setOpenDialog(false)} disableTypography>
+          <Typography variant="h5">
+            <Box fontWeight="fontWeightMedium">
+              {props.title}
+            </Box>
           </Typography>
+          <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent>
+          <Box fontWeight="fontWeightBold" fontSize="16px">
+            Description
+          </Box>
         </DialogContent>
       </Dialog>
     </>
