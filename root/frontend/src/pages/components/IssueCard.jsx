@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,6 +9,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import CloseIcon from '@material-ui/icons/Close';
 import { Draggable } from 'react-beautiful-dnd';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   dialog: {
-    padding: theme.spacing(2),
+    backgroundColor: theme.palette.grey[50],
+    boxShadow: 'none',
   },
   closeButton: {
     position: 'absolute',
@@ -34,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionTextArea: {
     marginBlock: '10px',
-    paddingInline: '10px',
+    padding: '4px 10px',
     height: '60px',
     resize: 'none',
+    fontFamily: 'arial',
     width: '92%',
     '&:focus': {
       outline: 'none',
+      boxShadow: `0 0 0 2px ${theme.palette.primary.light}`,
     },
   },
 }));
@@ -70,7 +74,9 @@ const IssueCard = (props) => {
       </Draggable>
 
       <Dialog
-        className={classes.dialog}
+        PaperProps={{
+          className: classes.dialog,
+        }}
         open={openDialog}
         onClose={() => setOpenDialog(false)}
         fullWidth
@@ -78,11 +84,16 @@ const IssueCard = (props) => {
       >
 
         <DialogTitle onClose={() => setOpenDialog(false)} disableTypography>
-          <Typography variant="h5">
-            <Box fontWeight="fontWeightMedium">
-              {props.title}
+          <Box display="flex" alignItems="flex-end">
+            <Box marginRight="10px">
+              <AssignmentIcon />
             </Box>
-          </Typography>
+            <Typography variant="h5">
+              <Box fontWeight="fontWeightMedium">
+                {props.title}
+              </Box>
+            </Typography>
+          </Box>
           <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
             <CloseIcon />
           </IconButton>
