@@ -32,11 +32,22 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
+  descriptionTextArea: {
+    marginBlock: '10px',
+    paddingInline: '10px',
+    height: '60px',
+    resize: 'none',
+    width: '92%',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
 }));
 
 const IssueCard = (props) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
+  const [description, setDescription] = useState('');
 
   return (
     <>
@@ -81,6 +92,15 @@ const IssueCard = (props) => {
           <Box fontWeight="fontWeightBold" fontSize="16px">
             Description
           </Box>
+          <form>
+            <textarea
+              className={classes.descriptionTextArea}
+              type="text"
+              value={description}
+              onChange={({ target }) => setDescription(target.value)}
+              placeholder="Enter a description..."
+            />
+          </form>
         </DialogContent>
       </Dialog>
     </>
