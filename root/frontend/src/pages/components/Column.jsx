@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 /* React.memo prevents dragging a card over a column from
  * re-rendering the tasks in that column. */
-const CardList = React.memo(({ cards, filter }) => (
+const CardList = React.memo(({ cards, filter, columnTitle }) => (
   cards
     .filter((card) => (
       card.title.toLowerCase().includes(filter.toLowerCase())
@@ -40,6 +40,7 @@ const CardList = React.memo(({ cards, filter }) => (
         cardId={card.id}
         index={index}
         title={card.title}
+        columnTitle={columnTitle}
       />
     ))
 ));
@@ -81,7 +82,7 @@ const Column = (props) => {
               {(provided) => (
                 // without min height, cannot drag cards into empty columns
                 <Box minHeight="2px" ref={provided.innerRef} {...provided.droppableProps}>
-                  <CardList cards={props.cards} filter={props.filter} />
+                  <CardList cards={props.cards} filter={props.filter} columnTitle={props.title} />
                   {provided.placeholder}
                 </Box>
               )}
@@ -111,6 +112,7 @@ CardList.propTypes = {
     }),
   ).isRequired,
   filter: PropTypes.string.isRequired,
+  columnTitle: PropTypes.string.isRequired,
 };
 
 Column.propTypes = {

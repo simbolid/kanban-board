@@ -97,6 +97,11 @@ const IssueCard = (props) => {
           <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
             <CloseIcon />
           </IconButton>
+          <Box marginLeft="36px" color="#505050">
+            <Typography variant="body2">
+              {`in list ${props.columnTitle}`}
+            </Typography>
+          </Box>
         </DialogTitle>
 
         <DialogContent>
@@ -122,6 +127,7 @@ IssueCard.propTypes = {
   title: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   cardId: PropTypes.string.isRequired,
+  columnTitle: PropTypes.string.isRequired,
 };
 
 export default IssueCard;
