@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
-import IssueCard from './IssueCard';
+import CardList from './CardList';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,24 +26,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
   },
 }));
-
-/* React.memo prevents dragging a card over a column from
- * re-rendering the tasks in that column. */
-const CardList = React.memo(({ cards, filter, columnTitle }) => (
-  cards
-    .filter((card) => (
-      card.title.toLowerCase().includes(filter.toLowerCase())
-    ))
-    .map((card, index) => (
-      <IssueCard
-        key={card.id}
-        cardId={card.id}
-        index={index}
-        title={card.title}
-        columnTitle={columnTitle}
-      />
-    ))
-));
 
 const Column = ({
   column,
@@ -107,17 +89,6 @@ const Column = ({
       )}
     </Draggable>
   );
-};
-
-CardList.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      // TODO: add id
-    }),
-  ).isRequired,
-  filter: PropTypes.string.isRequired,
-  columnTitle: PropTypes.string.isRequired,
 };
 
 Column.propTypes = {
