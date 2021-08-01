@@ -45,7 +45,12 @@ const CardList = React.memo(({ cards, filter, columnTitle }) => (
     ))
 ));
 
-const Column = (props) => {
+const Column = ({
+  column,
+  index,
+  filter,
+  addCard,
+}) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const classes = useStyles();
@@ -59,13 +64,13 @@ const Column = (props) => {
     // the new card requires a title
     if (newCardTitle !== '') {
       setNewCardRequested(false);
-      props.addCard(props.id, { title: newCardTitle });
+      addCard(column.id, { title: newCardTitle });
       setNewCardTitle('');
     }
   };
 
   return (
-    <Draggable draggableId={props.id} index={props.index}>
+    <Draggable draggableId={column.id} index={index}>
       {(provided) => (
         <Paper
           className={classes.paper}
@@ -74,15 +79,15 @@ const Column = (props) => {
           ref={provided.innerRef}
         >
           <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
-            {props.title}
+            {column.title}
           </Typography>
           <List>
-            <Droppable droppableId={props.id} type="card">
+            <Droppable droppableId={column.id} type="card">
               {/* eslint-disable-next-line no-shadow */}
               {(provided) => (
                 // without min height, cannot drag cards into empty columns
                 <Box minHeight="2px" ref={provided.innerRef} {...provided.droppableProps}>
-                  <CardList cards={props.cards} filter={props.filter} columnTitle={props.title} />
+                  <CardList cards={column.cards} filter={filter} columnTitle={column.title} />
                   {provided.placeholder}
                 </Box>
               )}
@@ -116,17 +121,19 @@ CardList.propTypes = {
 };
 
 Column.propTypes = {
-  title: PropTypes.string.isRequired,
-  filter: PropTypes.string.isRequired,
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      // TODO: add id
-    }),
-  ).isRequired,
-  addCard: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  column: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    cards: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        // TODO: add id?
+      }),
+    ).isRequired,
+  }).isRequired,
   index: PropTypes.number.isRequired,
+  filter: PropTypes.string.isRequired,
+  addCard: PropTypes.func.isRequired,
 };
 
 export default Column;

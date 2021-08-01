@@ -196,11 +196,9 @@ const ProjectBoard = () => {
                 {columns.map((column, index) => (
                   <Column
                     key={column.id}
-                    id={column.id}
+                    column={column}
                     index={index}
-                    title={column.title}
                     filter={filter}
-                    cards={column.cards}
                     addCard={addCardToColumn}
                   />
                 ))}
