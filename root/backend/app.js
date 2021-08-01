@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config = require('./utils/config');
 const boardRouter = require('./controllers/boards');
-const columnRouter = require('./controllers/columns');
 
 const app = express();
 
@@ -37,6 +36,5 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 // route handling
 app.use('/api/boards', boardRouter);
-app.use('/api/columns', columnRouter);
 
 module.exports = app;

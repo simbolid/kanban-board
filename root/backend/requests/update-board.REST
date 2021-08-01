@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/boards/610722fd4e2f1b3b9c3f30c3
+Content-Type: application/json
+
+{
+  "title": "Board for Backend Testing",
+  "columns": []
+}

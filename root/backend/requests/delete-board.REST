@@ -1,0 +1,1 @@
+DELETE http://localhost:3001/api/boards/610721b2c9915b1b586f0e43

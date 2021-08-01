@@ -4,3 +4,7 @@ Content-Type: application/json
 {
   "title": "My First Board"
 }
+
+###
+POST http://localhost:3001/api/boards
+Content-Type: application/json

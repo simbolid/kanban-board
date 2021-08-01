@@ -7,12 +7,24 @@ const boardSchema = new mongoose.Schema({
   },
   columns: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Column',
+      title: {
+        type: String,
+        required: true,
+      },
+      cards: [
+        {
+          title: {
+            type: String,
+            required: true,
+          },
+          description: String,
+        },
+      ],
     },
   ],
 });
 
+// converting the ID field to a string makes testing easier
 boardSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
