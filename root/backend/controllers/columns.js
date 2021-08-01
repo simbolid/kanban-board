@@ -2,9 +2,22 @@ const columnRouter = require('express').Router();
 const Board = require('../models/board');
 const Column = require('../models/column');
 
+// For development use only
 columnRouter.get('/', async (request, response) => {
   const columns = await Column.find({});
   response.json(columns);
+});
+
+columnRouter.get('/:id', async (request, response) => {
+  const column = await Column.findById(request.params.id);
+  response.json(column);
+});
+
+columnRouter.delete('/:id', async (request, response) => {
+  await Column.findByIdAndRemove(request.params.id);
+
+  // 204 no content
+  response.status(204).end();
 });
 
 columnRouter.post('/', async (request, response) => {
