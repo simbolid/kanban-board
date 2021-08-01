@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IssueCard = (props) => {
+const IssueCard = ({ card, index, columnTitle }) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
   const [description, setDescription] = useState('');
@@ -104,7 +104,7 @@ const IssueCard = (props) => {
         value={description}
         onChange={({ target }) => setDescription(target.value)}
         placeholder="Enter a description..."
-        aria-label={`Enter a description for the task ${props.title}`}
+        aria-label={`Enter a description for the task ${card.title}`}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
       />
@@ -126,7 +126,7 @@ const IssueCard = (props) => {
 
   return (
     <>
-      <Draggable draggableId={props.cardId} index={props.index}>
+      <Draggable draggableId={card.id} index={index}>
         {(provided) => (
           <ListItem
             className={classes.card}
@@ -138,7 +138,7 @@ const IssueCard = (props) => {
             onClick={() => setOpenDialog(true)}
           >
             <ListItemText>
-              {props.title}
+              {card.title}
             </ListItemText>
           </ListItem>
         )}
@@ -160,7 +160,7 @@ const IssueCard = (props) => {
             </Box>
             <Typography variant="h5">
               <Box fontWeight="fontWeightMedium">
-                {props.title}
+                {card.title}
               </Box>
             </Typography>
           </Box>
@@ -169,7 +169,7 @@ const IssueCard = (props) => {
           </IconButton>
           <Box marginLeft="36px" color="#505050">
             <Typography variant="body2">
-              {`in list ${props.columnTitle}`}
+              {`in list ${columnTitle}`}
             </Typography>
           </Box>
         </DialogTitle>
@@ -186,9 +186,11 @@ const IssueCard = (props) => {
 };
 
 IssueCard.propTypes = {
-  title: PropTypes.string.isRequired,
+  card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   index: PropTypes.number.isRequired,
-  cardId: PropTypes.string.isRequired,
   columnTitle: PropTypes.string.isRequired,
 };
 

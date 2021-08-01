@@ -12,9 +12,8 @@ const CardList = React.memo(({ cards, filter, columnTitle }) => (
     .map((card, index) => (
       <IssueCard
         key={card.id}
-        cardId={card.id}
+        card={card}
         index={index}
-        title={card.title}
         columnTitle={columnTitle}
       />
     ))
