@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +10,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -136,7 +134,6 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
           <Typography component="h1" variant="h6" color="inherit" noWrap>
             {title}
           </Typography>
-
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -152,15 +149,8 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
               onChange={handleFilterChange}
             />
           </div>
-
-          <IconButton color="inherit" className={classes.notification}>
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
-
       <Drawer
         variant="permanent"
         classes={{
