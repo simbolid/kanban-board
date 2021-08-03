@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionTextArea: {
     resize: 'none',
+    fontFamily: 'roboto, sans-serif',
     '&:focus': {
       outline: 'none',
       boxShadow: `0 0 0 2px ${theme.palette.primary.light}`,
