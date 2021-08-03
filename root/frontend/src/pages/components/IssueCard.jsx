@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#E8E8E8',
     },
   },
+  descriptionText: {
+    color: 'gray',
+  },
   descriptionTextArea: {
     resize: 'none',
     '&:focus': {
@@ -76,25 +79,33 @@ const IssueCard = ({ card, index, columnTitle }) => {
     setEditDescription(false);
   };
 
-  const placeholderText = () => (
-    <Typography style={{ color: 'gray' }}>
-      Enter a description...
-    </Typography>
-  );
+  const descriptionButton = () => {
+    const placeholderText = () => (
+      <Box color="gray">
+        <Typography>
+          Enter a description...
+        </Typography>
+      </Box>
+    );
 
-  const descriptionButton = () => (
-    <ButtonBase
-      className={`${classes.description} ${classes.descriptionButton}`}
-      onClick={() => setEditDescription(true)}
-      disableRipple
-    >
+    const text = () => (
       <Typography>
+        {description}
+      </Typography>
+    );
+
+    return (
+      <ButtonBase
+        className={`${classes.description} ${classes.descriptionButton}`}
+        onClick={() => setEditDescription(true)}
+        disableRipple
+      >
         {description === ''
           ? placeholderText()
-          : description}
-      </Typography>
-    </ButtonBase>
-  );
+          : text()}
+      </ButtonBase>
+    );
+  };
 
   const descriptionInput = () => (
     <form onSubmit={updateDescription}>
