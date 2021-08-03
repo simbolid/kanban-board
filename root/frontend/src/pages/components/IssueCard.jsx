@@ -63,20 +63,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IssueCard = ({ card, index, columnTitle }) => {
+const IssueCard = ({ card, index, columnTitle, updateCard }) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(card.description ? card.description : '');
   const [editDescription, setEditDescription] = useState(false);
 
   const resetDescription = () => {
-    setDescription('');
+    setDescription(card.description);
     setEditDescription(false);
   };
 
   const updateDescription = () => {
-    // TODO: save updates to backend
     setEditDescription(false);
+    updateCard({
+      ...card,
+      description,
+    });
   };
 
   const descriptionButton = () => {
@@ -199,10 +202,12 @@ const IssueCard = ({ card, index, columnTitle }) => {
 IssueCard.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string.isRequired,
+    description: PropTypes.string,
     _id: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
   columnTitle: PropTypes.string.isRequired,
+  updateCard: PropTypes.func.isRequired,
 };
 
 export default IssueCard;

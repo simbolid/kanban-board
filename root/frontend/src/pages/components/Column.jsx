@@ -31,7 +31,7 @@ const Column = ({
   column,
   index,
   filter,
-  addCard,
+  updateColumn,
 }) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
@@ -46,9 +46,24 @@ const Column = ({
     // the new card requires a title
     if (newCardTitle !== '') {
       setNewCardRequested(false);
-      addCard(column._id, { title: newCardTitle });
       setNewCardTitle('');
+
+      const changedColumn = {
+        ...column,
+        cards: column.cards.concat({ title: newCardTitle }),
+      };
+      updateColumn(changedColumn);
     }
+  };
+
+  const updateCard = async (updatedCard) => {
+    const changedColumn = {
+      ...column,
+      cards: column.cards
+        .map((card) => (card._id !== updatedCard._id ? card : updatedCard)),
+    };
+
+    updateColumn(changedColumn);
   };
 
   return (
@@ -69,7 +84,12 @@ const Column = ({
               {(provided) => (
                 // without min height, cannot drag cards into empty columns
                 <Box minHeight="2px" ref={provided.innerRef} {...provided.droppableProps}>
-                  <CardList cards={column.cards} filter={filter} columnTitle={column.title} />
+                  <CardList
+                    cards={column.cards}
+                    filter={filter}
+                    columnTitle={column.title}
+                    updateCard={updateCard}
+                  />
                   {provided.placeholder}
                 </Box>
               )}
@@ -104,7 +124,7 @@ Column.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   filter: PropTypes.string.isRequired,
-  addCard: PropTypes.func.isRequired,
+  updateColumn: PropTypes.func.isRequired,
 };
 
 export default Column;

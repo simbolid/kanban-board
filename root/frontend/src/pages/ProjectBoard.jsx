@@ -72,22 +72,12 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
-  const addCardToColumn = async (columnId, card) => {
-    // retrieve and update the column to be modified
-    const columnToUpdate = board.columns.find((col) => col._id === columnId);
-
-    const changedColumn = {
-      ...columnToUpdate,
-      cards: columnToUpdate.cards.concat(card),
-    };
-
-    // insert the updated column into the columns array
+  const updateColumn = async (updatedColumn) => {
     const savedBoard = await boardService.updateBoard({
       ...board,
       columns: board.columns
-        .map((col) => (col._id !== changedColumn._id ? col : changedColumn)),
+        .map((col) => (col._id !== updatedColumn._id ? col : updatedColumn)),
     });
-
     setBoard(savedBoard);
   };
 
@@ -181,14 +171,12 @@ const ProjectBoard = () => {
 
   return (
     <div className={classes.root}>
-
       {/* the top bar and side menu */}
       <NavigationInterface
         title={board.title}
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
       />
-
       <DragDropContext onDragEnd={onDragEnd}>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -205,7 +193,7 @@ const ProjectBoard = () => {
                     column={column}
                     index={index}
                     filter={filter}
-                    addCard={addCardToColumn}
+                    updateColumn={updateColumn}
                   />
                 ))}
                 {provided.placeholder}
