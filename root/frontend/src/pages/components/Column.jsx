@@ -46,13 +46,13 @@ const Column = ({
     // the new card requires a title
     if (newCardTitle !== '') {
       setNewCardRequested(false);
-      addCard(column.id, { title: newCardTitle });
+      addCard(column._id, { title: newCardTitle });
       setNewCardTitle('');
     }
   };
 
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={column._id} index={index}>
       {(provided) => (
         <Paper
           className={classes.paper}
@@ -64,7 +64,7 @@ const Column = ({
             {column.title}
           </Typography>
           <List>
-            <Droppable droppableId={column.id} type="card">
+            <Droppable droppableId={column._id} type="card">
               {/* eslint-disable-next-line no-shadow */}
               {(provided) => (
                 // without min height, cannot drag cards into empty columns
@@ -93,12 +93,12 @@ const Column = ({
 
 Column.propTypes = {
   column: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     cards: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
-        // TODO: add id?
+        _id: PropTypes.string.isRequired,
       }),
     ).isRequired,
   }).isRequired,

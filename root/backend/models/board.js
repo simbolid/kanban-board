@@ -24,13 +24,18 @@ const boardSchema = new mongoose.Schema({
   ],
 });
 
-// converting the ID field to a string makes testing easier
 boardSchema.set('toJSON', {
+  versionKey: false,
+  virtuals: false,
+  /*
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
-    delete returnedObject.__v;
-  },
+    returnedObject.columns.forEach((col) => {
+      col.id = col._id.toString();
+      delete col._id;
+    });
+  }, */
 });
 
 module.exports = mongoose.model('Board', boardSchema);

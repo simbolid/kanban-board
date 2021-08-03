@@ -5,7 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from './components/Navigation';
 import Column from './components/Column';
 import ButtonToTextField from './components/ButtonToTextField';
-import requestService from '../services/requests';
+import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,39 +25,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/* Note regarding immutability:
- * Because columns is an array of objects, I had to be careful not to unknowingly
- * mutate the array due to the pass-by-reference behavior of objects.
- * I ensured that updates to columns are immutable by logging their state before and
- * after copying and modifying a given column (but before the call to setColumns).
- * State remained unchanged in all cases.
- */
 const ProjectBoard = () => {
-  const classes = useStyles();
   const [newColumnRequested, setNewColumnRequested] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
-  const [columns, setColumns] = useState([]);
   const [filter, setFilter] = useState('');
-  const [boardID, setBoardID] = useState();
-  const [boardTitle, setBoardTitle] = useState('');
+  const [board, setBoard] = useState({
+    title: '',
+    columns: [],
+  });
 
-  // load columns from server on startup
+  const classes = useStyles();
+
+  // load board data from server on startup
   useEffect(async () => {
-    const board = await requestService.getBoard();
-    // console.log(board);
-
-    setBoardID(board.id);
-    setBoardTitle(board.title);
-    setColumns(board.columns);
+    const retrievedBoard = await boardService.getBoard();
+    // console.log(retrievedBoard);
+    // console.log(typeof retrievedBoard._id);
+    setBoard(retrievedBoard);
   }, []);
-
-  // save column reordering
-  useEffect(async () => {
-    if (boardID && columns !== []) {
-      const columnIDs = columns.map((col) => col.id);
-      await requestService.updateColumnOrder(boardID, columnIDs);
-    }
-  }, [columns]);
 
   const handleNewColumnSubmit = async (event) => {
     // prevent form submission from reloading page
@@ -69,10 +54,16 @@ const ProjectBoard = () => {
         cards: [],
       };
 
-      const savedColumn = await requestService.createColumn(newColumn);
       setNewColumnRequested(false);
       setNewColumnTitle('');
-      setColumns(columns.concat(savedColumn));
+
+      // the backend will give the new column a unique id
+      const savedBoard = await boardService.updateBoard({
+        ...board,
+        columns: board.columns.concat(newColumn),
+      });
+
+      setBoard(savedBoard);
     }
   };
 
@@ -81,23 +72,23 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
-  const addCardToColumn = async (id, card) => {
+  const addCardToColumn = async (columnId, card) => {
     // retrieve and update the column to be modified
-    const columnToUpdate = columns.find((col) => col.id === id);
+    const columnToUpdate = board.columns.find((col) => col._id === columnId);
 
     const changedColumn = {
       ...columnToUpdate,
       cards: columnToUpdate.cards.concat(card),
     };
 
-    // save the column to the backend
-    const savedColumn = await requestService.updateColumn(id, changedColumn);
-
     // insert the updated column into the columns array
-    setColumns(columns.map((column) => {
-      const col = column.id !== savedColumn.id ? column : savedColumn;
-      return col;
-    }));
+    const savedBoard = await boardService.updateBoard({
+      ...board,
+      columns: board.columns
+        .map((col) => (col._id !== changedColumn._id ? col : changedColumn)),
+    });
+
+    setBoard(savedBoard);
   };
 
   const onDragEnd = async ({ destination, source, type }) => {
@@ -114,15 +105,23 @@ const ProjectBoard = () => {
 
     // Move a column
     if (type === 'column') {
-      const newColumns = Array.from(columns);
+      const newColumns = Array.from(board.columns);
       const draggedColumn = newColumns.splice(source.index, 1)[0];
       newColumns.splice(destination.index, 0, draggedColumn);
-      setColumns(newColumns);
+
+      const newBoard = {
+        ...board,
+        columns: newColumns,
+      };
+
+      // save changes to the frontend first to prevent lag
+      setBoard(newBoard);
+      await boardService.updateBoard(newBoard);
       return;
     }
 
-    const startColumn = columns.find((col) => col.id === source.droppableId);
-    const endColumn = columns.find((col) => col.id === destination.droppableId);
+    const startColumn = board.columns.find((col) => col._id === source.droppableId);
+    const endColumn = board.columns.find((col) => col._id === destination.droppableId);
 
     // Move a card within a column
     if (startColumn === endColumn) {
@@ -140,11 +139,14 @@ const ProjectBoard = () => {
         cards: newCards,
       };
 
-      // update the frontend first to prevent lag
-      setColumns(columns.map((col) => (col.id !== changedColumn.id ? col : changedColumn)));
+      const newBoard = {
+        ...board,
+        columns: board.columns
+          .map((col) => (col._id !== changedColumn._id ? col : changedColumn)),
+      };
 
-      // then save changes to backend
-      await requestService.updateColumn(startColumn.id, changedColumn);
+      setBoard(newBoard);
+      await boardService.updateBoard(newBoard);
       return;
     }
 
@@ -163,14 +165,18 @@ const ProjectBoard = () => {
       cards: endColumnCards,
     };
 
-    setColumns(columns.map((col) => {
-      if (col.id === newStartColumn.id) return newStartColumn;
-      if (col.id === newEndColumn.id) return newEndColumn;
-      return col;
-    }));
+    const newBoard = {
+      ...board,
+      columns: board.columns
+        .map((col) => {
+          if (col._id === newStartColumn._id) return newStartColumn;
+          if (col._id === newEndColumn._id) return newEndColumn;
+          return col;
+        }),
+    };
 
-    await requestService.updateColumn(startColumn.id, newStartColumn);
-    await requestService.updateColumn(endColumn.id, newEndColumn);
+    setBoard(newBoard);
+    await boardService.updateBoard(newBoard);
   };
 
   return (
@@ -178,7 +184,7 @@ const ProjectBoard = () => {
 
       {/* the top bar and side menu */}
       <NavigationInterface
-        title={boardTitle}
+        title={board.title}
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
       />
@@ -193,9 +199,9 @@ const ProjectBoard = () => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {columns.map((column, index) => (
+                {board.columns.map((column, index) => (
                   <Column
-                    key={column.id}
+                    key={column._id}
                     column={column}
                     index={index}
                     filter={filter}

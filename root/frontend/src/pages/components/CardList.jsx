@@ -11,7 +11,7 @@ const CardList = React.memo(({ cards, filter, columnTitle }) => (
     ))
     .map((card, index) => (
       <IssueCard
-        key={card.id}
+        key={card._id}
         card={card}
         index={index}
         columnTitle={columnTitle}
@@ -23,7 +23,7 @@ CardList.propTypes = {
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      // TODO: add id?
+      _id: PropTypes.string.isRequired,
     }),
   ).isRequired,
   filter: PropTypes.string.isRequired,

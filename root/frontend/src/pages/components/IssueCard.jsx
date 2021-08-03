@@ -126,7 +126,7 @@ const IssueCard = ({ card, index, columnTitle }) => {
 
   return (
     <>
-      <Draggable draggableId={card.id} index={index}>
+      <Draggable draggableId={card._id} index={index}>
         {(provided) => (
           <ListItem
             className={classes.card}
@@ -188,7 +188,7 @@ const IssueCard = ({ card, index, columnTitle }) => {
 IssueCard.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
   columnTitle: PropTypes.string.isRequired,
