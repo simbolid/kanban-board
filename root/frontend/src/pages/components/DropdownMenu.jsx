@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,10 +26,15 @@ const useStyles = makeStyles({
   },
 });
 
-const DropdownMenu = () => {
+const DropdownMenu = ({ onDelete }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
 
   const classes = useStyles();
+
+  const handleDelete = () => {
+    setPopupAnchor(null);
+    onDelete();
+  };
 
   return (
     <>
@@ -50,12 +56,19 @@ const DropdownMenu = () => {
         MenuListProps={{ disablePadding: true }}
         keepMounted
       >
-        <MenuItem className={classes.deleteMenuItem}>
+        <MenuItem
+          className={classes.deleteMenuItem}
+          onClick={handleDelete}
+        >
           Delete
         </MenuItem>
       </Menu>
     </>
   );
+};
+
+DropdownMenu.propTypes = {
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default DropdownMenu;

@@ -34,6 +34,7 @@ const Column = ({
   column,
   index,
   filter,
+  deleteColumn,
   updateColumn,
 }) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
@@ -57,6 +58,10 @@ const Column = ({
       };
       updateColumn(changedColumn);
     }
+  };
+
+  const handleDelete = () => {
+    deleteColumn(column._id);
   };
 
   const updateCard = async (updatedCard) => {
@@ -83,7 +88,7 @@ const Column = ({
               {column.title}
             </Typography>
             <Box marginRight="-12px">
-              <DropdownMenu />
+              <DropdownMenu onDelete={handleDelete} />
             </Box>
           </Box>
           <List>
@@ -132,6 +137,7 @@ Column.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   filter: PropTypes.string.isRequired,
+  deleteColumn: PropTypes.func.isRequired,
   updateColumn: PropTypes.func.isRequired,
 };
 

@@ -39,12 +39,24 @@ const ProjectBoard = () => {
   // load board data from server on startup
   useEffect(async () => {
     const retrievedBoard = await boardService.getBoard();
-    // console.log(retrievedBoard);
-    // console.log(typeof retrievedBoard._id);
     setBoard(retrievedBoard);
   }, []);
 
-  const handleNewColumnSubmit = async (event) => {
+  /* Update the frontend before the backend. Use for re-ordering cards and columns
+   * with drag-and-drop, as updating the local state first prevents lag. */
+  const updateBoardFrontend = async (newBoard) => {
+    setBoard(newBoard);
+    await boardService.updateBoard(newBoard);
+  };
+
+  /* Update the backend before the frontend. Use for adding and updating columns,
+   * as the app relies on the backend to set "_id" fields of columns and cards. */
+  const updateBoardBackend = async (newBoard) => {
+    const savedBoard = await boardService.updateBoard(newBoard);
+    setBoard(savedBoard);
+  };
+
+  const addColumn = async (event) => {
     // prevent form submission from reloading page
     event.preventDefault();
 
@@ -57,28 +69,35 @@ const ProjectBoard = () => {
       setNewColumnRequested(false);
       setNewColumnTitle('');
 
-      // the backend will give the new column a unique id
-      const savedBoard = await boardService.updateBoard({
+      updateBoardBackend({
         ...board,
         columns: board.columns.concat(newColumn),
       });
-
-      setBoard(savedBoard);
     }
   };
 
-  const handleNewColumnCancel = () => {
+  const cancelNewColumn = () => {
     setNewColumnRequested(false);
     setNewColumnTitle('');
   };
 
   const updateColumn = async (updatedColumn) => {
-    const savedBoard = await boardService.updateBoard({
+    updateBoardBackend({
       ...board,
       columns: board.columns
         .map((col) => (col._id !== updatedColumn._id ? col : updatedColumn)),
     });
-    setBoard(savedBoard);
+  };
+
+  const deleteColumn = async (columnId) => {
+    const index = board.columns.findIndex((col) => col._id === columnId);
+    const newColumns = Array.from(board.columns);
+    newColumns.splice(index, 1);
+
+    updateBoardFrontend({
+      ...board,
+      columns: newColumns,
+    });
   };
 
   const onDragEnd = async ({ destination, source, type }) => {
@@ -99,14 +118,10 @@ const ProjectBoard = () => {
       const draggedColumn = newColumns.splice(source.index, 1)[0];
       newColumns.splice(destination.index, 0, draggedColumn);
 
-      const newBoard = {
+      updateBoardFrontend({
         ...board,
         columns: newColumns,
-      };
-
-      // save changes to the frontend first to prevent lag
-      setBoard(newBoard);
-      await boardService.updateBoard(newBoard);
+      });
       return;
     }
 
@@ -129,14 +144,11 @@ const ProjectBoard = () => {
         cards: newCards,
       };
 
-      const newBoard = {
+      updateBoardFrontend({
         ...board,
         columns: board.columns
           .map((col) => (col._id !== changedColumn._id ? col : changedColumn)),
-      };
-
-      setBoard(newBoard);
-      await boardService.updateBoard(newBoard);
+      });
       return;
     }
 
@@ -155,7 +167,7 @@ const ProjectBoard = () => {
       cards: endColumnCards,
     };
 
-    const newBoard = {
+    updateBoardFrontend({
       ...board,
       columns: board.columns
         .map((col) => {
@@ -163,10 +175,7 @@ const ProjectBoard = () => {
           if (col._id === newEndColumn._id) return newEndColumn;
           return col;
         }),
-    };
-
-    setBoard(newBoard);
-    await boardService.updateBoard(newBoard);
+    });
   };
 
   return (
@@ -194,6 +203,7 @@ const ProjectBoard = () => {
                     index={index}
                     filter={filter}
                     updateColumn={updateColumn}
+                    deleteColumn={deleteColumn}
                   />
                 ))}
                 {provided.placeholder}
@@ -203,9 +213,9 @@ const ProjectBoard = () => {
                   <ButtonToTextField
                     buttonPressed={newColumnRequested}
                     onButtonClick={() => setNewColumnRequested(true)}
-                    onCancel={handleNewColumnCancel}
+                    onCancel={cancelNewColumn}
                     onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
-                    onTextFieldSubmit={handleNewColumnSubmit}
+                    onTextFieldSubmit={addColumn}
                     textFieldLabel="Column title"
                     textFieldValue={newColumnTitle}
                     title="Add Column"
