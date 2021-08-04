@@ -5,13 +5,10 @@ import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
 import CardList from './CardList';
+import DropdownMenu from './DropdownMenu';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,7 +38,6 @@ const Column = ({
 }) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
-  const [popupAnchor, setPopupAnchor] = useState(null);
   const classes = useStyles();
 
   const handleNewCardCancel = () => {
@@ -86,23 +82,8 @@ const Column = ({
             <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
               {column.title}
             </Typography>
-            <Box color="darkgray">
-              <IconButton
-                aria-haspopup="true"
-                onClick={(event) => setPopupAnchor(event.currentTarget)}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                anchorEl={popupAnchor}
-                open={Boolean(popupAnchor)}
-                onClose={() => setPopupAnchor(null)}
-                getContentAnchorEl={null}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                keepMounted
-              >
-                <MenuItem>Delete</MenuItem>
-              </Menu>
+            <Box marginRight="-12px">
+              <DropdownMenu />
             </Box>
           </Box>
           <List>
