@@ -5,6 +5,10 @@ import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
 import CardList from './CardList';
@@ -12,7 +16,8 @@ import CardList from './CardList';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginLeft: theme.spacing(1.5),
-    padding: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingInline: theme.spacing(1),
     backgroundColor: theme.palette.grey[50],
     borderRadius: 0,
     minWidth: '240px',
@@ -24,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
     paddingLeft: theme.spacing(2),
+    flexGrow: 1,
   },
 }));
 
@@ -35,6 +41,7 @@ const Column = ({
 }) => {
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
+  const [popupAnchor, setPopupAnchor] = useState(null);
   const classes = useStyles();
 
   const handleNewCardCancel = () => {
@@ -75,9 +82,29 @@ const Column = ({
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
-            {column.title}
-          </Typography>
+          <Box display="flex" alignItems="center" marginBottom="-8px">
+            <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
+              {column.title}
+            </Typography>
+            <Box color="darkgray">
+              <IconButton
+                aria-haspopup="true"
+                onClick={(event) => setPopupAnchor(event.currentTarget)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={popupAnchor}
+                open={Boolean(popupAnchor)}
+                onClose={() => setPopupAnchor(null)}
+                getContentAnchorEl={null}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                keepMounted
+              >
+                <MenuItem>Delete</MenuItem>
+              </Menu>
+            </Box>
+          </Box>
           <List>
             <Droppable droppableId={column._id} type="card">
               {/* eslint-disable-next-line no-shadow */}
