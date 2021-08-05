@@ -74,6 +74,17 @@ const Column = ({
     updateColumn(changedColumn);
   };
 
+  const deleteCard = async (cardId) => {
+    const idx = column.cards.findIndex((card) => card._id === cardId);
+    const newCards = Array.from(column.cards);
+    newCards.splice(idx, 1);
+
+    updateColumn({
+      ...column,
+      cards: newCards,
+    }, true);
+  };
+
   return (
     <Draggable draggableId={column._id} index={index}>
       {(provided) => (
@@ -102,6 +113,7 @@ const Column = ({
                     filter={filter}
                     columnTitle={column.title}
                     updateCard={updateCard}
+                    deleteCard={deleteCard}
                   />
                   {provided.placeholder}
                 </Box>

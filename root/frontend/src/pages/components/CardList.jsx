@@ -4,7 +4,13 @@ import IssueCard from './IssueCard';
 
 /* React.memo prevents dragging a card over a column from
  * re-rendering the tasks in that column. */
-const CardList = React.memo(({ cards, filter, columnTitle, updateCard }) => (
+const CardList = React.memo(({
+  cards,
+  filter,
+  columnTitle,
+  deleteCard,
+  updateCard,
+}) => (
   cards
     .filter((card) => (
       card.title.toLowerCase().includes(filter.toLowerCase())
@@ -16,6 +22,7 @@ const CardList = React.memo(({ cards, filter, columnTitle, updateCard }) => (
         index={index}
         columnTitle={columnTitle}
         updateCard={updateCard}
+        deleteCard={deleteCard}
       />
     ))
 ));
@@ -29,6 +36,7 @@ CardList.propTypes = {
   ).isRequired,
   filter: PropTypes.string.isRequired,
   columnTitle: PropTypes.string.isRequired,
+  deleteCard: PropTypes.func.isRequired,
   updateCard: PropTypes.func.isRequired,
 };
 

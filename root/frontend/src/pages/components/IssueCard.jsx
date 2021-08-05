@@ -9,11 +9,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 import { Draggable } from 'react-beautiful-dnd';
+import DropdownMenu from './DropdownMenu';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -24,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
+    },
+  },
+  test: {
+    '&:hover > $.card': {
+      // otherwise, cursor defaults to grab
+      backgroundColor: 'red',
     },
   },
   dialog: {
@@ -64,7 +72,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const IssueCard = ({ card, index, columnTitle, updateCard }) => {
+const IssueCard = ({
+  card,
+  index,
+  columnTitle,
+  deleteCard,
+  updateCard,
+}) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
   const [description, setDescription] = useState(card.description ? card.description : '');
@@ -152,9 +166,12 @@ const IssueCard = ({ card, index, columnTitle, updateCard }) => {
             disableRipple
             onClick={() => setOpenDialog(true)}
           >
-            <ListItemText>
+            <ListItemText className={classes.test}>
               {card.title}
             </ListItemText>
+            <ListItemSecondaryAction>
+              <DropdownMenu onDelete={deleteCard} />
+            </ListItemSecondaryAction>
           </ListItem>
         )}
       </Draggable>
@@ -208,6 +225,7 @@ IssueCard.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   columnTitle: PropTypes.string.isRequired,
+  deleteCard: PropTypes.func.isRequired,
   updateCard: PropTypes.func.isRequired,
 };
 

@@ -81,12 +81,18 @@ const ProjectBoard = () => {
     setNewColumnTitle('');
   };
 
-  const updateColumn = async (updatedColumn) => {
-    updateBoardBackend({
+  const updateColumn = async (updatedColumn, isDeleteOp) => {
+    const newBoard = {
       ...board,
       columns: board.columns
         .map((col) => (col._id !== updatedColumn._id ? col : updatedColumn)),
-    });
+    };
+
+    // Because delete operations don't require retrieving an id from the server,
+    // for such operations we can update the client first.
+    if (isDeleteOp) updateBoardFrontend(newBoard);
+
+    else updateBoardBackend(newBoard);
   };
 
   const deleteColumn = async (columnId) => {
