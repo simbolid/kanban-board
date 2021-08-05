@@ -41,22 +41,21 @@ const Column = ({
   const [newCardTitle, setNewCardTitle] = useState('');
   const classes = useStyles();
 
-  const handleNewCardCancel = () => {
+  const cancelNewCard = () => {
     setNewCardRequested(false);
     setNewCardTitle('');
   };
 
-  const handleNewCardSubmit = () => {
+  const addCard = () => {
     // the new card requires a title
     if (newCardTitle !== '') {
       setNewCardRequested(false);
       setNewCardTitle('');
 
-      const changedColumn = {
+      updateColumn({
         ...column,
         cards: column.cards.concat({ title: newCardTitle }),
-      };
-      updateColumn(changedColumn);
+      }, true);
     }
   };
 
@@ -65,13 +64,11 @@ const Column = ({
   };
 
   const updateCard = async (updatedCard) => {
-    const changedColumn = {
+    updateColumn({
       ...column,
       cards: column.cards
         .map((card) => (card._id !== updatedCard._id ? card : updatedCard)),
-    };
-
-    updateColumn(changedColumn);
+    });
   };
 
   const deleteCard = async (cardId) => {
@@ -82,7 +79,7 @@ const Column = ({
     updateColumn({
       ...column,
       cards: newCards,
-    }, true);
+    });
   };
 
   return (
@@ -122,9 +119,9 @@ const Column = ({
             <ButtonToTextField
               buttonPressed={newCardRequested}
               onButtonClick={() => setNewCardRequested(true)}
-              onCancel={handleNewCardCancel}
+              onCancel={cancelNewCard}
               onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
-              onTextFieldSubmit={handleNewCardSubmit}
+              onTextFieldSubmit={addCard}
               textFieldLabel="Card title"
               textFieldValue={newCardTitle}
               title="Add Card"

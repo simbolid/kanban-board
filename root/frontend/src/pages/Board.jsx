@@ -49,11 +49,16 @@ const ProjectBoard = () => {
     await boardService.updateBoard(newBoard);
   };
 
-  /* Update the backend before the frontend. Use for adding and updating columns,
-   * as the app relies on the backend to set "_id" fields of columns and cards. */
+  /* Update the backend before the frontend. Use for adding and updating columns and cards,
+   * as the app relies on the server to set the "_id" fields of these objects. */
   const updateBoardBackend = async (newBoard) => {
     const savedBoard = await boardService.updateBoard(newBoard);
     setBoard(savedBoard);
+  };
+
+  const cancelNewColumn = () => {
+    setNewColumnRequested(false);
+    setNewColumnTitle('');
   };
 
   const addColumn = async (event) => {
@@ -76,23 +81,17 @@ const ProjectBoard = () => {
     }
   };
 
-  const cancelNewColumn = () => {
-    setNewColumnRequested(false);
-    setNewColumnTitle('');
-  };
-
-  const updateColumn = async (updatedColumn, isDeleteOp) => {
+  const updateColumn = async (updatedColumn, newCardAdded) => {
     const newBoard = {
       ...board,
       columns: board.columns
         .map((col) => (col._id !== updatedColumn._id ? col : updatedColumn)),
     };
 
-    // Because delete operations don't require retrieving an id from the server,
-    // for such operations we can update the client first.
-    if (isDeleteOp) updateBoardFrontend(newBoard);
+    // adding a card requires the backend to generate an id for the card
+    if (newCardAdded) updateBoardBackend(newBoard);
 
-    else updateBoardBackend(newBoard);
+    else updateBoardFrontend(newBoard);
   };
 
   const deleteColumn = async (columnId) => {
