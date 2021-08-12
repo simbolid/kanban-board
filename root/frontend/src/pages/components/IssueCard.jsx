@@ -28,12 +28,6 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   },
-  test: {
-    '&:hover > $.card': {
-      // otherwise, cursor defaults to grab
-      backgroundColor: 'red',
-    },
-  },
   dialog: {
     backgroundColor: theme.palette.grey[50],
     boxShadow: 'none',
@@ -166,11 +160,13 @@ const IssueCard = ({
             disableRipple
             onClick={() => setOpenDialog(true)}
           >
-            <ListItemText className={classes.test}>
-              {card.title}
-            </ListItemText>
+            <Box marginRight="-10px">
+              <ListItemText primary={card.title} />
+            </Box>
             <ListItemSecondaryAction>
-              <DropdownMenu onDelete={deleteCard} />
+              <Box marginRight="-24px">
+                <DropdownMenu onDelete={deleteCard} />
+              </Box>
             </ListItemSecondaryAction>
           </ListItem>
         )}
