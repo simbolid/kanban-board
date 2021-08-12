@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -26,7 +25,25 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
+      '& + $dropdown': {
+        opacity: 1,
+      },
     },
+  },
+  dropdown: {
+    opacity: 0,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    '&:hover': {
+      opacity: 1,
+    },
+  },
+  dropdownFocus: {
+    opacity: 1,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   dialog: {
     backgroundColor: theme.palette.grey[50],
@@ -53,9 +70,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#E8E8E8',
     },
   },
-  descriptionText: {
-    color: 'gray',
-  },
   descriptionTextArea: {
     resize: 'none',
     fontFamily: 'roboto, sans-serif',
@@ -75,6 +89,7 @@ const IssueCard = ({
 }) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [description, setDescription] = useState(card.description ? card.description : '');
   const [editDescription, setEditDescription] = useState(false);
 
@@ -151,24 +166,26 @@ const IssueCard = ({
     <>
       <Draggable draggableId={card._id} index={index}>
         {(provided) => (
-          <ListItem
-            className={classes.card}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-            button
-            disableRipple
-            onClick={() => setOpenDialog(true)}
-          >
-            <Box marginRight="-10px">
+          <Box display="flex" position="relative" cursor="pointer">
+            <ListItem
+              className={classes.card}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+              button
+              disableRipple
+              onClick={() => setOpenDialog(true)}
+            >
               <ListItemText primary={card.title} />
-            </Box>
-            <ListItemSecondaryAction>
-              <Box marginRight="-24px">
-                <DropdownMenu onDelete={deleteCard} />
-              </Box>
-            </ListItemSecondaryAction>
-          </ListItem>
+            </ListItem>
+            <div className={openMenu ? classes.dropdownFocus : classes.dropdown}>
+              <DropdownMenu
+                onDelete={deleteCard}
+                onClick={() => setOpenMenu(true)}
+                onClose={() => setOpenMenu(false)}
+              />
+            </div>
+          </Box>
         )}
       </Draggable>
 

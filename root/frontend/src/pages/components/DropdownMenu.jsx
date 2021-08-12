@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-const DropdownMenu = ({ onDelete }) => {
+const DropdownMenu = ({ onClick, onClose, onDelete }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
 
   const classes = useStyles();
@@ -36,12 +36,22 @@ const DropdownMenu = ({ onDelete }) => {
     onDelete();
   };
 
+  const handleClick = (event) => {
+    setPopupAnchor(event.currentTarget);
+    onClick();
+  };
+
+  const handleClose = () => {
+    setPopupAnchor(null);
+    onClose();
+  };
+
   return (
     <>
       <IconButton
         className={popupAnchor ? classes.focusedButton : classes.button}
         aria-haspopup="true"
-        onClick={(event) => setPopupAnchor(event.currentTarget)}
+        onClick={handleClick}
         disableRipple
       >
         <MoreVertIcon />
@@ -49,7 +59,7 @@ const DropdownMenu = ({ onDelete }) => {
       <Menu
         anchorEl={popupAnchor}
         open={Boolean(popupAnchor)}
-        onClose={() => setPopupAnchor(null)}
+        onClose={handleClose}
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         elevation={4}
@@ -68,7 +78,14 @@ const DropdownMenu = ({ onDelete }) => {
 };
 
 DropdownMenu.propTypes = {
+  onClick: PropTypes.func,
+  onClose: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
+};
+
+DropdownMenu.defaultProps = {
+  onClick: () => { },
+  onClose: () => { },
 };
 
 export default DropdownMenu;
