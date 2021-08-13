@@ -12,5 +12,6 @@ The project is in development. It currently supports the following features:
 
 Upcoming features:
 * editing column and card titles
+* a labeling system
 * user administration 
 * auth0 user authentication
