@@ -15,6 +15,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 import { Draggable } from 'react-beautiful-dnd';
 import DropdownMenu from './DropdownMenu';
+import EditableTitle from './EditableTitle';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -103,6 +104,13 @@ const IssueCard = ({
     updateCard({
       ...card,
       description,
+    });
+  };
+
+  const updateTitle = (newTitle) => {
+    updateCard({
+      ...card,
+      title: newTitle,
     });
   };
 
@@ -203,11 +211,13 @@ const IssueCard = ({
             <Box marginRight="10px">
               <AssignmentIcon />
             </Box>
-            <Typography variant="h5">
-              <Box fontWeight="fontWeightMedium">
-                {card.title}
-              </Box>
-            </Typography>
+            <EditableTitle
+              initialTitle={card.title}
+              TypographyProps={{
+                variant: 'h5',
+              }}
+              onSubmit={updateTitle}
+            />
           </Box>
           <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
             <CloseIcon />

@@ -6,12 +6,12 @@ A Kanban board solution for project management built with the [MERN](https://www
 
 The project is in development. It currently supports the following features: 
 * creating and deleting cards and columns
+* editing column and card titles
+* adding descriptions to cards
 * moving cards and columns with drag-and-drop
 * filtering cards by title
-* adding descriptions to cards
 
 Upcoming features:
-* editing column and card titles
 * a labeling system
 * user administration 
 * auth0 user authentication

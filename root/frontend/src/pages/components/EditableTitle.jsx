@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-// import ButtonBase from '@material-ui/core/ButtonBase';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(() => ({
+  text: {
+    cursor: 'pointer',
+  },
   textField: {
     paddingInline: '10px',
     paddingBlock: '5px',
@@ -29,6 +31,7 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
 
   const text = () => (
     <div
+      className={classes.text}
       onClick={toggleEdit}
       onKeyDown={toggleEdit}
       role="button"
@@ -63,7 +66,8 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
 EditableTitle.propTypes = {
   initialTitle: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  // typographyProps: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  TypographyProps: PropTypes.object,
 };
 
 export default EditableTitle;
