@@ -27,8 +27,6 @@ boardRouter.put('/:id', async (request, response) => {
 });
 
 boardRouter.delete('/:id', async (request, response) => {
-  console.log('delete');
-
   await Board.findByIdAndRemove(request.params.id);
   response.status(204).end(); // 204 no content
 });

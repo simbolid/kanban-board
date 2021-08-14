@@ -30,6 +30,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// serve static files from the frontend build directory
+app.use(express.static('build'));
+
 // request logging
 morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
