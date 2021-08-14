@@ -24,12 +24,13 @@ mongoose.connect(config.DB_URI,
 // parse requests containing JSON payloads
 app.use(express.json());
 
-// only allow requests from the local frontend
-const corsOptions = {
-  origin: 'http://localhost:3000',
-};
-
-app.use(cors(corsOptions));
+// allow requests from local frontend for development builds
+if (process.env.NODE_ENV === 'development') {
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+  };
+  app.use(cors(corsOptions));
+}
 
 // serve static files from the frontend build directory
 app.use(express.static('build'));
