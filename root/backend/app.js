@@ -4,12 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config = require('./utils/config');
+const logger = require('./utils/logger');
 const boardRouter = require('./controllers/boards');
 
 const app = express();
 
 // connect to MongoDB cluster
-console.log('connecting to MongoDB');
+logger.info('connecting to MongoDB');
 mongoose.connect(config.DB_URI,
   {
     useNewUrlParser: true,
@@ -17,8 +18,8 @@ mongoose.connect(config.DB_URI,
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then(() => console.log('connected to MongoDB'))
-  .catch((error) => console.log('error connecting to MongoDB:', error.message));
+  .then(() => logger.info('connected to MongoDB'))
+  .catch((error) => logger.info('error connecting to MongoDB:', error.message));
 
 // parse requests containing JSON payloads
 app.use(express.json());
