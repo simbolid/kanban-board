@@ -4,11 +4,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ButtonToTextField from './ButtonToTextField';
 import CardList from './CardList';
 import DropdownMenu from './DropdownMenu';
+import EditableTitle from './EditableTitle';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +26,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
     paddingLeft: theme.spacing(2),
-    flexGrow: 1,
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '-8px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 }));
 
@@ -40,6 +47,17 @@ const Column = ({
   const [newCardRequested, setNewCardRequested] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const classes = useStyles();
+
+  const handleDelete = () => {
+    deleteColumn(column._id);
+  };
+
+  const editTitle = (newTitle) => {
+    updateColumn({
+      ...column,
+      title: newTitle,
+    });
+  };
 
   const cancelNewCard = () => {
     setNewCardRequested(false);
@@ -57,10 +75,6 @@ const Column = ({
         cards: column.cards.concat({ title: newCardTitle }),
       }, true);
     }
-  };
-
-  const handleDelete = () => {
-    deleteColumn(column._id);
   };
 
   const updateCard = async (updatedCard) => {
@@ -91,14 +105,21 @@ const Column = ({
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <Box display="flex" alignItems="center" marginBottom="-8px">
-            <Typography className={classes.title} {...provided.dragHandleProps} gutterBottom>
-              {column.title}
-            </Typography>
+          <div className={classes.header} {...provided.dragHandleProps}>
+            <Box flexGrow={1}>
+              <EditableTitle
+                initialTitle={column.title}
+                onSubmit={editTitle}
+                TypographyProps={{
+                  className: classes.title,
+                  gutterBottom: true,
+                }}
+              />
+            </Box>
             <Box marginRight="-12px">
               <DropdownMenu onDelete={handleDelete} />
             </Box>
-          </Box>
+          </div>
           <List>
             <Droppable droppableId={column._id} type="card">
               {/* eslint-disable-next-line no-shadow */}
