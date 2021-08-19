@@ -1,6 +1,6 @@
-# time-board
+# kanban-board
 
-A Kanban board solution for project management built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node).   
+A project management solution built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node).   
 
 # Project Status
 
@@ -13,5 +13,4 @@ The project is in development. It currently supports the following features:
 
 Upcoming features:
 * a labeling system
-* user administration 
 * auth0 user authentication
