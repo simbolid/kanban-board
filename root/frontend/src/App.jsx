@@ -8,6 +8,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import LoadingScreen from './pages/Loading';
 
 // code splitting prevents initial load time from being too long
 const Home = lazy(() => import('./pages/Home'));
@@ -15,7 +16,7 @@ const Board = lazy(() => import('./pages/Board'));
 
 const App = () => (
   <Router>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingScreen />}>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/board" component={Board} />
