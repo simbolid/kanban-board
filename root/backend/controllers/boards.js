@@ -6,6 +6,11 @@ boardRouter.get('/', async (request, response) => {
   response.json(boards);
 });
 
+boardRouter.get('/:id', async (request, response) => {
+  const board = await Board.findById(request.params.id);
+  response.json(board);
+});
+
 boardRouter.post('/', async (request, response) => {
   if (!request.body.title) {
     request.body.title = 'My Board';

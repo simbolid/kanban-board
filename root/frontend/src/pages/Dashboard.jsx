@@ -47,7 +47,10 @@ const Dashboard = () => {
         </Typography>
         <div className={classes.container}>
           {boards.map((board) => (
-            <Box marginLeft="10px">
+            <Box
+              key={board._id}
+              marginLeft="10px"
+            >
               <Button
                 key={board._id}
                 variant="contained"

@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const baseUrl = '/api/boards';
 
-const getBoard = async () => {
-  const response = await axios.get(baseUrl);
-  return response.data[0];
+const getBoard = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
 };
 
 const getBoards = async () => {

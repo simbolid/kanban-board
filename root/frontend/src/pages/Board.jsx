@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProjectBoard = () => {
+const ProjectBoard = ({ match }) => {
   const [newColumnRequested, setNewColumnRequested] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
   const [filter, setFilter] = useState('');
@@ -38,7 +38,7 @@ const ProjectBoard = () => {
 
   // load board data from server on startup
   useEffect(async () => {
-    const retrievedBoard = await boardService.getBoard();
+    const retrievedBoard = await boardService.getBoard(match.params.id);
     setBoard(retrievedBoard);
   }, []);
 
