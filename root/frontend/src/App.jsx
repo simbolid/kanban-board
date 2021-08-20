@@ -12,6 +12,7 @@ import LoadingScreen from './pages/Loading';
 
 // code splitting prevents initial load time from being too long
 const Home = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Board = lazy(() => import('./pages/Board'));
 
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
     <Suspense fallback={<LoadingScreen />}>
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/board" component={Board} />
       </Switch>
     </Suspense>

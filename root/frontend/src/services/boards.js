@@ -7,6 +7,11 @@ const getBoard = async () => {
   return response.data[0];
 };
 
+const getBoards = async () => {
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
 const updateBoard = async (board) => {
   const response = await axios.put(`${baseUrl}/${board._id}`, board);
   return response.data;
@@ -14,5 +19,6 @@ const updateBoard = async (board) => {
 
 export default {
   getBoard,
+  getBoards,
   updateBoard,
 };

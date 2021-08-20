@@ -118,6 +118,24 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
+  const search = () => (
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <SearchIcon />
+      </div>
+      <InputBase
+        placeholder="Filter cards"
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+        inputProps={{ 'aria-label': 'search' }}
+        value={filter}
+        onChange={handleFilterChange}
+      />
+    </div>
+  );
+
   return (
     <>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -134,21 +152,8 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
           <Typography component="h1" variant="h6" color="inherit" noWrap>
             {title}
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Filter cards"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              value={filter}
-              onChange={handleFilterChange}
-            />
-          </div>
+          {/* only the board page requires a search field for filtering tasks */}
+          {(filter !== undefined) ? search() : null}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -174,8 +179,13 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
 
 NavigationInterface.propTypes = {
   title: PropTypes.string.isRequired,
-  filter: PropTypes.string.isRequired,
-  handleFilterChange: PropTypes.func.isRequired,
+  filter: PropTypes.string,
+  handleFilterChange: PropTypes.func,
+};
+
+NavigationInterface.defaultProps = {
+  filter: undefined,
+  handleFilterChange: () => {},
 };
 
 export default NavigationInterface;

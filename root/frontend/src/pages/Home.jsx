@@ -3,8 +3,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,9 +52,9 @@ const Home = () => {
                 variant="contained"
                 color="primary"
                 component={Link}
-                to="/board"
+                to="/dashboard"
               >
-                Open Board
+                Open Dashboard
               </Button>
             </div>
           </Container>
