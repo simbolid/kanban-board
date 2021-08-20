@@ -1,16 +1,27 @@
-import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, { Suspense, lazy } from 'react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import Board from './pages/Board';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+
+// code splitting prevents initial load time from being too long
+const Home = lazy(() => import('./pages/Home'));
+const Board = lazy(() => import('./pages/Board'));
 
 const App = () => (
-  <>
-    <CssBaseline />
-    <Board />
-  </>
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/board" component={Board} />
+      </Switch>
+    </Suspense>
+  </Router>
 );
 
 export default App;
