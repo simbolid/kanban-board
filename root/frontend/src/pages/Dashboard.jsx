@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import BoardButton from '../components/BoardButton';
+import BoardButton from '../components/dashboard/BoardButton';
+import NewBoardButton from '../components/dashboard/NewBoardButton';
 import NavigationInterface from '../components/Navigation';
 import boardService from '../services/boards';
 
@@ -21,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     paddingBlock: theme.spacing(3),
     display: 'flex',
     alignItems: 'flex-start',
+  },
+  newBoardButton: {
+    width: theme.spacing(16),
+    height: theme.spacing(10),
   },
 }));
 
@@ -48,7 +53,7 @@ const Dashboard = () => {
           {boards.map((board) => (
             <Box
               key={board._id}
-              marginLeft="10px"
+              marginRight="10px"
             >
               <BoardButton boardID={board._id}>
                 {board.title}
@@ -56,6 +61,7 @@ const Dashboard = () => {
             </Box>
           ))}
         </div>
+        <NewBoardButton />
       </main>
     </div>
   );

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     '& > *': {
       margin: theme.spacing(1),
-      width: theme.spacing(16),
+      width: theme.spacing(18),
       height: theme.spacing(10),
     },
   },
@@ -20,10 +20,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     // remove underline from link
     textDecoration: 'none',
-  },
-  text: {
-    textDecoration: 'none',
-    textColor: 'white',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }));
 
