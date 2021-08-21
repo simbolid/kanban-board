@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import NavigationInterface from './components/Navigation';
-import Column from './components/Column';
-import ButtonToTextField from './components/ButtonToTextField';
+import NavigationInterface from '../components/Navigation';
+import Column from '../components/Column';
+import ButtonToTextField from '../components/ButtonToTextField';
 import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
