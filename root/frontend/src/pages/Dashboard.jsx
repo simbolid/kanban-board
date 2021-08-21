@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import BoardButton from '../components/BoardButton';
 import NavigationInterface from '../components/Navigation';
 import boardService from '../services/boards';
 
@@ -51,15 +50,9 @@ const Dashboard = () => {
               key={board._id}
               marginLeft="10px"
             >
-              <Button
-                key={board._id}
-                variant="contained"
-                color="primary"
-                component={Link}
-                to={`/board/${board._id}`}
-              >
+              <BoardButton boardID={board._id}>
                 {board.title}
-              </Button>
+              </BoardButton>
             </Box>
           ))}
         </div>
