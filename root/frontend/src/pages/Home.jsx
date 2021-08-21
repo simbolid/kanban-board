@@ -43,9 +43,7 @@ const Home = () => {
               Kanban Bonsai
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
+              A minimalistic project management solution.
             </Typography>
             <div className={classes.heroButton}>
               <Button
@@ -60,16 +58,6 @@ const Home = () => {
           </Container>
         </div>
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
-      </footer>
-      {/* End footer */}
     </>
   );
 };
