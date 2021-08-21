@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProjectBoard = ({ match }) => {
+const Board = ({ match }) => {
   const [newColumnRequested, setNewColumnRequested] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
   const [filter, setFilter] = useState('');
@@ -235,4 +236,12 @@ const ProjectBoard = ({ match }) => {
   );
 };
 
-export default ProjectBoard;
+Board.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
+
+export default Board;
