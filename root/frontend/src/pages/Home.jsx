@@ -43,7 +43,7 @@ const Home = () => {
               Kanban Bonsai
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              A minimalistic project management solution.
+              A minimalist project management solution.
             </Typography>
             <div className={classes.heroButton}>
               <Button
