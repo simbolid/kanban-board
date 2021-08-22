@@ -39,6 +39,14 @@ const Dashboard = () => {
     setBoards(retrievedBoards);
   }, []);
 
+  const addBoard = async (title) => {
+    const newBoard = {
+      title,
+    };
+    const returnedBoard = await boardService.addBoard(newBoard);
+    setBoards(boards.concat(returnedBoard));
+  };
+
   return (
     <div className={classes.root}>
       <NavigationInterface title="Dashboard" />
@@ -61,7 +69,7 @@ const Dashboard = () => {
             </Box>
           ))}
         </div>
-        <NewBoardButton />
+        <NewBoardButton onSubmit={addBoard} />
       </main>
     </div>
   );

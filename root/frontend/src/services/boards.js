@@ -12,6 +12,11 @@ const getBoards = async () => {
   return response.data;
 };
 
+const addBoard = async (newBoard) => {
+  const response = await axios.post(baseUrl, newBoard);
+  return response.data;
+};
+
 const updateBoard = async (board) => {
   const response = await axios.put(`${baseUrl}/${board._id}`, board);
   return response.data;
@@ -20,5 +25,6 @@ const updateBoard = async (board) => {
 export default {
   getBoard,
   getBoards,
+  addBoard,
   updateBoard,
 };
