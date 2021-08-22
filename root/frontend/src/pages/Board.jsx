@@ -4,8 +4,8 @@ import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from '../components/Navigation';
-import Column from '../components/Column';
-import ButtonToTextField from '../components/ButtonToTextField';
+import Column from '../components/board/Column';
+import ButtonToTextField from '../components/board/ButtonToTextField';
 import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
