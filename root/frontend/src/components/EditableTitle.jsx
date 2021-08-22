@@ -25,8 +25,10 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setOpenEdit(false);
-    onSubmit(title);
+    if (title !== '') {
+      setOpenEdit(false);
+      onSubmit(title);
+    }
   };
 
   const text = () => (
