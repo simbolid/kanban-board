@@ -191,6 +191,7 @@ const Board = ({ match }) => {
         title={board.title}
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
+        editableTitle
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <main className={classes.content}>

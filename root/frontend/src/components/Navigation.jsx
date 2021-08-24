@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import EditableTitle from './board/EditableTitle';
 import { mainListItems, secondaryListItems } from './navigationItems';
 
 const drawerWidth = 240;
@@ -111,12 +112,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavigationInterface = ({ title, filter, handleFilterChange }) => {
+const NavigationInterface = ({
+  title,
+  filter,
+  handleFilterChange,
+  editableTitle,
+  handleTitleChange,
+}) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+
+  const staticTitle = () => (
+    <Typography component="h1" variant="h6" color="inherit" noWrap>
+      {title}
+    </Typography>
+  );
+
+  /* The key prop is necessary so that the component updates when the title prop changes.
+   * See https://stackoverflow.com/questions/38892672 */
+  const dynamicTitle = () => (
+    <EditableTitle
+      initialTitle={title}
+      key={title}
+      TypographyProps={{
+        component: 'h1',
+        variant: 'h6',
+        color: 'inherit',
+        nowrap: 'true',
+      }}
+      onSubmit={handleTitleChange}
+      appBar
+    />
+  );
 
   const search = () => (
     <div className={classes.search}>
@@ -149,9 +179,7 @@ const NavigationInterface = ({ title, filter, handleFilterChange }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap>
-            {title}
-          </Typography>
+          {editableTitle ? dynamicTitle() : staticTitle()}
           {/* only the board page requires a search field for filtering tasks */}
           {(filter !== undefined) ? search() : null}
         </Toolbar>
@@ -181,11 +209,15 @@ NavigationInterface.propTypes = {
   title: PropTypes.string.isRequired,
   filter: PropTypes.string,
   handleFilterChange: PropTypes.func,
+  editableTitle: PropTypes.bool,
+  handleTitleChange: PropTypes.func,
 };
 
 NavigationInterface.defaultProps = {
   filter: undefined,
   handleFilterChange: () => {},
+  editableTitle: false,
+  handleTitleChange: () => {},
 };
 
 export default NavigationInterface;

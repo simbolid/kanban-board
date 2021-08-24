@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   text: {
     cursor: 'pointer',
   },
@@ -12,9 +13,14 @@ const useStyles = makeStyles(() => ({
     paddingInline: '10px',
     paddingBlock: '5px',
   },
+  // styles to apply only for the app bar title
+  appBarField: {
+    color: 'white',
+    backgroundColor: theme.palette.primary.light,
+  },
 }));
 
-const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
+const EditableTitle = ({ initialTitle, onSubmit, TypographyProps, appBar }) => {
   const [title, setTitle] = useState(initialTitle);
   const [openEdit, setOpenEdit] = useState(false);
   const classes = useStyles();
@@ -48,10 +54,14 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
   const textField = () => (
     <form onSubmit={handleSubmit}>
       <TextField
-        inputProps={{
-          className: classes.textField,
+        className={classes.text}
+        InputProps={{
+          ...(appBar) && { disableUnderline: true },
+          inputProps: {
+            className: clsx(classes.textField, appBar && classes.appBarField),
+          },
         }}
-        variant="outlined"
+        variant={appBar ? 'standard' : 'outlined'}
         value={title}
         onChange={({ target }) => setTitle(target.value)}
         onBlur={handleSubmit}
@@ -68,8 +78,13 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
 EditableTitle.propTypes = {
   initialTitle: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  appBar: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
+};
+
+EditableTitle.defaultProps = {
+  appBar: false,
 };
 
 export default EditableTitle;
