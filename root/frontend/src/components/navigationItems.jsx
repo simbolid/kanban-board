@@ -34,7 +34,11 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <>
-    <ListItem button>
+    <ListItem
+      button
+      component={Link}
+      to="/settings"
+    >
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>

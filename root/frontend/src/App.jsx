@@ -14,6 +14,7 @@ import LoadingScreen from './pages/Loading';
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Board = lazy(() => import('./pages/Board'));
+const Settings = lazy(() => import('./pages/Settings'));
 
 const App = () => (
   <Router>
@@ -22,6 +23,7 @@ const App = () => (
         <Route path="/" exact component={Home} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/board/:id" component={Board} />
+        <Route path="/settings" component={Settings} />
       </Switch>
     </Suspense>
   </Router>

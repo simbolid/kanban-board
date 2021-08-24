@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'flex-start',
   },
-  newBoardButton: {
-    width: theme.spacing(16),
-    height: theme.spacing(10),
-  },
 }));
 
 const Dashboard = () => {
