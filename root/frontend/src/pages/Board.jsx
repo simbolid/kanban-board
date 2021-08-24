@@ -106,6 +106,13 @@ const Board = ({ match }) => {
     });
   };
 
+  const editBoardTitle = (title) => {
+    updateBoardFrontend({
+      ...board,
+      title,
+    });
+  };
+
   const onDragEnd = async ({ destination, source, type }) => {
     // make sure that the destination is valid
     if (!destination) return;
@@ -191,6 +198,7 @@ const Board = ({ match }) => {
         title={board.title}
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
+        handleTitleChange={editBoardTitle}
         editableTitle
       />
       <DragDropContext onDragEnd={onDragEnd}>
