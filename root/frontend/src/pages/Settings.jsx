@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,12 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Settings = () => {
+const Settings = ({ match }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <NavigationInterface title="Settings" />
+      <NavigationInterface
+        title="Settings"
+        boardID={match.params.id}
+      />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Typography variant="subtitle1">
@@ -49,6 +53,14 @@ const Settings = () => {
       </main>
     </div>
   );
+};
+
+Settings.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default Settings;

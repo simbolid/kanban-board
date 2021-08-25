@@ -4,10 +4,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 
-export const mainListItems = (
+const mainListItems = (
   <>
     <ListItem
       button
@@ -32,17 +31,4 @@ export const mainListItems = (
   </>
 );
 
-export const secondaryListItems = (
-  <>
-    <ListItem
-      button
-      component={Link}
-      to="/settings"
-    >
-      <ListItemIcon>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Settings" />
-    </ListItem>
-  </>
-);
+export default mainListItems;

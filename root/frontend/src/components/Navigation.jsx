@@ -14,7 +14,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import EditableTitle from './board/EditableTitle';
-import { mainListItems, secondaryListItems } from './navigationItems';
+import BoardList from './BoardList';
+import mainListItems from './navigationItems';
 
 const drawerWidth = 240;
 
@@ -116,8 +117,9 @@ const NavigationInterface = ({
   title,
   filter,
   handleFilterChange,
-  editableTitle,
   handleTitleChange,
+  boardFeatures,
+  boardID,
 }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -179,9 +181,10 @@ const NavigationInterface = ({
           >
             <MenuIcon />
           </IconButton>
-          {editableTitle ? dynamicTitle() : staticTitle()}
-          {/* only the board page requires a search field for filtering tasks */}
-          {(filter !== undefined) ? search() : null}
+          {/* board titles should be editable */}
+          {boardFeatures ? dynamicTitle() : staticTitle()}
+          {/* the board page requires a search field for filtering tasks */}
+          {boardFeatures ? search() : null}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -198,8 +201,13 @@ const NavigationInterface = ({
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        {/* the board page requires a link to the board settings page */}
+        {boardID ? (
+          <>
+            <Divider />
+            <BoardList boardID={boardID} />
+          </>
+        ) : null}
       </Drawer>
     </>
   );
@@ -209,15 +217,17 @@ NavigationInterface.propTypes = {
   title: PropTypes.string.isRequired,
   filter: PropTypes.string,
   handleFilterChange: PropTypes.func,
-  editableTitle: PropTypes.bool,
   handleTitleChange: PropTypes.func,
+  boardFeatures: PropTypes.bool,
+  boardID: PropTypes.string,
 };
 
 NavigationInterface.defaultProps = {
   filter: undefined,
   handleFilterChange: () => {},
-  editableTitle: false,
   handleTitleChange: () => {},
+  boardFeatures: false,
+  boardID: undefined,
 };
 
 export default NavigationInterface;
