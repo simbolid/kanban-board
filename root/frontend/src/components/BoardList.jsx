@@ -15,7 +15,7 @@ const BoardList = ({ boardID }) => (
     <ListItem
       button
       component={Link}
-      to={`/board/${boardID}`}
+      to={`/b/${boardID}`}
     >
       <ListItemIcon>
         <DeveloperBoardIcon />
@@ -25,7 +25,7 @@ const BoardList = ({ boardID }) => (
     <ListItem
       button
       component={Link}
-      to={`/board/${boardID}/s`}
+      to={`/b/${boardID}/s`}
     >
       <ListItemIcon>
         <SettingsIcon />

@@ -34,7 +34,7 @@ const BoardButton = ({ boardID, children }) => {
       <Paper
         className={classes.paper}
         component={Link}
-        to={`/board/${boardID}`}
+        to={`/b/${boardID}`}
       >
         <Box color="white" fontWeight="fontWeightMedium">
           {children}
