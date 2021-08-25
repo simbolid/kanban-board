@@ -17,6 +17,10 @@ const addBoard = async (newBoard) => {
   return response.data;
 };
 
+const deleteBoard = async (id) => {
+  await axios.delete(`${baseUrl}/${id}`);
+};
+
 const updateBoard = async (board) => {
   const response = await axios.put(`${baseUrl}/${board._id}`, board);
   return response.data;
@@ -26,5 +30,6 @@ export default {
   getBoard,
   getBoards,
   addBoard,
+  deleteBoard,
   updateBoard,
 };

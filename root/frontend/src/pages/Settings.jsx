@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigationInterface from '../components/Navigation';
 import DeleteButton from '../components/settings/DeleteButton';
+import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
 const Settings = ({ match }) => {
   const classes = useStyles();
 
+  const deleteBoard = () => {
+    boardService.deleteBoard(match.params.id);
+  };
+
   return (
     <div className={classes.root}>
       <NavigationInterface
@@ -49,7 +54,7 @@ const Settings = ({ match }) => {
             </Box>
           </Box>
         </Typography>
-        <DeleteButton />
+        <DeleteButton onSubmit={deleteBoard} />
       </main>
     </div>
   );
