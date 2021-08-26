@@ -1,4 +1,5 @@
 const boardRouter = require('express').Router();
+const { nanoid } = require('nanoid');
 const Board = require('../models/board');
 
 boardRouter.get('/', async (request, response) => {
@@ -6,8 +7,9 @@ boardRouter.get('/', async (request, response) => {
   response.json(boards);
 });
 
-boardRouter.get('/:id', async (request, response) => {
-  const board = await Board.findById(request.params.id);
+boardRouter.get('/:urlid', async (request, response) => {
+  const boards = await Board.find({});
+  const board = boards.find((b) => b.url_id === request.params.urlid);
   response.json(board);
 });
 
@@ -18,6 +20,7 @@ boardRouter.post('/', async (request, response) => {
 
   const newBoard = new Board({
     title: request.body.title,
+    url_id: nanoid(8),
   });
 
   const savedBoard = await newBoard.save();
@@ -31,8 +34,10 @@ boardRouter.put('/:id', async (request, response) => {
   response.json(updatedBoard);
 });
 
-boardRouter.delete('/:id', async (request, response) => {
-  await Board.findByIdAndRemove(request.params.id);
+boardRouter.delete('/:urlid', async (request, response) => {
+  const boards = await Board.find({});
+  const board = boards.find((b) => b.url_id === request.params.urlid);
+  await Board.findByIdAndRemove(board._id);
   response.status(204).end(); // 204 no content
 });
 

@@ -119,7 +119,7 @@ const NavigationInterface = ({
   handleFilterChange,
   handleTitleChange,
   boardFeatures,
-  boardID,
+  urlID,
 }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -202,10 +202,10 @@ const NavigationInterface = ({
         <Divider />
         <List>{mainListItems}</List>
         {/* the board page requires a link to the board settings page */}
-        {boardID ? (
+        {urlID ? (
           <>
             <Divider />
-            <BoardList boardID={boardID} />
+            <BoardList urlID={urlID} />
           </>
         ) : null}
       </Drawer>
@@ -219,7 +219,7 @@ NavigationInterface.propTypes = {
   handleFilterChange: PropTypes.func,
   handleTitleChange: PropTypes.func,
   boardFeatures: PropTypes.bool,
-  boardID: PropTypes.string,
+  urlID: PropTypes.string,
 };
 
 NavigationInterface.defaultProps = {
@@ -227,7 +227,7 @@ NavigationInterface.defaultProps = {
   handleFilterChange: () => {},
   handleTitleChange: () => {},
   boardFeatures: false,
-  boardID: undefined,
+  urlID: undefined,
 };
 
 export default NavigationInterface;

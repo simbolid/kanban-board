@@ -184,7 +184,7 @@ const Board = ({ match }) => {
         filter={filter}
         handleFilterChange={(event) => setFilter(event.target.value)}
         handleTitleChange={editBoardTitle}
-        boardID={board._id}
+        urlID={board.url_id}
         boardFeatures
       />
       <DragDropContext onDragEnd={onDragEnd}>

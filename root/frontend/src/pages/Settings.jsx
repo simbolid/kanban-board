@@ -40,7 +40,7 @@ const Settings = ({ match }) => {
     <div className={classes.root}>
       <NavigationInterface
         title="Settings"
-        boardID={match.params.id}
+        urlID={match.params.id}
       />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

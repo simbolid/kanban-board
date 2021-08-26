@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoardButton = ({ boardID, children }) => {
+const BoardButton = ({ urlID, children }) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,7 @@ const BoardButton = ({ boardID, children }) => {
       <Paper
         className={classes.paper}
         component={Link}
-        to={`/b/${boardID}`}
+        to={`/b/${urlID}`}
       >
         <Box color="white" fontWeight="fontWeightMedium">
           {children}
@@ -45,7 +45,7 @@ const BoardButton = ({ boardID, children }) => {
 };
 
 BoardButton.propTypes = {
-  boardID: PropTypes.string.isRequired,
+  urlID: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 

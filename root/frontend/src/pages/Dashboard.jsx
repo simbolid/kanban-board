@@ -59,7 +59,7 @@ const Dashboard = () => {
               key={board._id}
               marginRight="10px"
             >
-              <BoardButton boardID={board._id}>
+              <BoardButton urlID={board.url_id}>
                 {board.title}
               </BoardButton>
             </Box>

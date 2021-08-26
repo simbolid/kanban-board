@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 
 /* navigation items that are only visible once the user has
  * selected a board */
-const BoardList = ({ boardID }) => (
+const BoardList = ({ urlID }) => (
   <List>
     <ListItem
       button
       component={Link}
-      to={`/b/${boardID}`}
+      to={`/b/${urlID}`}
     >
       <ListItemIcon>
         <DeveloperBoardIcon />
@@ -25,7 +25,7 @@ const BoardList = ({ boardID }) => (
     <ListItem
       button
       component={Link}
-      to={`/b/${boardID}/s`}
+      to={`/b/${urlID}/s`}
     >
       <ListItemIcon>
         <SettingsIcon />
@@ -36,7 +36,7 @@ const BoardList = ({ boardID }) => (
 );
 
 BoardList.propTypes = {
-  boardID: PropTypes.string.isRequired,
+  urlID: PropTypes.string.isRequired,
 };
 
 export default BoardList;

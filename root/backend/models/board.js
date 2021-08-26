@@ -5,6 +5,10 @@ const boardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  url_id: {
+    type: String,
+    requires: true,
+  },
   columns: [
     {
       title: {
