@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Board = ({ match }) => {
-  const [newColumnRequested, setNewColumnRequested] = useState(false);
-  const [newColumnTitle, setNewColumnTitle] = useState('');
   const [filter, setFilter] = useState('');
   const [board, setBoard] = useState({
     title: '',
@@ -57,29 +55,16 @@ const Board = ({ match }) => {
     setBoard(savedBoard);
   };
 
-  const cancelNewColumn = () => {
-    setNewColumnRequested(false);
-    setNewColumnTitle('');
-  };
+  const addColumn = async (title) => {
+    const newColumn = {
+      cards: [],
+      title,
+    };
 
-  const addColumn = async (event) => {
-    // prevent form submission from reloading page
-    event.preventDefault();
-
-    if (newColumnTitle !== '') {
-      const newColumn = {
-        title: newColumnTitle,
-        cards: [],
-      };
-
-      setNewColumnRequested(false);
-      setNewColumnTitle('');
-
-      updateBoardBackend({
-        ...board,
-        columns: board.columns.concat(newColumn),
-      });
-    }
+    updateBoardBackend({
+      ...board,
+      columns: board.columns.concat(newColumn),
+    });
   };
 
   const updateColumn = async (updatedColumn, newCardAdded) => {
@@ -227,14 +212,9 @@ const Board = ({ match }) => {
                     pressed, turns into a text field that requests a name for the column */}
                 <Box marginLeft={1.5}>
                   <ButtonToTextField
-                    buttonPressed={newColumnRequested}
-                    onButtonClick={() => setNewColumnRequested(true)}
-                    onCancel={cancelNewColumn}
-                    onTextFieldChange={(event) => setNewColumnTitle(event.target.value)}
-                    onTextFieldSubmit={addColumn}
-                    textFieldLabel="Column title"
-                    textFieldValue={newColumnTitle}
+                    onSubmit={addColumn}
                     title="Add Column"
+                    label="Column title"
                   />
                 </Box>
               </div>

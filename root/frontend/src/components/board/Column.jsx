@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Box from '@material-ui/core/Box';
@@ -44,8 +44,6 @@ const Column = ({
   deleteColumn,
   updateColumn,
 }) => {
-  const [newCardRequested, setNewCardRequested] = useState(false);
-  const [newCardTitle, setNewCardTitle] = useState('');
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -59,22 +57,11 @@ const Column = ({
     });
   };
 
-  const cancelNewCard = () => {
-    setNewCardRequested(false);
-    setNewCardTitle('');
-  };
-
-  const addCard = () => {
-    // the new card requires a title
-    if (newCardTitle !== '') {
-      setNewCardRequested(false);
-      setNewCardTitle('');
-
-      updateColumn({
-        ...column,
-        cards: column.cards.concat({ title: newCardTitle }),
-      }, true);
-    }
+  const addCard = (title) => {
+    updateColumn({
+      ...column,
+      cards: column.cards.concat({ title }),
+    }, true);
   };
 
   const updateCard = async (updatedCard) => {
@@ -138,14 +125,9 @@ const Column = ({
               )}
             </Droppable>
             <ButtonToTextField
-              buttonPressed={newCardRequested}
-              onButtonClick={() => setNewCardRequested(true)}
-              onCancel={cancelNewCard}
-              onTextFieldChange={(e) => setNewCardTitle(e.target.value)}
-              onTextFieldSubmit={addCard}
-              textFieldLabel="Card title"
-              textFieldValue={newCardTitle}
+              onSubmit={addCard}
               title="Add Card"
+              label="Card title"
             />
           </List>
         </Paper>

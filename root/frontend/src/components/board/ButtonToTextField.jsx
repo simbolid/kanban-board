@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textTransform: 'none',
-    // fontFamily: 'Roboto',
     padding: theme.spacing(1),
   },
   secondRow: {
@@ -23,69 +22,90 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ButtonToTextField = (props) => {
+const ButtonToTextField = ({
+  onSubmit,
+  title,
+  label,
+}) => {
+  const [openTextField, setOpenTextField] = useState(false);
+  const [text, setText] = useState('');
+
   const classes = useStyles();
 
-  const detectEnterKey = (event) => {
-    if (event.keyCode === 13) {
-      props.onTextFieldSubmit(event);
+  const handleOpen = () => {
+    setOpenTextField(true);
+  };
+
+  const handleCancel = () => {
+    setOpenTextField(false);
+    setText('');
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (text !== '') {
+      setOpenTextField(false);
+      onSubmit(text);
+      setText('');
     }
   };
 
-  if (props.buttonPressed) {
-    return (
-      <div className={classes.root}>
-        <form onSubmit={props.onTextFieldSubmit}>
-          <TextField
-            variant="outlined"
-            size="small"
-            label={props.textFieldLabel}
-            value={props.textFieldValue}
-            onKeyDown={detectEnterKey}
-            onChange={props.onTextFieldChange}
-            autoFocus
-            multiline
-          />
-        </form>
-        <div className={classes.secondRow}>
-          <Button
-            variant="contained"
-            size="small"
-            color="primary"
-            className={classes.addButton}
-            onClick={props.onTextFieldSubmit}
-          >
-            {props.title}
-          </Button>
-          <IconButton aria-label="delete" onClick={props.onCancel}>
-            <CloseIcon />
-          </IconButton>
-        </div>
-      </div>
-    );
-  }
-  return (
+  const detectEnterKey = (event) => {
+    if (event.keyCode === 13) {
+      handleSubmit(event);
+    }
+  };
+
+  const button = () => (
     <div className={classes.root}>
       <Button
         color="primary"
         className={classes.addButton}
-        onClick={props.onButtonClick}
+        onClick={handleOpen}
       >
-        {props.title}
+        {title}
       </Button>
     </div>
   );
+
+  const textField = () => (
+    <div className={classes.root}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          variant="outlined"
+          size="small"
+          label={label}
+          value={text}
+          onKeyDown={detectEnterKey}
+          onChange={({ target }) => setText(target.value)}
+          autoFocus
+          multiline
+        />
+      </form>
+      <div className={classes.secondRow}>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          className={classes.addButton}
+          onClick={handleSubmit}
+        >
+          {title}
+        </Button>
+        <IconButton aria-label="delete" onClick={handleCancel}>
+          <CloseIcon />
+        </IconButton>
+      </div>
+    </div>
+  );
+
+  return openTextField ? textField() : button();
 };
 
 ButtonToTextField.propTypes = {
-  buttonPressed: PropTypes.bool.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onTextFieldSubmit: PropTypes.func.isRequired,
-  textFieldLabel: PropTypes.string.isRequired,
-  textFieldValue: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  onTextFieldChange: PropTypes.func.isRequired,
-  onButtonClick: PropTypes.func.isRequired,
 };
 
 export default ButtonToTextField;
