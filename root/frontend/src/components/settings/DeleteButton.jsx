@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    color: theme.palette.grey[800],
-    textTransform: 'none',
+    color: theme.palette.red,
+    borderColor: theme.palette.red,
     '&:hover': {
       color: 'white',
-      backgroundColor: 'red',
+      backgroundColor: theme.palette.red,
     },
   },
   dialog: {

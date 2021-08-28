@@ -87,10 +87,11 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'relative',
+    border: '1px gainsboro solid',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.grey[400], 0.20),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.grey[500], 0.20),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -108,6 +109,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: theme.palette.grey[700],
   },
   notification: {
     marginLeft: 'auto',
@@ -146,7 +148,6 @@ const NavigationInterface = ({
         nowrap: 'true',
       }}
       onSubmit={handleTitleChange}
-      appBar
     />
   );
 

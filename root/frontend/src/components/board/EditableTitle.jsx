@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   text: {
     cursor: 'pointer',
   },
@@ -13,14 +12,9 @@ const useStyles = makeStyles((theme) => ({
     paddingInline: '10px',
     paddingBlock: '5px',
   },
-  // styles to apply only for the app bar title
-  appBarField: {
-    // color: 'white',
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
+});
 
-const EditableTitle = ({ initialTitle, onSubmit, TypographyProps, appBar }) => {
+const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
   const [title, setTitle] = useState(initialTitle);
   const [openEdit, setOpenEdit] = useState(false);
   const classes = useStyles();
@@ -56,12 +50,12 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps, appBar }) => {
       <TextField
         className={classes.text}
         InputProps={{
-          ...(appBar) && { disableUnderline: true },
           inputProps: {
-            className: clsx(classes.textField, appBar && classes.appBarField),
+            className: classes.textField,
           },
         }}
-        variant={appBar ? 'standard' : 'outlined'}
+        variant="outlined"
+        color="secondary"
         value={title}
         onChange={({ target }) => setTitle(target.value)}
         onBlur={handleSubmit}
@@ -78,13 +72,8 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps, appBar }) => {
 EditableTitle.propTypes = {
   initialTitle: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  appBar: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
-};
-
-EditableTitle.defaultProps = {
-  appBar: false,
 };
 
 export default EditableTitle;

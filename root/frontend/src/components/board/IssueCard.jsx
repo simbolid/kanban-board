@@ -155,10 +155,9 @@ const IssueCard = ({
         autoFocus
       />
       <Button
-        style={{ textTransform: 'none' }}
         variant="contained"
         size="small"
-        color="primary"
+        color="secondary"
         className={classes.addButton}
         type="submit"
       >

@@ -96,6 +96,7 @@ const NewBoardButton = ({ onSubmit }) => {
           </DialogContentText>
           <TextField
             value={newBoardTitle}
+            color="secondary"
             onChange={({ target }) => setNewBoardTitle(target.value)}
             onKeyDown={detectEnterKey}
             autoFocus
@@ -105,10 +106,10 @@ const NewBoardButton = ({ onSubmit }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} color="secondary">
             Submit
           </Button>
         </DialogActions>

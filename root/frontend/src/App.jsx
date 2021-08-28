@@ -23,6 +23,7 @@ const theme = createMuiTheme({
       main: '#006241', // Starbucks green
       light: '#009150', // Spanish green
     },
+    red: '#e62020',
   },
   typography: {
     button: {

@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
   },
   addButton: {
-    textTransform: 'none',
     padding: theme.spacing(1),
   },
   secondRow: {
@@ -73,6 +72,7 @@ const ButtonToTextField = ({
       <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
+          color="secondary"
           size="small"
           label={label}
           value={text}
@@ -86,7 +86,7 @@ const ButtonToTextField = ({
         <Button
           variant="contained"
           size="small"
-          color="primary"
+          color="secondary"
           className={classes.addButton}
           onClick={handleSubmit}
         >
