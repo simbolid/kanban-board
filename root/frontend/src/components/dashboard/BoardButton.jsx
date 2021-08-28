@@ -14,14 +14,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.secondary.light,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     // remove underline from link
     textDecoration: 'none',
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 }));

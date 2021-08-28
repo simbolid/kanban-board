@@ -59,7 +59,7 @@ const ButtonToTextField = ({
   const button = () => (
     <div className={classes.root}>
       <Button
-        color="primary"
+        color="secondary"
         className={classes.addButton}
         onClick={handleOpen}
       >

@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    borderBottom: '1px gainsboro solid',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -142,7 +143,6 @@ const NavigationInterface = ({
       TypographyProps={{
         component: 'h1',
         variant: 'h6',
-        color: 'inherit',
         nowrap: 'true',
       }}
       onSubmit={handleTitleChange}
@@ -170,7 +170,11 @@ const NavigationInterface = ({
 
   return (
     <>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+        elevation={0}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"

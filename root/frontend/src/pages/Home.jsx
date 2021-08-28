@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <>
-      <AppBar position="relative">
+      <AppBar position="relative" elevation={0}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Kanban Bonsai
@@ -47,12 +47,14 @@ const Home = () => {
             </Typography>
             <div className={classes.heroButton}>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
+                size="large"
+                color="secondary"
                 component={Link}
                 to="/dashboard"
+                style={{ borderRadius: '12px' }}
               >
-                Open Dashboard
+                Get Started
               </Button>
             </div>
           </Container>

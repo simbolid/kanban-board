@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
   },
   // styles to apply only for the app bar title
   appBarField: {
-    color: 'white',
-    backgroundColor: theme.palette.primary.light,
+    // color: 'white',
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 

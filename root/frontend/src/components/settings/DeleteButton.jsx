@@ -67,12 +67,12 @@ const DeleteButton = ({ onSubmit }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
           <Button
             onClick={handleSubmit}
-            color="primary"
+            color="secondary"
             component={Link}
             to="/dashboard"
           >
