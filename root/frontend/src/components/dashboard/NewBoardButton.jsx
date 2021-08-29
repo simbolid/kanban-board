@@ -70,14 +70,14 @@ const NewBoardButton = ({ onSubmit }) => {
 
   return (
     <>
-      <div
-        className={classes.container}
-        onClick={handleClick}
-        onKeyDown={handleClick}
-        role="button"
-        tabIndex={0}
-      >
-        <Paper className={classes.paper}>
+      <div className={classes.container}>
+        <Paper
+          className={classes.paper}
+          onClick={handleClick}
+          onKeyDown={handleClick}
+          role="button"
+          tabIndex={0}
+        >
           Create new board
         </Paper>
       </div>
