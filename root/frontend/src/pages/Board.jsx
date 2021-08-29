@@ -8,23 +8,12 @@ import Column from '../components/board/Column';
 import ButtonToTextField from '../components/board/ButtonToTextField';
 import boardService from '../services/boards';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    backgroundColor: theme.palette.grey[200],
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    height: '100vh',
-    overflow: 'auto',
-  },
+const useStyles = makeStyles({
   container: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
     display: 'flex',
     alignItems: 'flex-start',
   },
-}));
+});
 
 const Board = ({ match }) => {
   const [filter, setFilter] = useState('');
@@ -177,52 +166,47 @@ const Board = ({ match }) => {
   };
 
   return (
-    <div className={classes.root}>
-      {/* the top bar and side menu */}
-      <NavigationInterface
-        title={board.title}
-        filter={filter}
-        handleFilterChange={(event) => setFilter(event.target.value)}
-        handleTitleChange={editBoardTitle}
-        urlID={board.url_id}
-        boardFeatures
-      />
+    <NavigationInterface
+      title={board.title}
+      filter={filter}
+      handleFilterChange={(event) => setFilter(event.target.value)}
+      handleTitleChange={editBoardTitle}
+      urlID={board.url_id}
+      boardFeatures
+    >
       <DragDropContext onDragEnd={onDragEnd}>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Droppable droppableId="all-columns" type="column" direction="horizontal">
-            {(provided) => (
-              <div
-                className={classes.container}
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {board.columns.map((column, index) => (
-                  <Column
-                    key={column._id}
-                    column={column}
-                    index={index}
-                    filter={filter}
-                    updateColumn={updateColumn}
-                    deleteColumn={deleteColumn}
-                  />
-                ))}
-                {provided.placeholder}
-                {/* Initially a button for adding a column to the board. If the button is
-                    pressed, turns into a text field that requests a name for the column */}
-                <Box marginLeft={1.5}>
-                  <ButtonToTextField
-                    onSubmit={addColumn}
-                    title="Add Column"
-                    label="Column title"
-                  />
-                </Box>
-              </div>
-            )}
-          </Droppable>
-        </main>
+        <Droppable droppableId="all-columns" type="column" direction="horizontal">
+          {(provided) => (
+            <div
+              className={classes.container}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {board.columns.map((column, index) => (
+                <Column
+                  key={column._id}
+                  column={column}
+                  index={index}
+                  filter={filter}
+                  updateColumn={updateColumn}
+                  deleteColumn={deleteColumn}
+                />
+              ))}
+              {provided.placeholder}
+              {/* Initially a button for adding a column to the board. If the button is
+                  pressed, turns into a text field that requests a name for the column */}
+              <Box marginLeft={1.5}>
+                <ButtonToTextField
+                  onSubmit={addColumn}
+                  title="Add Column"
+                  label="Column title"
+                />
+              </Box>
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
-    </div>
+    </NavigationInterface>
   );
 };
 

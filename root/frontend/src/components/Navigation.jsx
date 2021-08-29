@@ -52,25 +52,12 @@ const useStyles = makeStyles((theme) => ({
   menuButtonHidden: {
     display: 'none',
   },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
+  drawer: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    flexShrink: 0,
   },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
+  drawerPaper: {
+    width: drawerWidth,
   },
   inputRoot: {
     color: 'inherit',
@@ -111,12 +98,32 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     color: theme.palette.grey[700],
   },
-  notification: {
-    marginLeft: 'auto',
+  root: {
+    display: 'flex',
+    backgroundColor: theme.palette.grey[200],
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    height: '100vh',
+    overflow: 'auto',
+    padding: theme.spacing(2),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   },
 }));
 
 const NavigationInterface = ({
+  children,
   title,
   filter,
   handleFilterChange,
@@ -170,7 +177,7 @@ const NavigationInterface = ({
   );
 
   return (
-    <>
+    <div className={classes.root}>
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -193,9 +200,10 @@ const NavigationInterface = ({
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        className={classes.drawer}
+        variant="persistent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: classes.drawerPaper,
         }}
         open={open}
       >
@@ -214,11 +222,20 @@ const NavigationInterface = ({
           </>
         ) : null}
       </Drawer>
-    </>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.appBarSpacer} />
+        {children}
+      </main>
+    </div>
   );
 };
 
 NavigationInterface.propTypes = {
+  children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   filter: PropTypes.string,
   handleFilterChange: PropTypes.func,

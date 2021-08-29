@@ -8,16 +8,6 @@ import NavigationInterface from '../components/Navigation';
 import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    backgroundColor: theme.palette.grey[200],
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    height: '100vh',
-    overflow: 'auto',
-    padding: theme.spacing(2),
-  },
   container: {
     paddingBlock: theme.spacing(3),
     display: 'flex',
@@ -44,30 +34,26 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <NavigationInterface title="Dashboard" />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Typography variant="h5">
-          <Box fontWeight="fontWeightMedium">
-            Boards
+    <NavigationInterface title="Dashboard">
+      <Typography variant="h5">
+        <Box fontWeight="fontWeightMedium">
+          Boards
+        </Box>
+      </Typography>
+      <div className={classes.container}>
+        {boards.map((board) => (
+          <Box
+            key={board._id}
+            marginRight="10px"
+          >
+            <BoardButton urlID={board.url_id}>
+              {board.title}
+            </BoardButton>
           </Box>
-        </Typography>
-        <div className={classes.container}>
-          {boards.map((board) => (
-            <Box
-              key={board._id}
-              marginRight="10px"
-            >
-              <BoardButton urlID={board.url_id}>
-                {board.title}
-              </BoardButton>
-            </Box>
-          ))}
-        </div>
-        <NewBoardButton onSubmit={addBoard} />
-      </main>
-    </div>
+        ))}
+      </div>
+      <NewBoardButton onSubmit={addBoard} />
+    </NavigationInterface>
   );
 };
 
