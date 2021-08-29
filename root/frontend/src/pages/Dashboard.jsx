@@ -9,7 +9,7 @@ import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingBlock: theme.spacing(3),
+    paddingBlock: theme.spacing(2),
     display: 'flex',
     alignItems: 'flex-start',
   },
@@ -35,24 +35,26 @@ const Dashboard = () => {
 
   return (
     <NavigationInterface title="Dashboard">
-      <Typography variant="h5">
-        <Box fontWeight="fontWeightMedium">
-          Boards
-        </Box>
-      </Typography>
-      <div className={classes.container}>
-        {boards.map((board) => (
-          <Box
-            key={board._id}
-            marginRight="10px"
-          >
-            <BoardButton urlID={board.url_id}>
-              {board.title}
-            </BoardButton>
+      <Box marginLeft={4} marginTop={1}>
+        <Typography variant="h5">
+          <Box fontWeight="fontWeightMedium">
+            Boards
           </Box>
-        ))}
-      </div>
-      <NewBoardButton onSubmit={addBoard} />
+        </Typography>
+        <div className={classes.container}>
+          {boards.map((board) => (
+            <Box
+              key={board._id}
+              marginRight="10px"
+            >
+              <BoardButton urlID={board.url_id}>
+                {board.title}
+              </BoardButton>
+            </Box>
+          ))}
+        </div>
+        <NewBoardButton onSubmit={addBoard} />
+      </Box>
     </NavigationInterface>
   );
 };

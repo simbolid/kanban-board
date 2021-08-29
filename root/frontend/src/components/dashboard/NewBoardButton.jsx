@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   container: {
     '& > *': {
-      margin: theme.spacing(1),
       width: theme.spacing(18),
       height: theme.spacing(10),
     },

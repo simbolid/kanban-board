@@ -16,17 +16,19 @@ const Settings = ({ match }) => {
       title="Settings"
       urlID={match.params.id}
     >
-      <Typography variant="subtitle1">
-        <Box margin="5px">
-          <Box fontWeight="fontWeightMedium">
-            Delete Board
+      <Box marginLeft={2}>
+        <Typography variant="subtitle1">
+          <Box margin={1}>
+            <Box fontWeight="fontWeightMedium">
+              Delete Board
+            </Box>
+            <Box color="#303030">
+              Warning: once a board is deleted, it cannot be brought back.
+            </Box>
           </Box>
-          <Box color="#303030">
-            Warning: once a board is deleted, it cannot be brought back.
-          </Box>
-        </Box>
-      </Typography>
-      <DeleteButton onSubmit={deleteBoard} />
+        </Typography>
+        <DeleteButton onSubmit={deleteBoard} />
+      </Box>
     </NavigationInterface>
   );
 };
