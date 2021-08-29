@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
-import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
-import { makeStyles, fade } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
+import { grey } from '@material-ui/core/colors';
 import EditableTitle from './board/EditableTitle';
-import BoardList from './BoardList';
-import mainListItems from './navigationItems';
+import DrawerList from './DrawerList';
 
-const drawerWidth = 240;
+const drawerWidth = 230;
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
+      easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
@@ -58,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: '#043927', // Sacramento State green
   },
   inputRoot: {
     color: 'inherit',
@@ -131,7 +130,7 @@ const NavigationInterface = ({
   boardFeatures,
   urlID,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const classes = useStyles();
 
   const handleDrawerOpen = () => setOpen(true);
@@ -209,18 +208,10 @@ const NavigationInterface = ({
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon style={{ color: grey[400] }} />
           </IconButton>
         </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        {/* the board page requires a link to the board settings page */}
-        {urlID ? (
-          <>
-            <Divider />
-            <BoardList urlID={urlID} />
-          </>
-        ) : null}
+        <DrawerList urlID={urlID} />
       </Drawer>
       <main
         className={clsx(classes.content, {
