@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import BounceLoader from 'react-spinners/BounceLoader';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from '../components/Navigation';
 import Column from '../components/board/Column';
@@ -165,6 +166,52 @@ const Board = ({ match }) => {
     });
   };
 
+  const loader = () => (
+    <Box
+      position="fixed"
+      top="45%"
+      left="50%"
+    >
+      <BounceLoader size={80} color="#009150" />
+    </Box>
+  );
+
+  // eslint-disable-next-line no-unused-vars
+  const boardInterface = () => (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" type="column" direction="horizontal">
+        {(provided) => (
+          <div
+            className={classes.container}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {board.columns.map((column, index) => (
+              <Column
+                key={column._id}
+                column={column}
+                index={index}
+                filter={filter}
+                updateColumn={updateColumn}
+                deleteColumn={deleteColumn}
+              />
+            ))}
+            {provided.placeholder}
+            {/* Initially a button for adding a column to the board. If the button is
+                pressed, turns into a text field that requests a name for the column */}
+            <Box marginLeft={1.5}>
+              <ButtonToTextField
+                onSubmit={addColumn}
+                title="Add Column"
+                label="Column title"
+              />
+            </Box>
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
+
   return (
     <NavigationInterface
       title={board.title}
@@ -174,38 +221,7 @@ const Board = ({ match }) => {
       urlID={board.url_id}
       boardFeatures
     >
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-columns" type="column" direction="horizontal">
-          {(provided) => (
-            <div
-              className={classes.container}
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {board.columns.map((column, index) => (
-                <Column
-                  key={column._id}
-                  column={column}
-                  index={index}
-                  filter={filter}
-                  updateColumn={updateColumn}
-                  deleteColumn={deleteColumn}
-                />
-              ))}
-              {provided.placeholder}
-              {/* Initially a button for adding a column to the board. If the button is
-                  pressed, turns into a text field that requests a name for the column */}
-              <Box marginLeft={1.5}>
-                <ButtonToTextField
-                  onSubmit={addColumn}
-                  title="Add Column"
-                  label="Column title"
-                />
-              </Box>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {board.title ? boardInterface() : loader()}
     </NavigationInterface>
   );
 };
