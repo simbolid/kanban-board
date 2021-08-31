@@ -69,6 +69,7 @@ const DropdownMenu = ({ onClick, onClose, onDelete }) => {
         <MenuItem
           className={classes.deleteMenuItem}
           onClick={handleDelete}
+          disableRipple
         >
           Delete
         </MenuItem>
