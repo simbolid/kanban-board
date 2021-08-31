@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.grey[200],
+    backgroundColor: theme.palette.grey[100],
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {

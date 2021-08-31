@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: '10px',
     backgroundColor: 'white',
-    borderRadius: '2px',
+    borderRadius: '4px',
     boxShadow: ' 0 1.25px 1px 0 rgba(0, 0, 0, 0.15)',
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
+      backgroundColor: theme.palette.grey[100],
       '& + $dropdown': {
         opacity: 1,
       },
