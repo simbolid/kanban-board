@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -18,6 +19,14 @@ import DropdownMenu from './DropdownMenu';
 import EditableTitle from './EditableTitle';
 
 const useStyles = makeStyles((theme) => ({
+  parent: {
+    display: 'flex',
+    position: 'relative',
+    cursor: 'pointer',
+    '&:hover $card': {
+      backgroundColor: 'rgba(185, 255, 190, 0.4)',
+    },
+  },
   card: {
     marginBottom: '10px',
     backgroundColor: 'white',
@@ -26,12 +35,15 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
-      backgroundColor: theme.palette.grey[100],
+      // backgroundColor: theme.palette.grey[100],
       '& + $dropdown': {
         opacity: 1,
         color: 'darkgrey',
       },
     },
+  },
+  cardFocus: {
+    backgroundColor: 'rgba(185, 255, 190, 0.4)',
   },
   dropdown: {
     opacity: 0,
@@ -44,9 +56,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dropdownFocus: {
     opacity: 1,
-    position: 'absolute',
-    top: 0,
-    right: 0,
   },
   dialog: {
     backgroundColor: theme.palette.grey[50],
@@ -175,9 +184,9 @@ const IssueCard = ({
     <>
       <Draggable draggableId={card._id} index={index}>
         {(provided) => (
-          <Box display="flex" position="relative" cursor="pointer">
+          <div className={classes.parent}>
             <ListItem
-              className={classes.card}
+              className={clsx(classes.card, openMenu && classes.cardFocus)}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
@@ -187,14 +196,14 @@ const IssueCard = ({
             >
               <ListItemText primary={card.title} />
             </ListItem>
-            <div className={openMenu ? classes.dropdownFocus : classes.dropdown}>
+            <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
               <DropdownMenu
                 onDelete={deleteCard}
                 onClick={() => setOpenMenu(true)}
                 onClose={() => setOpenMenu(false)}
               />
             </div>
-          </Box>
+          </div>
         )}
       </Draggable>
 
