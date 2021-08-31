@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.grey[100],
       '& + $dropdown': {
         opacity: 1,
+        color: 'darkgrey',
       },
     },
   },
