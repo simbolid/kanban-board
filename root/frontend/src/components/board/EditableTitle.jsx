@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   text: {
-    cursor: 'pointer',
+    cursor: (props) => props.cursor,
   },
   textField: {
     paddingInline: '10px',
@@ -15,11 +15,16 @@ const useStyles = makeStyles({
   },
 });
 
-const EditableTitle = React.forwardRef(({ initialTitle, onSubmit, TypographyProps }, ref) => {
+const EditableTitle = React.forwardRef(({
+  initialTitle,
+  onSubmit,
+  TypographyProps,
+  ...props
+}, ref) => {
   const [title, setTitle] = useState(initialTitle);
   const [isEditing, setIsEditing] = useState(false);
 
-  const classes = useStyles();
+  const classes = useStyles(props);
   const inputRef = useRef(false);
 
   const toggle = () => {
@@ -92,10 +97,12 @@ EditableTitle.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
+  cursor: PropTypes.string,
 };
 
 EditableTitle.defaultProps = {
   TypographyProps: { },
+  cursor: 'pointer',
 };
 
 export default EditableTitle;

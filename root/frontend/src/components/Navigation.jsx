@@ -154,6 +154,7 @@ const NavigationInterface = ({
         nowrap: 'true',
       }}
       onSubmit={handleTitleChange}
+      cursor="text"
     />
   );
 
