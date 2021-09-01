@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     color: 'darkgray',
     '&:hover': {
       backgroundColor: 'inherit',
-      color: 'black',
+      color: (props) => props.focusColor,
     },
   },
   focusedButton: {
     backgroundColor: 'inherit',
-    color: 'black',
+    color: (props) => props.focusColor,
   },
   deleteMenuItem: {
     '&:hover': {
@@ -26,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropdownMenu = ({ onClick, onClose, onDelete }) => {
+const DropdownMenu = ({ onClick, onClose, onDelete, ...props }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
 
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const handleDelete = () => {
     setPopupAnchor(null);
@@ -79,12 +79,14 @@ const DropdownMenu = ({ onClick, onClose, onDelete }) => {
 };
 
 DropdownMenu.propTypes = {
+  focusColor: PropTypes.string,
   onClick: PropTypes.func,
   onClose: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
 };
 
 DropdownMenu.defaultProps = {
+  focusColor: 'black',
   onClick: () => { },
   onClose: () => { },
 };

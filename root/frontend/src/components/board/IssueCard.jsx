@@ -198,6 +198,7 @@ const IssueCard = ({
             </ListItem>
             <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
               <DropdownMenu
+                focusColor="#424242"
                 onDelete={deleteCard}
                 onClick={() => setOpenMenu(true)}
                 onClose={() => setOpenMenu(false)}
