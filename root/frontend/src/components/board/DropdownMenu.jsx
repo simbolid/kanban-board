@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'inherit',
     color: theme.palette.grey[800],
   },
-  deleteMenuItem: {
+  menuItem: {
+    paddingBlock: '5px',
+  },
+  delete: {
     '&:hover': {
       backgroundColor: theme.palette.red,
       color: 'white',
@@ -26,19 +30,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropdownMenu = ({ onClick, onClose, onDelete }) => {
+const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
 
   const classes = useStyles();
 
-  const handleDelete = () => {
-    setPopupAnchor(null);
-    onDelete();
-  };
-
   const handleClick = (event) => {
     setPopupAnchor(event.currentTarget);
     onClick();
+  };
+
+  const handleRename = () => {
+    setPopupAnchor(null);
+    onRename();
+  };
+
+  const handleDelete = () => {
+    setPopupAnchor(null);
+    onDelete();
   };
 
   const handleClose = () => {
@@ -67,7 +76,15 @@ const DropdownMenu = ({ onClick, onClose, onDelete }) => {
         keepMounted
       >
         <MenuItem
-          className={classes.deleteMenuItem}
+          className={classes.menuItem}
+          onClick={handleRename}
+          disableRipple
+        >
+          Rename
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          className={`${classes.menuItem} ${classes.delete}`}
           onClick={handleDelete}
           disableRipple
         >
@@ -81,10 +98,12 @@ const DropdownMenu = ({ onClick, onClose, onDelete }) => {
 DropdownMenu.propTypes = {
   onClick: PropTypes.func,
   onClose: PropTypes.func,
+  onRename: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
 };
 
 DropdownMenu.defaultProps = {
+  onRename: () => { },
   onClick: () => { },
   onClose: () => { },
 };
