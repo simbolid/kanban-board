@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -14,19 +15,29 @@ const useStyles = makeStyles({
   },
 });
 
-const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
+const EditableTitle = React.forwardRef(({ initialTitle, onSubmit, TypographyProps }, ref) => {
   const [title, setTitle] = useState(initialTitle);
-  const [openEdit, setOpenEdit] = useState(false);
-  const classes = useStyles();
+  const [isEditing, setIsEditing] = useState(false);
 
-  const toggleEdit = () => {
-    setOpenEdit(!openEdit);
+  const classes = useStyles();
+  const inputRef = useRef(false);
+
+  const toggle = () => {
+    setIsEditing(!isEditing);
   };
+
+  /* We have to manually focus input because autofocus does not work
+     when the input field is opened from the drop-down menu. */
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (title !== '') {
-      setOpenEdit(false);
+      setIsEditing(false);
       onSubmit(title);
     }
   };
@@ -34,8 +45,8 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
   const text = () => (
     <div
       className={classes.text}
-      onClick={toggleEdit}
-      onKeyDown={toggleEdit}
+      onClick={toggle}
+      onKeyDown={toggle}
       role="button"
       tabIndex={0}
     >
@@ -45,35 +56,46 @@ const EditableTitle = ({ initialTitle, onSubmit, TypographyProps }) => {
     </div>
   );
 
+  /* ClickAwayListener's mouse event must be mouse down so that preventDefault()
+     prevent the blur event. (Event order is mousedown -> blur -> mouseup -> click) */
   const textField = () => (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        className={classes.text}
-        InputProps={{
-          inputProps: {
-            className: classes.textField,
-          },
-        }}
-        variant="outlined"
-        color="secondary"
-        value={title}
-        onChange={({ target }) => setTitle(target.value)}
-        onBlur={handleSubmit}
-        autoFocus
-      />
-    </form>
+    <ClickAwayListener mouseEvent="onMouseDown" onClickAway={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          className={classes.text}
+          InputProps={{
+            inputProps: {
+              className: classes.textField,
+            },
+          }}
+          variant="outlined"
+          color="secondary"
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+          inputRef={inputRef}
+        />
+      </form>
+    </ClickAwayListener>
   );
 
+  useImperativeHandle(ref, () => ({
+    toggle,
+  }));
+
   return (
-    openEdit ? textField() : text()
+    isEditing ? textField() : text()
   );
-};
+});
 
 EditableTitle.propTypes = {
   initialTitle: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
+};
+
+EditableTitle.defaultProps = {
+  TypographyProps: { },
 };
 
 export default EditableTitle;

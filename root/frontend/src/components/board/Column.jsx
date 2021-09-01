@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Box from '@material-ui/core/Box';
@@ -45,6 +45,12 @@ const Column = ({
   updateColumn,
 }) => {
   const classes = useStyles();
+
+  const titleRef = useRef();
+
+  const handleRename = () => {
+    titleRef.current.toggle();
+  };
 
   const handleDelete = () => {
     deleteColumn(column._id);
@@ -101,10 +107,14 @@ const Column = ({
                   className: classes.title,
                   gutterBottom: true,
                 }}
+                ref={titleRef}
               />
             </Box>
             <Box marginRight="-12px">
-              <DropdownMenu onDelete={handleDelete} />
+              <DropdownMenu
+                onRename={handleRename}
+                onDelete={handleDelete}
+              />
             </Box>
           </div>
           <List>
