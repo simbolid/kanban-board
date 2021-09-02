@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     marginBottom: '10px',
+    paddingBlock: '5px',
+    paddingInline: '10px',
     backgroundColor: 'white',
     borderRadius: '4px',
     boxShadow: ' 0 1.25px 1px 0 rgba(0, 0, 0, 0.15)',
@@ -48,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
   dropdown: {
     opacity: 0,
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: -4,
+    right: -4,
     '&:hover': {
       opacity: 1,
     },
@@ -195,7 +197,12 @@ const IssueCard = ({
               onClick={() => setOpenDialog(true)}
             >
               <Box marginRight={2}>
-                <ListItemText primary={card.title} />
+                <ListItemText
+                  primary={card.title}
+                  primaryTypographyProps={{
+                    variant: 'body2',
+                  }}
+                />
               </Box>
             </ListItem>
             <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
