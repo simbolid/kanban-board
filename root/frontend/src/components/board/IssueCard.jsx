@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+// import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     marginBottom: '10px',
-    paddingBlock: '5px',
+    paddingBlock: '7px',
     paddingInline: '10px',
     backgroundColor: 'white',
     borderRadius: '4px',
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   dropdown: {
     opacity: 0,
     position: 'absolute',
-    top: -4,
+    top: -6,
     right: -4,
     '&:hover': {
       opacity: 1,
@@ -101,11 +101,12 @@ const IssueCard = ({
   deleteCard,
   updateCard,
 }) => {
-  const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [description, setDescription] = useState(card.description ? card.description : '');
   const [editDescription, setEditDescription] = useState(false);
+  const classes = useStyles();
+  const titleRef = useRef();
 
   const resetDescription = () => {
     setDescription(card.description);
@@ -125,6 +126,10 @@ const IssueCard = ({
       ...card,
       title: newTitle,
     });
+  };
+
+  const handleRename = () => {
+    titleRef.current.toggle();
   };
 
   const descriptionButton = () => {
@@ -197,11 +202,14 @@ const IssueCard = ({
               onClick={() => setOpenDialog(true)}
             >
               <Box marginRight={2}>
-                <ListItemText
-                  primary={card.title}
-                  primaryTypographyProps={{
+                <EditableTitle
+                  ref={titleRef}
+                  initialTitle={card.title}
+                  TypographyProps={{
                     variant: 'body2',
                   }}
+                  onSubmit={updateTitle}
+                  disableClick
                 />
               </Box>
             </ListItem>
@@ -210,6 +218,7 @@ const IssueCard = ({
                 onDelete={deleteCard}
                 onClick={() => setOpenMenu(true)}
                 onClose={() => setOpenMenu(false)}
+                onRename={handleRename}
               />
             </div>
           </div>

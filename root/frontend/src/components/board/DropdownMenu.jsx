@@ -98,12 +98,11 @@ const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
 DropdownMenu.propTypes = {
   onClick: PropTypes.func,
   onClose: PropTypes.func,
-  onRename: PropTypes.func,
+  onRename: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
 DropdownMenu.defaultProps = {
-  onRename: () => { },
   onClick: () => { },
   onClose: () => { },
 };

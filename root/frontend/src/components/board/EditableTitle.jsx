@@ -25,6 +25,7 @@ const EditableTitle = React.forwardRef(({
   onSubmit,
   TypographyProps,
   large,
+  disableClick,
   ...props
 }, ref) => {
   const [title, setTitle] = useState(initialTitle);
@@ -53,7 +54,7 @@ const EditableTitle = React.forwardRef(({
     }
   };
 
-  const text = () => (
+  const clickableText = () => (
     <div
       className={classes.text}
       onClick={toggle}
@@ -66,6 +67,16 @@ const EditableTitle = React.forwardRef(({
       </Typography>
     </div>
   );
+
+  const disabledText = () => (
+    <div className={classes.text}>
+      <Typography {...TypographyProps}>
+        {title}
+      </Typography>
+    </div>
+  );
+
+  const text = disableClick ? disabledText() : clickableText();
 
   /* ClickAwayListener's mouse event must be mouse down so that preventDefault()
      prevent the blur event. (Event order is mousedown -> blur -> mouseup -> click) */
@@ -94,7 +105,7 @@ const EditableTitle = React.forwardRef(({
   }));
 
   return (
-    isEditing ? textField() : text()
+    isEditing ? textField() : text
   );
 });
 
@@ -103,12 +114,14 @@ EditableTitle.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
+  disableClick: PropTypes.bool,
   large: PropTypes.bool,
   cursor: PropTypes.string,
 };
 
 EditableTitle.defaultProps = {
   TypographyProps: { },
+  disableClick: false,
   large: false,
   cursor: 'pointer',
 };
