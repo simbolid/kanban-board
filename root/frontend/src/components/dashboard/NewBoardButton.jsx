@@ -23,10 +23,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    // remove underline from link
-    textDecoration: 'none',
+    textDecoration: 'none', // remove underline from link
     '&:hover': {
-      backgroundColor: theme.palette.grey[100],
+      backgroundColor: theme.palette.grey[300],
       cursor: 'pointer',
     },
   },
@@ -42,7 +41,6 @@ const NewBoardButton = ({ onSubmit }) => {
   const classes = useStyles();
 
   const handleClick = () => {
-    // open form dialog: see https://material-ui.com/components/dialogs/#form-dialogs
     setOpenDialog(true);
   };
 
@@ -55,8 +53,6 @@ const NewBoardButton = ({ onSubmit }) => {
     if (newBoardTitle !== '') {
       handleClose();
       onSubmit(newBoardTitle);
-    } else {
-      // TODO: display alert stating that title cannot be blank
     }
   };
 
