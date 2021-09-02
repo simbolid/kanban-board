@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
@@ -13,12 +14,17 @@ const useStyles = makeStyles({
     paddingInline: '10px',
     paddingBlock: '5px',
   },
+  largeTextField: {
+    height: '30px',
+    fontSize: '1.25rem',
+  },
 });
 
 const EditableTitle = React.forwardRef(({
   initialTitle,
   onSubmit,
   TypographyProps,
+  large,
   ...props
 }, ref) => {
   const [title, setTitle] = useState(initialTitle);
@@ -70,7 +76,7 @@ const EditableTitle = React.forwardRef(({
           className={classes.text}
           InputProps={{
             inputProps: {
-              className: classes.textField,
+              className: clsx(classes.textField, large && classes.largeTextField),
             },
           }}
           variant="outlined"
@@ -97,11 +103,13 @@ EditableTitle.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
+  large: PropTypes.bool,
   cursor: PropTypes.string,
 };
 
 EditableTitle.defaultProps = {
   TypographyProps: { },
+  large: false,
   cursor: 'pointer',
 };
 

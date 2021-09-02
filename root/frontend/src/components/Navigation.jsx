@@ -172,6 +172,7 @@ const NavigationInterface = ({
       }}
       onSubmit={handleTitleChange}
       cursor="text"
+      large
     />
   );
 

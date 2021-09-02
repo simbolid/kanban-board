@@ -236,6 +236,7 @@ const IssueCard = ({
                 variant: 'h5',
               }}
               onSubmit={updateTitle}
+              large
             />
           </Box>
           <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
