@@ -194,7 +194,9 @@ const IssueCard = ({
               disableRipple
               onClick={() => setOpenDialog(true)}
             >
-              <ListItemText primary={card.title} />
+              <Box marginRight={2}>
+                <ListItemText primary={card.title} />
+              </Box>
             </ListItem>
             <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
               <DropdownMenu
