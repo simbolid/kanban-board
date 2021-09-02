@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import BounceLoader from 'react-spinners/BounceLoader';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NavigationInterface from '../components/Navigation';
 import Column from '../components/board/Column';
 import ButtonToTextField from '../components/board/ButtonToTextField';
+import Spinner from '../components/Spinner';
 import boardService from '../services/boards';
 
 const useStyles = makeStyles({
@@ -166,17 +166,6 @@ const Board = ({ match }) => {
     });
   };
 
-  const loader = () => (
-    <Box
-      position="fixed"
-      top="45%"
-      left="50%"
-    >
-      <BounceLoader size={80} color="#009150" />
-    </Box>
-  );
-
-  // eslint-disable-next-line no-unused-vars
   const boardInterface = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" type="column" direction="horizontal">
@@ -221,7 +210,7 @@ const Board = ({ match }) => {
       urlID={board.url_id}
       boardFeatures
     >
-      {board.title ? boardInterface() : loader()}
+      {board.title ? boardInterface() : <Spinner />}
     </NavigationInterface>
   );
 };

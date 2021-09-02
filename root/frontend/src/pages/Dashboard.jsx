@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import BoardButton from '../components/dashboard/BoardButton';
 import NewBoardButton from '../components/dashboard/NewBoardButton';
 import NavigationInterface from '../components/Navigation';
+import Spinner from '../components/Spinner';
 import boardService from '../services/boards';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,12 +18,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const [boards, setBoards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const classes = useStyles();
 
   useEffect(async () => {
     const retrievedBoards = await boardService.getBoards();
     setBoards(retrievedBoards);
+    setLoading(false);
   }, []);
 
   const addBoard = async (title) => {
@@ -33,28 +36,32 @@ const Dashboard = () => {
     setBoards(boards.concat(returnedBoard));
   };
 
+  const boardGrid = () => (
+    <Box marginLeft={4} marginTop={1}>
+      <Typography variant="h5">
+        <Box fontWeight="fontWeightMedium">
+          Boards
+        </Box>
+      </Typography>
+      <div className={classes.container}>
+        {boards.map((board) => (
+          <Box
+            key={board._id}
+            marginRight="10px"
+          >
+            <BoardButton urlID={board.url_id}>
+              {board.title}
+            </BoardButton>
+          </Box>
+        ))}
+      </div>
+      <NewBoardButton onSubmit={addBoard} />
+    </Box>
+  );
+
   return (
     <NavigationInterface title="Dashboard">
-      <Box marginLeft={4} marginTop={1}>
-        <Typography variant="h5">
-          <Box fontWeight="fontWeightMedium">
-            Boards
-          </Box>
-        </Typography>
-        <div className={classes.container}>
-          {boards.map((board) => (
-            <Box
-              key={board._id}
-              marginRight="10px"
-            >
-              <BoardButton urlID={board.url_id}>
-                {board.title}
-              </BoardButton>
-            </Box>
-          ))}
-        </div>
-        <NewBoardButton onSubmit={addBoard} />
-      </Box>
+      {loading ? <Spinner /> : boardGrid()}
     </NavigationInterface>
   );
 };
