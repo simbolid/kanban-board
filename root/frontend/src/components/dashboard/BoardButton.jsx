@@ -37,7 +37,7 @@ const BoardButton = ({ urlID, children }) => {
         component={Link}
         to={`/b/${urlID}`}
       >
-        <Typography variant="body2">
+        <Typography variant="body2" component="div">
           <Box color="white" fontWeight="fontWeightMedium">
             {children}
           </Box>

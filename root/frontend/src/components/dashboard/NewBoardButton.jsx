@@ -79,7 +79,7 @@ const NewBoardButton = ({ onSubmit }) => {
           role="button"
           tabIndex={0}
         >
-          <Typography variant="body2">
+          <Typography variant="body2" component="div">
             <Box fontWeight="fontWeightMedium" textAlign="center">
               Create new
               <br />
