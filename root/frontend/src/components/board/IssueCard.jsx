@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
         color: 'darkgrey',
       },
     },
+    '&.Mui-focusVisible': {
+      backgroundColor: 'white',
+    },
   },
   cardFocus: {
     backgroundColor: 'rgba(185, 255, 190, 0.4)',
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   dropdown: {
     opacity: 0,
     position: 'absolute',
-    top: 3,
+    top: 4,
     right: -4,
     '&:hover': {
       opacity: 1,
@@ -127,6 +130,7 @@ const IssueCard = ({
   };
 
   const handleRename = () => {
+    setOpenMenu(false);
     titleRef.current.toggle();
   };
 
