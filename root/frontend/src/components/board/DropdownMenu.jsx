@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
+const DropdownMenu = ({ onClick, onClose, onRename, onDelete, open }) => {
   const [popupAnchor, setPopupAnchor] = useState(null);
 
   const classes = useStyles();
@@ -66,7 +66,7 @@ const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
       </IconButton>
       <Menu
         anchorEl={popupAnchor}
-        open={Boolean(popupAnchor)}
+        open={Boolean(popupAnchor) && open}
         onClose={handleClose}
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
@@ -97,11 +97,13 @@ DropdownMenu.propTypes = {
   onClose: PropTypes.func,
   onRename: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  open: PropTypes.bool,
 };
 
 DropdownMenu.defaultProps = {
   onClick: () => { },
   onClose: () => { },
+  open: true,
 };
 
 export default DropdownMenu;

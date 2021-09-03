@@ -63,6 +63,7 @@ const IssueCard = ({
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [editingTitle, setEditingTitle] = useState(false);
   const classes = useStyles();
   const titleRef = useRef();
 
@@ -78,6 +79,13 @@ const IssueCard = ({
       ...card,
       title,
     });
+
+    /* Without this delay, editingTitle will be set to false immediately.
+     * This means that if a user clicked on the card to close the title,
+     * the card dialog will open. Setting the delay avoids this scenario. */
+    setTimeout(() => {
+      setEditingTitle(false);
+    }, 200);
   };
 
   const handleDelete = () => {
@@ -86,15 +94,28 @@ const IssueCard = ({
 
   const handleRename = () => {
     setOpenMenu(false);
+    setEditingTitle(true);
     titleRef.current.toggle();
   };
 
   const handleDialogOpen = () => {
-    setOpenDialog(true);
+    if (!editingTitle) {
+      setOpenDialog(true);
+    }
   };
 
   const handleDialogClose = () => {
     setOpenDialog(false);
+  };
+
+  const handleMenuOpen = () => {
+    if (!editingTitle) {
+      setOpenMenu(true);
+    }
+  };
+
+  const handleMenuClose = () => {
+    setOpenMenu(false);
   };
 
   return (
@@ -126,9 +147,10 @@ const IssueCard = ({
             </ListItem>
             <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
               <DropdownMenu
+                open={openMenu}
                 onDelete={handleDelete}
-                onClick={() => setOpenMenu(true)}
-                onClose={() => setOpenMenu(false)}
+                onClick={handleMenuOpen}
+                onClose={handleMenuClose}
                 onRename={handleRename}
               />
             </div>
