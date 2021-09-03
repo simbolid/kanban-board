@@ -122,7 +122,12 @@ const Column = ({
               {/* eslint-disable-next-line no-shadow */}
               {(provided) => (
                 // without min height, cannot drag cards into empty columns
-                <Box minHeight="2px" ref={provided.innerRef} {...provided.droppableProps}>
+                <Box
+                  minHeight="11px"
+                  marginTop="-10px"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
                   <CardList
                     cards={column.cards}
                     filter={filter}
