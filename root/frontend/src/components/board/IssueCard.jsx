@@ -80,6 +80,10 @@ const IssueCard = ({
     });
   };
 
+  const handleDelete = () => {
+    deleteCard(card._id);
+  };
+
   const handleRename = () => {
     setOpenMenu(false);
     titleRef.current.toggle();
@@ -121,7 +125,7 @@ const IssueCard = ({
             </ListItem>
             <div className={clsx(classes.dropdown, openMenu && classes.dropdownFocus)}>
               <DropdownMenu
-                onDelete={deleteCard}
+                onDelete={handleDelete}
                 onClick={() => setOpenMenu(true)}
                 onClose={() => setOpenMenu(false)}
                 onRename={handleRename}
