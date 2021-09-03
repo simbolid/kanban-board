@@ -145,18 +145,20 @@ const CardDialog = ({
       scroll="body"
     >
       <DialogTitle onClose={handleClose} disableTypography>
-        <Box display="flex" alignItems="flex-end">
-          <Box marginRight="10px">
+        <Box display="flex">
+          <Box marginTop={1} marginRight="10px">
             <AssignmentIcon />
           </Box>
-          <EditableTitle
-            initialTitle={card.title}
-            TypographyProps={{
-              variant: 'h5',
-            }}
-            onSubmit={updateTitle}
-            size="large"
-          />
+          <Box marginRight={2}>
+            <EditableTitle
+              initialTitle={card.title}
+              TypographyProps={{
+                variant: 'h5',
+              }}
+              onSubmit={updateTitle}
+              size="large"
+            />
+          </Box>
         </Box>
         <IconButton
           aria-label="close"
