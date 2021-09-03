@@ -153,9 +153,10 @@ const CardDialog = ({
             <EditableTitle
               initialTitle={card.title}
               TypographyProps={{
-                variant: 'h5',
+                variant: 'h6',
               }}
               onSubmit={updateTitle}
+              cursor="text"
               size="large"
             />
           </Box>

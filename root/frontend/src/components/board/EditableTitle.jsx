@@ -19,8 +19,9 @@ const useStyles = makeStyles({
     fontSize: '0.875rem',
   },
   largeTextField: {
-    height: '30px',
+    height: '22px',
     fontSize: '1.25rem',
+    fontWeight: '500',
   },
 });
 
