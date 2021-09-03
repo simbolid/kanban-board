@@ -9,7 +9,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       // otherwise, cursor defaults to grab
       cursor: 'pointer',
-      // backgroundColor: theme.palette.grey[100],
       '& + $dropdown': {
         opacity: 1,
         color: 'darkgrey',
@@ -209,6 +207,7 @@ const IssueCard = ({
                     variant: 'body2',
                   }}
                   onSubmit={updateTitle}
+                  size="small"
                   disableClick
                 />
               </Box>
@@ -245,10 +244,14 @@ const IssueCard = ({
                 variant: 'h5',
               }}
               onSubmit={updateTitle}
-              large
+              size="large"
             />
           </Box>
-          <IconButton aria-label="close" className={classes.closeButton} onClick={() => setOpenDialog(false)}>
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={() => setOpenDialog(false)}
+          >
             <CloseIcon />
           </IconButton>
           <Box marginLeft="36px" color="#505050">

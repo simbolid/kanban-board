@@ -14,6 +14,10 @@ const useStyles = makeStyles({
     paddingInline: '10px',
     paddingBlock: '5px',
   },
+  smallTextField: {
+    height: '14px',
+    fontSize: '0.875rem',
+  },
   largeTextField: {
     height: '30px',
     fontSize: '1.25rem',
@@ -24,7 +28,7 @@ const EditableTitle = React.forwardRef(({
   initialTitle,
   onSubmit,
   TypographyProps,
-  large,
+  size,
   disableClick,
   ...props
 }, ref) => {
@@ -87,7 +91,11 @@ const EditableTitle = React.forwardRef(({
           className={classes.text}
           InputProps={{
             inputProps: {
-              className: clsx(classes.textField, large && classes.largeTextField),
+              className: clsx(
+                classes.textField,
+                (size === 'small') && classes.smallTextField,
+                (size === 'large') && classes.largeTextField,
+              ),
             },
           }}
           variant="outlined"
@@ -115,14 +123,14 @@ EditableTitle.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   TypographyProps: PropTypes.object,
   disableClick: PropTypes.bool,
-  large: PropTypes.bool,
+  size: PropTypes.string,
   cursor: PropTypes.string,
 };
 
 EditableTitle.defaultProps = {
   TypographyProps: { },
   disableClick: false,
-  large: false,
+  size: 'medium',
   cursor: 'pointer',
 };
 
