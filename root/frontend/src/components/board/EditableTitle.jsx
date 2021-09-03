@@ -103,6 +103,7 @@ const EditableTitle = React.forwardRef(({
           value={title}
           onChange={({ target }) => setTitle(target.value)}
           inputRef={inputRef}
+          fullWidth
         />
       </form>
     </ClickAwayListener>

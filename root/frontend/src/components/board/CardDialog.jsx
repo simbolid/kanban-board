@@ -149,7 +149,7 @@ const CardDialog = ({
           <Box marginTop={1} marginRight="10px">
             <AssignmentIcon />
           </Box>
-          <Box marginRight={2}>
+          <Box flexGrow={1} marginRight={4}>
             <EditableTitle
               initialTitle={card.title}
               TypographyProps={{
