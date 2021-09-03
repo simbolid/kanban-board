@@ -104,7 +104,6 @@ const IssueCard = ({
               {...provided.dragHandleProps}
               ref={provided.innerRef}
               button
-              disableRipple
               onClick={handleDialogOpen}
             >
               <Box marginRight={2}>

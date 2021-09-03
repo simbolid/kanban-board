@@ -61,7 +61,6 @@ const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
         className={popupAnchor ? classes.focusedButton : classes.button}
         aria-haspopup="true"
         onClick={handleClick}
-        disableRipple
       >
         <MoreVertIcon />
       </IconButton>
@@ -78,7 +77,6 @@ const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
         <MenuItem
           className={classes.menuItem}
           onClick={handleRename}
-          disableRipple
         >
           Rename
         </MenuItem>
@@ -86,7 +84,6 @@ const DropdownMenu = ({ onClick, onClose, onRename, onDelete }) => {
         <MenuItem
           className={`${classes.menuItem} ${classes.delete}`}
           onClick={handleDelete}
-          disableRipple
         >
           Delete
         </MenuItem>

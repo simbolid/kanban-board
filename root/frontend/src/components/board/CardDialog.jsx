@@ -95,7 +95,6 @@ const CardDialog = ({
       <ButtonBase
         className={`${classes.description} ${classes.descriptionButton}`}
         onClick={() => setEditDescription(true)}
-        disableRipple
       >
         {description === ''
           ? placeholderText()

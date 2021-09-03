@@ -30,6 +30,11 @@ const theme = createMuiTheme({
       textTransform: 'none',
     },
   },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
+  },
 });
 
 // code splitting prevents initial load time from being too long
