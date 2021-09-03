@@ -110,7 +110,7 @@ const IssueCard = ({
               button
               onClick={handleDialogOpen}
             >
-              <Box marginRight={2}>
+              <Box marginRight="20px">
                 <EditableTitle
                   ref={titleRef}
                   key={card.title}
