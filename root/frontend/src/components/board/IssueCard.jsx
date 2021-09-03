@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   dropdown: {
     opacity: 0,
     position: 'absolute',
-    top: -6,
+    top: 3,
     right: -4,
     '&:hover': {
       opacity: 1,
