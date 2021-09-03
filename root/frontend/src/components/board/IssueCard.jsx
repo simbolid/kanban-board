@@ -2,22 +2,14 @@ import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import CloseIcon from '@material-ui/icons/Close';
 import { Draggable } from 'react-beautiful-dnd';
+import CardDialog from './CardDialog';
 import DropdownMenu from './DropdownMenu';
 import EditableTitle from './EditableTitle';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   parent: {
     display: 'flex',
     position: 'relative',
@@ -60,40 +52,7 @@ const useStyles = makeStyles((theme) => ({
   dropdownFocus: {
     opacity: 1,
   },
-  dialog: {
-    backgroundColor: theme.palette.grey[50],
-    boxShadow: 'none',
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-  description: {
-    marginBlock: '10px',
-    padding: '4px 10px',
-    height: '60px',
-    width: '92%',
-    fontFamily: 'arial',
-  },
-  descriptionButton: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    backgroundColor: '#F0F0F0',
-    '&:hover': {
-      backgroundColor: '#E8E8E8',
-    },
-  },
-  descriptionTextArea: {
-    resize: 'none',
-    fontFamily: 'roboto, sans-serif',
-    '&:focus': {
-      outline: 'none',
-      boxShadow: `0 0 0 2px ${theme.palette.primary.light}`,
-    },
-  },
-}));
+});
 
 const IssueCard = ({
   card,
@@ -104,28 +63,20 @@ const IssueCard = ({
 }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const [description, setDescription] = useState(card.description ? card.description : '');
-  const [editDescription, setEditDescription] = useState(false);
   const classes = useStyles();
   const titleRef = useRef();
 
-  const resetDescription = () => {
-    setDescription(card.description);
-    setEditDescription(false);
-  };
-
-  const updateDescription = () => {
-    setEditDescription(false);
+  const updateDescription = (description) => {
     updateCard({
       ...card,
       description,
     });
   };
 
-  const updateTitle = (newTitle) => {
+  const updateTitle = (title) => {
     updateCard({
       ...card,
-      title: newTitle,
+      title,
     });
   };
 
@@ -134,60 +85,13 @@ const IssueCard = ({
     titleRef.current.toggle();
   };
 
-  const descriptionButton = () => {
-    const placeholderText = () => (
-      <Box color="gray">
-        <Typography>
-          Enter a description...
-        </Typography>
-      </Box>
-    );
-
-    const text = () => (
-      <Typography>
-        {description}
-      </Typography>
-    );
-
-    return (
-      <ButtonBase
-        className={`${classes.description} ${classes.descriptionButton}`}
-        onClick={() => setEditDescription(true)}
-        disableRipple
-      >
-        {description === ''
-          ? placeholderText()
-          : text()}
-      </ButtonBase>
-    );
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
   };
 
-  const descriptionInput = () => (
-    <form onSubmit={updateDescription}>
-      <textarea
-        className={`${classes.description} ${classes.descriptionTextArea}`}
-        type="text"
-        value={description}
-        onChange={({ target }) => setDescription(target.value)}
-        placeholder="Enter a description..."
-        aria-label={`Enter a description for the task ${card.title}`}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus
-      />
-      <Button
-        variant="contained"
-        size="small"
-        color="secondary"
-        className={classes.addButton}
-        type="submit"
-      >
-        Save
-      </Button>
-      <IconButton aria-label="delete" onClick={resetDescription}>
-        <CloseIcon />
-      </IconButton>
-    </form>
-  );
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   return (
     <>
@@ -201,7 +105,7 @@ const IssueCard = ({
               ref={provided.innerRef}
               button
               disableRipple
-              onClick={() => setOpenDialog(true)}
+              onClick={handleDialogOpen}
             >
               <Box marginRight={2}>
                 <EditableTitle
@@ -227,51 +131,14 @@ const IssueCard = ({
           </div>
         )}
       </Draggable>
-
-      <Dialog
-        PaperProps={{
-          className: classes.dialog,
-        }}
+      <CardDialog
+        card={card}
         open={openDialog}
-        onClose={() => setOpenDialog(false)}
-        fullWidth
-        scroll="body"
-      >
-        <DialogTitle onClose={() => setOpenDialog(false)} disableTypography>
-          <Box display="flex" alignItems="flex-end">
-            <Box marginRight="10px">
-              <AssignmentIcon />
-            </Box>
-            <EditableTitle
-              initialTitle={card.title}
-              TypographyProps={{
-                variant: 'h5',
-              }}
-              onSubmit={updateTitle}
-              size="large"
-            />
-          </Box>
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={() => setOpenDialog(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Box marginLeft="36px" color="#505050">
-            <Typography variant="body2">
-              {`in list ${columnTitle}`}
-            </Typography>
-          </Box>
-        </DialogTitle>
-
-        <DialogContent>
-          <Box fontWeight="fontWeightBold" fontSize="16px">
-            Description
-          </Box>
-          {editDescription ? descriptionInput() : descriptionButton()}
-        </DialogContent>
-      </Dialog>
+        columnTitle={columnTitle}
+        handleClose={handleDialogClose}
+        updateTitle={updateTitle}
+        updateDescription={updateDescription}
+      />
     </>
   );
 };
