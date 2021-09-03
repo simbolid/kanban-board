@@ -113,6 +113,7 @@ const IssueCard = ({
               <Box marginRight={2}>
                 <EditableTitle
                   ref={titleRef}
+                  key={card.title}
                   initialTitle={card.title}
                   TypographyProps={{
                     variant: 'body2',
