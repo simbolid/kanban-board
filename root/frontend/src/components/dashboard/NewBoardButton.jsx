@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,7 +11,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import boardService from '../../services/boards';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewBoardButton = ({ onSubmit }) => {
+const NewBoardButton = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [newBoardTitle, setNewBoardTitle] = useState('');
-
   const classes = useStyles();
+  const history = useHistory();
 
   const handleClick = () => {
     setOpenDialog(true);
@@ -49,10 +50,12 @@ const NewBoardButton = ({ onSubmit }) => {
     setNewBoardTitle('');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (newBoardTitle !== '') {
-      handleClose();
-      onSubmit(newBoardTitle);
+      const board = await boardService.addBoard({
+        title: newBoardTitle,
+      });
+      history.push(`/b/${board.url_id}`);
     }
   };
 
@@ -119,10 +122,6 @@ const NewBoardButton = ({ onSubmit }) => {
       </Dialog>
     </>
   );
-};
-
-NewBoardButton.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default NewBoardButton;

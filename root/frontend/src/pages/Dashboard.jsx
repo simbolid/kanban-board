@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const [boards, setBoards] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const classes = useStyles();
 
   useEffect(async () => {
@@ -27,14 +26,6 @@ const Dashboard = () => {
     setBoards(retrievedBoards);
     setLoading(false);
   }, []);
-
-  const addBoard = async (title) => {
-    const newBoard = {
-      title,
-    };
-    const returnedBoard = await boardService.addBoard(newBoard);
-    setBoards(boards.concat(returnedBoard));
-  };
 
   const boardGrid = () => (
     <Box marginLeft={4} marginTop={1}>
@@ -55,7 +46,7 @@ const Dashboard = () => {
           </Box>
         ))}
       </div>
-      <NewBoardButton onSubmit={addBoard} />
+      <NewBoardButton />
     </Box>
   );
 
