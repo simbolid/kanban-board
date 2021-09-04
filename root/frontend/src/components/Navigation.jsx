@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { createMuiTheme, MuiThemeProvider, makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,27 +12,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import { grey } from '@material-ui/core/colors';
-import '@fontsource/ubuntu/300.css';
-import '@fontsource/ubuntu/400.css';
-import '@fontsource/ubuntu/500.css';
-import '@fontsource/ubuntu/700.css';
 import EditableTitle from './board/EditableTitle';
 import DrawerList from './DrawerList';
 
 const drawerWidth = 230;
-
-const boardTheme = (theme) => createMuiTheme({
-  ...theme,
-  typography: {
-    fontFamily: 'ubuntu',
-    body2: {
-      fontSize: '0.9rem',
-    },
-    button: {
-      textTransform: 'none',
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -195,54 +178,52 @@ const NavigationInterface = ({
   );
 
   return (
-    <MuiThemeProvider theme={boardTheme}>
-      <div className={classes.root}>
-        <AppBar
-          position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
-          elevation={0}
-        >
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-            >
-              <MenuIcon />
-            </IconButton>
-            {/* board titles should be editable */}
-            {boardFeatures ? dynamicTitle() : staticTitle()}
-            {/* the board page requires a search field for filtering tasks */}
-            {boardFeatures ? search() : null}
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon style={{ color: grey[400] }} />
-            </IconButton>
-          </div>
-          <DrawerList urlID={urlID} />
-        </Drawer>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.appBarSpacer} />
-          {children}
-        </main>
-      </div>
-    </MuiThemeProvider>
+    <div className={classes.root}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+        elevation={0}
+      >
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          {/* board titles should be editable */}
+          {boardFeatures ? dynamicTitle() : staticTitle()}
+          {/* the board page requires a search field for filtering tasks */}
+          {boardFeatures ? search() : null}
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon style={{ color: grey[400] }} />
+          </IconButton>
+        </div>
+        <DrawerList urlID={urlID} />
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.appBarSpacer} />
+        {children}
+      </main>
+    </div>
   );
 };
 

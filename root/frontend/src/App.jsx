@@ -1,14 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import '@fontsource/ubuntu/300.css';
+import '@fontsource/ubuntu/400.css';
+import '@fontsource/ubuntu/500.css';
+import '@fontsource/ubuntu/700.css';
 import LoadingScreen from './pages/Loading';
 
 const theme = createMuiTheme({
@@ -26,6 +26,10 @@ const theme = createMuiTheme({
     red: '#e62020',
   },
   typography: {
+    fontFamily: 'ubuntu',
+    body2: {
+      fontSize: '0.9rem',
+    },
     button: {
       textTransform: 'none',
     },
