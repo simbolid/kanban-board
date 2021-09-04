@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -7,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Link } from 'react-router-dom';
+import boardService from '../../services/boards';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -23,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeleteButton = ({ onSubmit }) => {
+const DeleteButton = ({ urlID }) => {
   const [openDialog, setOpenDialog] = useState(false);
-
   const classes = useStyles();
+  const history = useHistory();
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -36,9 +37,9 @@ const DeleteButton = ({ onSubmit }) => {
     setOpenDialog(false);
   };
 
-  const handleSubmit = () => {
-    setOpenDialog(false);
-    onSubmit();
+  const handleSubmit = async () => {
+    await boardService.deleteBoard(urlID);
+    history.push('/dashboard');
   };
 
   return (
@@ -73,8 +74,6 @@ const DeleteButton = ({ onSubmit }) => {
           <Button
             onClick={handleSubmit}
             color="secondary"
-            component={Link}
-            to="/dashboard"
           >
             Continue
           </Button>
@@ -85,7 +84,7 @@ const DeleteButton = ({ onSubmit }) => {
 };
 
 DeleteButton.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  urlID: PropTypes.string.isRequired,
 };
 
 export default DeleteButton;
