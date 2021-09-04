@@ -13,6 +13,8 @@ const useStyles = makeStyles({
   textField: {
     paddingInline: '10px',
     paddingBlock: '5px',
+    height: '16px',
+    backgroundColor: (props) => props.backgroundColor,
   },
   smallTextField: {
     height: '14px',
@@ -127,6 +129,7 @@ EditableTitle.propTypes = {
   disableClick: PropTypes.bool,
   size: PropTypes.string,
   cursor: PropTypes.string,
+  backgroundColor: PropTypes.string,
 };
 
 EditableTitle.defaultProps = {
@@ -134,6 +137,7 @@ EditableTitle.defaultProps = {
   disableClick: false,
   size: 'medium',
   cursor: 'pointer',
+  backgroundColor: 'inherit',
 };
 
 export default EditableTitle;

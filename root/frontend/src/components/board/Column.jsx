@@ -108,6 +108,7 @@ const Column = ({
                   gutterBottom: true,
                 }}
                 ref={titleRef}
+                backgroundColor="#f5f5f5"
               />
             </Box>
             <Box marginRight="-12px">
