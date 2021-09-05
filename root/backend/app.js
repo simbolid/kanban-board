@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const config = require('./utils/config');
 const logger = require('./utils/logger');
 const boardRouter = require('./controllers/boards');
+const fallbackRouter = require('./controllers/fallback');
 
 const app = express();
 
@@ -41,5 +42,9 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 // route handling
 app.use('/api/boards', boardRouter);
+
+// prevents errors such as 'Cannot GET /dashboard',
+// see https://ui.dev/react-router-cannot-get-url-refresh
+app.use('/', fallbackRouter);
 
 module.exports = app;
