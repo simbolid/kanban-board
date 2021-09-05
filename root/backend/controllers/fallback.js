@@ -8,3 +8,5 @@ fallbackRouter.get('/*', (req, res) => {
     }
   });
 });
+
+module.exports = fallbackRouter;

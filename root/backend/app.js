@@ -45,6 +45,6 @@ app.use('/api/boards', boardRouter);
 
 // prevents errors such as 'Cannot GET /dashboard',
 // see https://ui.dev/react-router-cannot-get-url-refresh
-app.use('/', fallbackRouter);
+app.use(fallbackRouter);
 
 module.exports = app;
