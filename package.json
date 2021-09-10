@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "deploy:heroku": "git subtree push --prefix root/backend heroku main",
+    "deploy:git": "git add . && git commit -m uibuild && git push",
+    "deploy:full": "cd root/backend && npm run build:ui && cd ../.. && npm run deploy:git && npm run deploy:heroku"
+  }
+}
