@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  toolbar: {
+    paddingTop: '8px',
+    paddingRight: '32px',
+  },
 }));
 
 const Home = () => {
@@ -25,18 +29,24 @@ const Home = () => {
   return (
     <>
       <AppBar position="relative" elevation={0}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Box flexGrow={1}>
-            <Typography variant="h6" noWrap>
-              Kanban Bonsai
+            <Typography variant="h5" noWrap>
+              <Box fontWeight="fontWeightMedium">
+                Kanban Bonsai
+              </Box>
             </Typography>
           </Box>
           <Box marginRight="10px">
-            <Button color="secondary" size="large">
+            <Button
+              color="secondary"
+              size="large"
+              style={{ fontSize: '16px' }}
+            >
               Login
             </Button>
           </Box>
-          <Button color="secondary" variant="contained">
+          <Button color="secondary" variant="contained" size="large">
             Sign up
           </Button>
         </Toolbar>
