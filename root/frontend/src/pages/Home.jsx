@@ -1,5 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -25,9 +26,19 @@ const Home = () => {
     <>
       <AppBar position="relative" elevation={0}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Kanban Bonsai
-          </Typography>
+          <Box flexGrow={1}>
+            <Typography variant="h6" noWrap>
+              Kanban Bonsai
+            </Typography>
+          </Box>
+          <Box marginRight="10px">
+            <Button color="secondary" size="large">
+              Login
+            </Button>
+          </Box>
+          <Button color="secondary" variant="contained">
+            Sign up
+          </Button>
         </Toolbar>
       </AppBar>
       <main>
