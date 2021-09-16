@@ -16,4 +16,6 @@ Upcoming features:
 * auth0 user authentication
 * a card labeling system
 
-Following best practices, I also plan to write a Cypress testing suite. 
+Following best practices, I also plan to write a testing suite using:
+* Cypress for E2E testing
+* Jest for unit tests
