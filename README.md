@@ -1,10 +1,11 @@
-# kanban-board
+# kanban-bonsai
 
-A project management solution built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node).   
+Kanban board software built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node). 
+View the latest production build at [kanban-bonsai.herokuapp.com](https://kanban-bonsai.herokuapp.com/).     
 
 # Project Status
 
-The project is in development. It currently supports the following features: 
+I am still developing this project. As of September 2020, the app supports the following features: 
 * creating and deleting cards and columns
 * editing card and column titles
 * adding descriptions to cards
@@ -12,5 +13,7 @@ The project is in development. It currently supports the following features:
 * filtering cards by title
 
 Upcoming features:
-* a labeling system
 * auth0 user authentication
+* a card labeling system
+
+Following best practices, I also plan to write a Cypress testing suite. 
