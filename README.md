@@ -1,6 +1,6 @@
 # kanban-bonsai
 
-Kanban board software built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node). 
+Kanban board software built with the [MERN](https://www.mongodb.com/mern-stack) stack (MongoDB Express React Node).<br />
 View the latest production build at [kanban-bonsai.herokuapp.com](https://kanban-bonsai.herokuapp.com/).     
 
 # Project Status
