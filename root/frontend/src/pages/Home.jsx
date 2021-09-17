@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const {
+    loginWithRedirect,
+  } = useAuth0();
+
+  const login = () => loginWithRedirect();
+  const signUp = () => loginWithRedirect({ screen_hint: 'signup' });
 
   return (
     <>
@@ -42,12 +49,18 @@ const Home = () => {
               color="secondary"
               size="large"
               style={{ fontSize: '16px' }}
+              onClick={login}
             >
               Login
             </Button>
           </Box>
-          <Button color="secondary" variant="contained" size="large">
-            Sign up
+          <Button
+            color="secondary"
+            variant="contained"
+            size="large"
+            onClick={signUp}
+          >
+            Sign Up
           </Button>
         </Toolbar>
       </AppBar>
