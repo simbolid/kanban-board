@@ -5,7 +5,7 @@ View the latest production build at [kanban-bonsai.herokuapp.com](https://kanban
 
 # Project Status
 
-I am still developing this project. As of September 2020, the app supports the following features: 
+I am still developing this project. As of September 2021, the app supports the following features: 
 * creating and deleting cards and columns
 * editing card and column titles
 * adding descriptions to cards
