@@ -1,20 +1,17 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
   heroButton: {
-    marginTop: theme.spacing(4),
-    display: 'flex',
-    justifyContent: 'center',
+    marginTop: theme.spacing(6),
+    minHeight: '60px',
+    minWidth: '180px',
+    borderRadius: '10px',
+    fontSize: '18px',
   },
 }));
 
@@ -22,39 +19,36 @@ const Home = () => {
   const classes = useStyles();
 
   return (
-    <>
-      <AppBar position="relative" elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Kanban Bonsai
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Kanban Bonsai
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Basic Kanban boards for individual projects
-            </Typography>
-            <div className={classes.heroButton}>
-              <Button
-                variant="contained"
-                size="large"
-                color="secondary"
-                component={Link}
-                to="/dashboard"
-                style={{ borderRadius: '12px' }}
-              >
-                Get Started
-              </Button>
-            </div>
-          </Container>
-        </div>
-      </main>
-    </>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        marginBottom={10}
+      >
+        <Typography variant="h1" align="center" color="textPrimary" gutterBottom>
+          Kanban Bonsai
+        </Typography>
+        <Typography variant="h4" align="center" color="textSecondary" paragraph>
+          Basic Kanban boards for individual projects.
+        </Typography>
+        <Button
+          className={classes.heroButton}
+          variant="contained"
+          size="large"
+          color="secondary"
+          component={Link}
+          to="/dashboard"
+        >
+          Get Started
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
