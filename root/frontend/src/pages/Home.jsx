@@ -35,7 +35,7 @@ const Home = () => {
           Kanban Bonsai
         </Typography>
         <Typography variant="h4" align="center" color="textSecondary" paragraph>
-          Basic Kanban boards for individual projects.
+          Basic Kanban boards for individual projects
         </Typography>
         <Button
           className={classes.heroButton}
