@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import Loading from './Loading';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -27,11 +28,19 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const {
+    isAuthenticated,
+    isLoading,
     loginWithRedirect,
   } = useAuth0();
 
   const login = () => loginWithRedirect();
   const signUp = () => loginWithRedirect({ screen_hint: 'signup' });
+
+  if (isLoading) {
+    return (
+      <Loading />
+    );
+  }
 
   return (
     <>
@@ -44,24 +53,28 @@ const Home = () => {
               </Box>
             </Typography>
           </Box>
-          <Box marginRight="10px">
-            <Button
-              color="secondary"
-              size="large"
-              style={{ fontSize: '16px' }}
-              onClick={login}
-            >
-              Login
-            </Button>
-          </Box>
-          <Button
-            color="secondary"
-            variant="contained"
-            size="large"
-            onClick={signUp}
-          >
-            Sign Up
-          </Button>
+          { !isAuthenticated && (
+            <>
+              <Box marginRight="10px">
+                <Button
+                  color="secondary"
+                  size="large"
+                  style={{ fontSize: '16px' }}
+                  onClick={login}
+                >
+                  Login
+                </Button>
+              </Box>
+              <Button
+                color="secondary"
+                variant="contained"
+                size="large"
+                onClick={signUp}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <main>
