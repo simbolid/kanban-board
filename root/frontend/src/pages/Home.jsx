@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import Loading from './Loading';
+import Spinner from '../components/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -38,7 +38,7 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <Loading />
+      <Spinner />
     );
   }
 
