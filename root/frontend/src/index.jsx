@@ -8,6 +8,5 @@ ReactDOM.render(
     <CssBaseline />
     <App />
   </>,
-  // eslint-disable-next-line no-undef
   document.getElementById('root'),
 );
