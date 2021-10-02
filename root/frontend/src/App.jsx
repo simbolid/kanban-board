@@ -9,7 +9,7 @@ import '@fontsource/ubuntu/300.css';
 import '@fontsource/ubuntu/400.css';
 import '@fontsource/ubuntu/500.css';
 import '@fontsource/ubuntu/700.css';
-import LoadingScreen from './pages/Loading';
+import Spinner from './components/Spinner';
 
 const theme = createMuiTheme({
   palette: {
@@ -50,7 +50,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const App = () => (
   <MuiThemeProvider theme={theme}>
     <Router>
-      <Suspense fallback={<LoadingScreen />}>
+      <Suspense fallback={<Spinner />}>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/dashboard" component={Dashboard} />
